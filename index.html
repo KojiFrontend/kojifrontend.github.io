@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Home | Koji</title>
+<meta name="description" content="Koji is a sleek, fun, and inspired frontend for handheld devices." />
+<meta name="theme-color" content="#FFFFFF" />
+
+<link rel="icon" type="image/png" href="assets/brand/favicon.png" />
+<link rel="apple-touch-icon" href="assets/brand/favicon.png" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Koji" />
+<meta property="og:url" content="https://kojifrontend.github.io/" />
+<meta property="og:title" content="Home | Koji" />
+<meta property="og:description" content="Koji is a sleek, fun, and inspired frontend for handheld devices." />
+<meta property="og:image" content="https://kojifrontend.github.io/assets/brand/embed-banner.jpg" />
+<meta property="og:image:width" content="2141" />
+<meta property="og:image:height" content="1290" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Home | Koji" />
+<meta name="twitter:description" content="Koji is a sleek, fun, and inspired frontend for handheld devices." />
+<meta name="twitter:image" content="https://kojifrontend.github.io/assets/brand/embed-banner.jpg" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --surface: #F5F5F5;
+    --card-surface: #FFFFFF;
+    --surface-stroke-width: 3px;
+    --surface-stroke: var(--surface-stroke-width) solid #FFFFFF;
+    --surface-quiet: rgba(0, 0, 0, 0.06);
+    --radius-card: 20px;
+    --shell-inset: 14px;
+    --surface-shadow: 2px 3px 0 rgba(0, 0, 0, 0.07);
+  }
+
+  html, body {
+    height: 100%;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  body {
+    font-family: "Quicksand", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .grid {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    mix-blend-mode: overlay;
+    --tile: 72px;
+  }
+
+  .grid__tile {
+    position: absolute;
+    inset: calc(var(--tile) * -1);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg stroke='%236B6B6B' stroke-width='2.5' fill='none'%3E%3Cline x1='-8' y1='-8' x2='80' y2='80'/%3E%3Cline x1='-8' y1='80' x2='80' y2='-8'/%3E%3C/g%3E%3Cg fill='%23333333'%3E%3Ccircle cx='0' cy='0' r='5'/%3E%3Ccircle cx='72' cy='0' r='5'/%3E%3Ccircle cx='0' cy='72' r='5'/%3E%3Ccircle cx='72' cy='72' r='5'/%3E%3Ccircle cx='36' cy='36' r='5'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: var(--tile) var(--tile);
+    background-repeat: repeat;
+    animation: grid-scroll 2.6s linear infinite;
+    will-change: transform;
+  }
+
+  @keyframes grid-scroll {
+    to { transform: translate3d(var(--tile), var(--tile), 0); }
+  }
+
+  .glow {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 44vh;
+    overflow: hidden;
+    opacity: 0.5;
+    -webkit-mask-image: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.85) 12%,
+      rgba(0, 0, 0, 0.4) 48%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    mask-image: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.85) 12%,
+      rgba(0, 0, 0, 0.4) 48%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    animation: glow-breathe 5.5s ease-in-out infinite;
+  }
+
+  .glow__band {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    background-image: linear-gradient(
+      90deg,
+      #ADD6FF 0%,
+      #389CFF 25%,
+      #7438FF 50%,
+      #E8A2FF 75%,
+      #ADD6FF 100%
+    );
+    background-size: 50% 100%;
+    background-repeat: repeat-x;
+    animation: glow-slide 18s linear infinite;
+    will-change: transform;
+  }
+
+  @keyframes glow-slide {
+    to { transform: translate3d(-50%, 0, 0); }
+  }
+
+  @keyframes glow-breathe {
+    0%, 100% { opacity: 0.44; }
+    50%      { opacity: 0.58; }
+  }
+
+  .tabbar {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    padding: 14px 14px calc(14px + env(safe-area-inset-bottom, 0px));
+    background: var(--surface);
+    border: var(--surface-stroke);
+    border-bottom: 0;
+    border-radius: 43px 43px 0 0;
+  }
+
+  .tabbar__tab {
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    padding: 0;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .tabbar__tab img {
+    display: block;
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  .tabbar__pill {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    height: 58px;
+    margin-left: 14px;
+    padding: 0 22px;
+    border-radius: 999px;
+    background: var(--surface-quiet);
+    transition: background-color 0.15s ease;
+  }
+
+  .tabbar__pill a {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+  }
+
+  .tabbar__pill img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  .tabbar__tab img,
+  .tabbar__pill img { transition: transform 0.15s ease; }
+
+  .tabbar__tab:hover img,
+  .tabbar__pill a:hover img { transform: scale(1.08); }
+
+  .tabbar__tab:active img,
+  .tabbar__pill a:active img { transform: scale(0.92); }
+
+  .tabbar__pill:hover { background: rgba(0, 0, 0, 0.1); }
+
+  .tabbar__tab:focus-visible,
+  .tabbar__pill a:focus-visible {
+    outline: 2px solid #389CFF;
+    outline-offset: 2px;
+  }
+
+  .stage {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-snap-type: y proximity;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+  }
+
+  .stage::-webkit-scrollbar { display: none; }
+
+  .screen {
+    display: grid;
+    min-height: 100%;
+    scroll-snap-align: start;
+  }
+
+  .panel-screen {
+    place-items: center;
+    align-content: center;
+    gap: clamp(10px, 2vh, 18px);
+    padding: 24px 16px 132px;
+  }
+
+  .bento-hint { max-width: 90%; }
+
+  .screen--home {
+    align-content: center;
+    justify-items: center;
+    gap: clamp(30px, 6vh, 64px);
+    padding: 24px 0 132px;
+  }
+
+  .screen--home > .shell { width: min(100% - 32px, 820px); }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1.02fr 1fr;
+    min-height: clamp(280px, 54cqw, 470px);
+    overflow: hidden;
+    border: var(--surface-stroke);
+    border-radius: var(--radius-card);
+    background-color: var(--card-surface);
+    box-shadow: var(--surface-shadow);
+  }
+
+  .hero__copy {
+    display: grid;
+    align-content: center;
+    gap: clamp(6px, 1.5cqw, 14px);
+    padding: clamp(20px, 5cqw, 52px);
+  }
+
+  .hero__title {
+    font-size: clamp(23px, 5.4cqw, 46px);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.022em;
+    color: #1C1C1E;
+    text-wrap: balance;
+  }
+
+  .hero__sub {
+    font-size: clamp(14px, 2.2cqw, 19px);
+    font-weight: 700;
+    letter-spacing: -0.005em;
+    color: #6E6E73;
+  }
+
+  .hero__banner {
+    min-height: clamp(170px, 30cqw, 340px);
+    background-image: url("assets/home/hero.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  @container (max-width: 560px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero__banner { min-height: clamp(180px, 44cqw, 260px); }
+  }
+
+  .scroller {
+    --gap: clamp(14px, 3.4vw, 22px);
+    --unit: clamp(80px, 21vw, 112px);
+    width: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  }
+
+  .scroller__track {
+    --shift: 50%;
+    display: flex;
+    width: max-content;
+    animation: scroller-roll 26s linear infinite;
+    will-change: transform;
+  }
+
+  .scroller__group {
+    display: flex;
+    align-items: center;
+    gap: var(--gap);
+    padding-right: var(--gap);
+  }
+
+  @keyframes scroller-roll {
+    to { transform: translate3d(calc(var(--shift) * -1), 0, 0); }
+  }
+
+  .scroller:hover .scroller__track,
+  .scroller:focus-within .scroller__track { animation-play-state: paused; }
+
+  .scroller__item {
+    flex: none;
+    width: var(--unit);
+    height: var(--unit);
+    object-fit: contain;
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  .scroller__item--wide { width: calc(var(--unit) * 2 + var(--gap)); }
+
+  .tip {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    max-width: min(340px, 100vw - 24px);
+    padding: 9px 16px;
+    border: var(--surface-stroke);
+    border-radius: 999px;
+    background-color: var(--surface);
+    box-shadow: var(--surface-shadow);
+    color: #1C1C1E;
+    font-size: 12.5px;
+    font-weight: 700;
+    line-height: 1.35;
+    text-align: center;
+    text-wrap: pretty;
+    transform: translate(-50%, -100%);
+    opacity: 0;
+    transition: opacity 0.14s ease;
+    pointer-events: none;
+  }
+
+  .tip.is-on { opacity: 1; }
+
+  .shell {
+    container-type: inline-size;
+    display: grid;
+    gap: 12px;
+    width: 100%;
+    max-width: 820px;
+    padding: var(--shell-inset);
+    border-radius: calc(var(--radius-card) + var(--shell-inset));
+    background: var(--surface-quiet);
+    box-shadow: var(--surface-shadow);
+  }
+
+  .bento {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: 1fr 1fr auto;
+  }
+
+  .more {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: 1fr auto;
+  }
+
+  .card {
+    --card-pad: clamp(10px, 3.2cqw, 18px);
+    display: flex;
+    flex-direction: column;
+    min-height: 82px;
+    padding: clamp(9px, 2.4cqw, 15px) var(--card-pad) var(--card-pad);
+    border: var(--surface-stroke);
+    border-radius: var(--radius-card);
+    background-color: var(--card-surface);
+    background-image: radial-gradient(
+      120% 80% at 50% 100%,
+      rgb(var(--tint) / 0.22),
+      transparent 72%
+    );
+    box-shadow: var(--surface-shadow);
+  }
+
+  .card__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 5px;
+  }
+
+  .card__title {
+    font-size: clamp(13px, 2.7cqw, 18px);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: var(--ink, #1C1C1E);
+  }
+
+  .card__icon {
+    flex: none;
+    width: clamp(22px, 4.6cqw, 30px);
+    height: clamp(22px, 4.6cqw, 30px);
+    object-fit: contain;
+  }
+
+  .card__text {
+    font-size: clamp(10.5px, 1.9cqw, 12px);
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--ink-soft, #6E6E73);
+  }
+
+  .card--art {
+    grid-row: span 2;
+    display: grid;
+    place-items: center;
+    padding: clamp(12px, 3.4cqw, 20px);
+    background-image: url("assets/icons/bento/gamesplash.png");
+    background-size: cover;
+    background-position: center;
+  }
+
+  .card__lead {
+    font-size: clamp(11.5px, 2.5cqw, 15px);
+    font-weight: 700;
+    line-height: 1.32;
+    letter-spacing: -0.01em;
+    color: #1C1C1E;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .card__cta {
+    display: grid;
+    place-items: center;
+    margin-top: auto;
+    height: clamp(34px, 6.4cqw, 46px);
+    padding: 0 14px;
+    border-radius: max(
+      10px,
+      calc(var(--radius-card) - var(--card-pad) - var(--surface-stroke-width))
+    );
+    border: var(--surface-stroke);
+    background-image: linear-gradient(180deg, var(--cta-top), var(--cta-bottom));
+    color: #FFFFFF;
+    font-size: clamp(12.5px, 2cqw, 14px);
+    font-weight: 700;
+    letter-spacing: -0.005em;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: inset 0 -6px 10px -4px rgba(0, 0, 0, 0.22),
+                0 3px 10px rgb(var(--tint) / 0.32);
+    transition: filter 0.15s ease, transform 0.15s ease;
+  }
+
+  .card__cta:hover { filter: brightness(1.05); }
+  .card__cta:active { transform: translateY(1px); }
+
+  .card--wide { grid-column: 1 / -1; }
+
+  /* Desktop: the panel screens (bento + more) get a wider, chunkier layout.
+     Caps scale with the wider shell so the cards keep their proportions. */
+  @media (min-width: 1000px) {
+    .bento,
+    .more {
+      --shell-inset: 17px;
+      gap: 15px;
+      max-width: 1040px;
+    }
+
+    .card {
+      --card-pad: clamp(12px, 3.2cqw, 23px);
+      min-height: 104px;
+      padding: clamp(11px, 2.4cqw, 19px) var(--card-pad) var(--card-pad);
+    }
+
+    .card--art { padding: clamp(15px, 3.4cqw, 25px); }
+
+    .card__title { font-size: clamp(16px, 2.7cqw, 23px); }
+    .card__text { font-size: clamp(13px, 1.9cqw, 15px); }
+    .card__lead { font-size: clamp(14px, 2.5cqw, 19px); }
+
+    .card__icon {
+      width: clamp(28px, 4.6cqw, 38px);
+      height: clamp(28px, 4.6cqw, 38px);
+    }
+
+    .card__cta {
+      height: clamp(42px, 6.4cqw, 58px);
+      font-size: clamp(15px, 2cqw, 18px);
+    }
+
+    .bento-hint { font-size: clamp(12px, 2.8vw, 16px); }
+  }
+
+  @media (max-width: 620px) {
+    .bento,
+    .more {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: none;
+    }
+
+    .card { min-height: 0; }
+
+    .card--art {
+      grid-column: 1 / -1;
+      grid-row: auto;
+      min-height: clamp(84px, 29cqw, 132px);
+    }
+
+    .shell {
+      --shell-inset: 12px;
+      gap: 10px;
+    }
+
+    .panel-screen {
+      padding-bottom: calc(104px + env(safe-area-inset-bottom, 0px));
+    }
+
+    .card__title { font-size: clamp(16px, 4.6cqw, 18px); }
+    .card__text { font-size: clamp(12.5px, 3.3cqw, 14px); }
+    .card__lead { font-size: clamp(15px, 4.4cqw, 18px); }
+
+    .card__icon {
+      width: clamp(26px, 6.8cqw, 30px);
+      height: clamp(26px, 6.8cqw, 30px);
+    }
+
+    .card__cta {
+      height: clamp(42px, 11cqw, 46px);
+      font-size: clamp(14px, 4cqw, 16px);
+    }
+  }
+
+  .card__cta:focus-visible {
+    outline: 2px solid #389CFF;
+    outline-offset: 3px;
+  }
+
+  .bento-hint {
+    font-size: clamp(11px, 2.8vw, 13px);
+    font-weight: 700;
+    letter-spacing: -0.005em;
+    color: #6E6E73;
+    text-align: center;
+  }
+
+  .card--shot {
+    cursor: pointer;
+    transition: filter 0.15s ease, transform 0.15s ease;
+  }
+
+  .card--shot:hover { filter: brightness(1.02); }
+  .card--shot:active { transform: translateY(1px); }
+
+  .card--shot:focus-visible {
+    outline: 2px solid #389CFF;
+    outline-offset: 3px;
+  }
+
+  .lightbox {
+    width: fit-content;
+    max-width: min(720px, 100vw - 40px);
+    margin: auto;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: visible;
+  }
+
+  .lightbox::backdrop {
+    background: rgba(24, 20, 34, 0.34);
+    opacity: 0;
+    transition: opacity 0.32s ease;
+  }
+
+  .lightbox.is-open::backdrop { opacity: 1; }
+
+  .lightbox__panel {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+    display: grid;
+    place-items: center;
+    padding: clamp(12px, 2.4vw, 20px);
+    border: var(--surface-stroke);
+    border-radius: calc(var(--radius-card) + 8px);
+    background-color: var(--card-surface);
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22), var(--surface-shadow);
+  }
+
+  .lightbox__art {
+    display: block;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.2s ease 0.12s;
+  }
+
+  .lightbox.is-open .lightbox__art { opacity: 1; }
+
+  .lightbox__close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border: var(--surface-stroke);
+    border-radius: 999px;
+    background-color: var(--surface);
+    box-shadow: var(--surface-shadow);
+    color: #1C1C1E;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    opacity: 0;
+    transition: background-color 0.15s ease, opacity 0.2s ease 0.16s;
+  }
+
+  .lightbox.is-open .lightbox__close { opacity: 1; }
+
+  .lightbox__close:hover { background-color: #EDEDED; }
+
+  .lightbox__close:focus-visible {
+    outline: 2px solid #389CFF;
+    outline-offset: 2px;
+  }
+
+  .lightbox.is-closing .lightbox__art { opacity: 0; transition: opacity 0.12s ease; }
+  .lightbox.is-closing .lightbox__close { opacity: 0; transition: opacity 0.1s ease; }
+  .lightbox.is-closing .lightbox__face { opacity: 1; }
+
+  .card--shot.is-lifted { visibility: hidden; }
+
+  .lightbox__face {
+    position: absolute;
+    left: 0;
+    top: 0;
+    box-shadow: none;
+    pointer-events: none;
+    transition: opacity 0.18s ease 0.06s;
+  }
+
+  .lightbox__face-wrap {
+    position: absolute;
+    left: calc(-1 * var(--surface-stroke-width));
+    top: calc(-1 * var(--surface-stroke-width));
+    container-type: inline-size;
+    pointer-events: none;
+  }
+
+  .lightbox.is-open .lightbox__face { opacity: 0; }
+  .lightbox.is-closing .lightbox__face { transition: opacity 0.16s ease 0.08s; }
+
+  @media (max-width: 380px) {
+    .tabbar { padding-left: 10px; padding-right: 10px; }
+
+    .tabbar__tab { width: 50px; height: 54px; }
+    .tabbar__tab img { width: 34px; height: 34px; }
+
+    .tabbar__pill {
+      height: 54px;
+      gap: 14px;
+      margin-left: 10px;
+      padding: 0 14px;
+    }
+
+    .tabbar__pill a,
+    .tabbar__pill img { width: 32px; height: 32px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .grid__tile, .glow, .glow__band { animation: none; }
+    .lightbox::backdrop,
+    .lightbox__art,
+    .lightbox__close,
+    .lightbox__face { transition: none; }
+    .scroller { overflow-x: auto; }
+    .scroller__track { animation: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="glow"><div class="glow__band"></div></div>
+  <div class="grid"><div class="grid__tile"></div></div>
+
+  <main class="stage">
+    <section class="screen screen--home" id="home" aria-label="Home">
+      <div class="shell">
+        <article class="hero">
+          <div class="hero__copy">
+            <h1 class="hero__title">The frontend made for you</h1>
+            <p class="hero__sub">v1 out now!</p>
+          </div>
+          <div class="hero__banner"></div>
+        </article>
+      </div>
+
+      <div class="scroller">
+        <div class="scroller__track">
+          <div class="scroller__group">
+            <img class="scroller__item scroller__item--wide" src="assets/icons/scroller/jumpback-1x2.png" alt="Jump back in"
+                 data-tip="Jump back into your most recently played game with this widget!" />
+            <img class="scroller__item" src="assets/icons/scroller/box.png" alt="Box"
+                 data-tip="Unfetched games get stored in a box." />
+            <img class="scroller__item" src="assets/icons/scroller/kodo.png" alt="Kodo"
+                 data-tip="Our funni mascot lol" />
+            <img class="scroller__item" src="assets/icons/scroller/mm.png" alt="Mark your games"
+                 data-tip="Mark your games as favourites" />
+            <img class="scroller__item" src="assets/icons/scroller/folder.png" alt="Folder"
+                 data-tip="Keep your home screen tidy with folders." />
+            <img class="scroller__item" src="assets/icons/scroller/gift.png" alt="Gift"
+                 data-tip="New games feel like Christmas morning!" />
+            <img class="scroller__item" src="assets/icons/scroller/random.png" alt="Random pick"
+                 data-tip="Feeling lucky? Let Koji pick your next game." />
+            <img class="scroller__item" src="assets/icons/scroller/stat.png" alt="Stats"
+                 data-tip="Your playtime and stats at a glance." />
+            <img class="scroller__item" src="assets/icons/scroller/cloud.png" alt="Cloud saves"
+                 data-tip="Back up your saves and ROMs to a NAS" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen panel-screen" id="bento" aria-label="What Koji is">
+      <div class="shell bento">
+        <article class="card card--art">
+          <p class="card__lead">A reimagining of the 3DS, as if it were made today.</p>
+        </article>
+
+        <article class="card card--shot" role="button" tabindex="0" aria-haspopup="dialog"
+                 data-shot="assets/shots/shop.png" data-shot-size="1163x1400"
+                 style="--tint: 240 96 48; --ink: #5E3F3F; --ink-soft: #89675D">
+          <div class="card__head">
+            <h2 class="card__title">KoShop</h2>
+            <img class="card__icon" src="assets/icons/bento/shop.png" alt="" />
+          </div>
+          <p class="card__text">A built-in shop for themes, games, and more!</p>
+        </article>
+
+        <article class="card card--shot" role="button" tabindex="0" aria-haspopup="dialog"
+                 data-shot="assets/shots/leaflet.png" data-shot-size="508x594"
+                 style="--tint: 72 200 72; --ink: #3F5F3F; --ink-soft: #5D895D">
+          <div class="card__head">
+            <h2 class="card__title">Leaflet</h2>
+            <img class="card__icon" src="assets/icons/bento/social.png" alt="" />
+          </div>
+          <p class="card__text">Our PictoChat-inspired social platform built on Pocketpass.</p>
+        </article>
+
+        <article class="card card--shot" role="button" tabindex="0" aria-haspopup="dialog"
+                 data-shot="assets/shots/discord.png" data-shot-size="1240x1208"
+                 style="--tint: 88 101 242; --ink: #3F425F; --ink-soft: #5D6189">
+          <div class="card__head">
+            <h2 class="card__title">Discord</h2>
+            <img class="card__icon" src="assets/icons/tabs/discord.png" alt="" />
+          </div>
+          <p class="card__text">Supports Discord Rich Presence when browsing or playing a game.</p>
+        </article>
+
+        <article class="card card--shot" role="button" tabindex="0" aria-haspopup="dialog"
+                 data-shot="assets/shots/media.png" data-shot-size="1163x1400"
+                 style="--tint: 240 96 96; --ink: #5F3F3F; --ink-soft: #895D5D">
+          <div class="card__head">
+            <h2 class="card__title">Media</h2>
+            <img class="card__icon" src="assets/icons/bento/media.png" alt="" />
+          </div>
+          <p class="card__text">Relive your best moments with media!</p>
+        </article>
+
+        <article class="card card--wide" style="--tint: 144 120 240; --ink: #463F5F; --ink-soft: #665D89">
+          <div class="card__head">
+            <h2 class="card__title">The Little Things</h2>
+            <img class="card__icon" src="assets/icons/bento/logohlyph.png" alt="" />
+          </div>
+          <p class="card__text">Koji is a closed loop, where nothing is added without considering its effect on other features. Everything is built to fit the ones already there, and polished like a real console.</p>
+        </article>
+      </div>
+
+      <p class="bento-hint">Press a box to expand it!</p>
+    </section>
+
+    <section class="screen panel-screen" id="more" aria-label="More from Koji">
+      <div class="shell more">
+        <article class="card" style="--tint: 250 110 109; --cta-top: #FA8584; --cta-bottom: #FA6E6D; --ink: #5F3F3F; --ink-soft: #895D5D">
+          <div class="card__head">
+            <h2 class="card__title">Have any more questions?</h2>
+            <img class="card__icon" src="assets/icons/more/questionicon.png" alt="" />
+          </div>
+          <a class="card__cta" href="#">Visit Koji Wiki</a>
+        </article>
+
+        <article class="card" style="--tint: 206 111 248; --cta-top: #D685F8; --cta-bottom: #CE6FF8; --ink: #553F5F; --ink-soft: #7B5D89">
+          <div class="card__head">
+            <h2 class="card__title">Want early access to Koji?</h2>
+            <img class="card__icon" src="assets/icons/more/hearticon.png" alt="" />
+          </div>
+          <a class="card__cta" href="https://ko-fi.com/brocolabs" target="_blank" rel="noreferrer">See our Ko-fi</a>
+        </article>
+
+        <article class="card card--wide" style="--tint: 111 139 250; --cta-top: #869DF9; --cta-bottom: #6F8BFA; --ink: #3F465F; --ink-soft: #5D6689">
+          <div class="card__head">
+            <h2 class="card__title">Want to be a part of our community?</h2>
+            <img class="card__icon" src="assets/icons/tabs/discord.png" alt="" />
+          </div>
+          <a class="card__cta" href="https://dsc.gg/brocolabs" target="_blank" rel="noreferrer">Join the Discord Server!</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <nav class="tabbar" aria-label="Primary">
+    <button class="tabbar__tab" type="button" data-view="home" data-title="Home" aria-label="Home" aria-current="page">
+      <img src="assets/icons/tabs/home.png" alt="" />
+    </button>
+    <button class="tabbar__tab" type="button" data-view="bento" data-title="What Koji is" aria-label="What Koji is">
+      <img src="assets/icons/tabs/bento.png" alt="" />
+    </button>
+    <button class="tabbar__tab" type="button" data-view="more" data-title="More" aria-label="More">
+      <img src="assets/icons/tabs/more.png" alt="" />
+    </button>
+
+    <div class="tabbar__pill">
+      <a href="#" aria-label="Download">
+        <img src="assets/icons/tabs/download.png" alt="" />
+      </a>
+      <a href="https://dsc.gg/brocolabs" target="_blank" rel="noreferrer" aria-label="Join the Discord community">
+        <img src="assets/icons/tabs/discord.png" alt="" />
+      </a>
+    </div>
+  </nav>
+
+  <dialog class="lightbox">
+    <figure class="lightbox__panel">
+      <img class="lightbox__art" alt="" />
+      <button class="lightbox__close" type="button" aria-label="Close">&#10005;</button>
+    </figure>
+  </dialog>
+
+  <div class="tip" role="tooltip" aria-hidden="true"></div>
+
+  <script>
+    const stage = document.querySelector('.stage');
+    const screens = [...document.querySelectorAll('.screen')];
+
+    const scroller = document.querySelector('.scroller');
+    const track = scroller.querySelector('.scroller__track');
+    const group = scroller.querySelector('.scroller__group');
+    const tip = document.querySelector('.tip');
+
+    const fillLoop = () => {
+      track.querySelectorAll('.scroller__group--clone').forEach((node) => node.remove());
+
+      const width = group.getBoundingClientRect().width;
+      if (!width) return;
+
+      const copies = Math.max(2, Math.ceil(scroller.clientWidth / width) + 2);
+      for (let i = 1; i < copies; i += 1) {
+        const clone = group.cloneNode(true);
+        clone.classList.add('scroller__group--clone');
+        clone.setAttribute('aria-hidden', 'true');
+        track.appendChild(clone);
+      }
+
+      track.style.setProperty('--shift', `${width}px`);
+    };
+
+    fillLoop();
+    document.fonts?.ready.then(fillLoop);
+
+    let refillTimer = 0;
+    window.addEventListener('resize', () => {
+      clearTimeout(refillTimer);
+      refillTimer = setTimeout(fillLoop, 150);
+    });
+
+    const tipLines = () => {
+      const range = document.createRange();
+      range.selectNodeContents(tip);
+      return [...range.getClientRects()];
+    };
+
+    const hug = () => {
+      const style = getComputedStyle(tip);
+      const cap = parseFloat(style.maxWidth);
+      const chrome =
+        parseFloat(style.paddingLeft) + parseFloat(style.paddingRight) +
+        (tip.offsetWidth - tip.clientWidth);
+
+      tip.style.width = `${cap}px`;
+      void tip.offsetHeight;
+      const wrapped = tipLines();
+      const widest = Math.max(...wrapped.map((line) => line.width));
+      tip.style.width = `${Math.ceil(widest + chrome)}px`;
+      void tip.offsetHeight;
+
+      if (tipLines().length > wrapped.length) {
+        tip.style.width = `${cap}px`;
+        void tip.offsetHeight;
+      }
+    };
+
+    const place = (item) => {
+      tip.textContent = item.dataset.tip;
+      hug();
+      const rect = item.getBoundingClientRect();
+      const half = tip.offsetWidth / 2;
+      const inset = 8;
+      const x = Math.min(
+        Math.max(rect.left + rect.width / 2, half + inset),
+        document.documentElement.clientWidth - half - inset
+      );
+      tip.style.left = `${x}px`;
+      tip.style.top = `${rect.top - 12}px`;
+      tip.classList.add('is-on');
+    };
+
+    scroller.addEventListener('pointerover', (event) => {
+      const item = event.target.closest('.scroller__item');
+      if (item && item.dataset.tip) place(item);
+    });
+
+    scroller.addEventListener('pointerout', (event) => {
+      if (!event.target.closest('.scroller__item')) return;
+      if (event.relatedTarget && event.relatedTarget.closest('.scroller__item')) return;
+      tip.classList.remove('is-on');
+    });
+
+    const tabs = [...document.querySelectorAll('.tabbar__tab')];
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const viewer = document.querySelector('.lightbox');
+    const viewerPanel = viewer.querySelector('.lightbox__panel');
+    const viewerArt = viewer.querySelector('.lightbox__art');
+
+    const MORPH = 380;
+    const MORPH_EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
+
+    let pressed = null;
+    let closeTimer = 0;
+    let morph = null;
+    let shotMorph = null;
+    let shotBox = null;
+
+    const chromeOf = (el) => {
+      const style = getComputedStyle(el);
+      return {
+        x: parseFloat(style.paddingLeft) + parseFloat(style.paddingRight) +
+           parseFloat(style.borderLeftWidth) + parseFloat(style.borderRightWidth),
+        y: parseFloat(style.paddingTop) + parseFloat(style.paddingBottom) +
+           parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth)
+      };
+    };
+
+    const fitArt = (w, h) => {
+      if (!w || !h) return;
+      const chrome = chromeOf(viewerPanel);
+      const maxW = Math.min(720, document.documentElement.clientWidth - 40) - chrome.x;
+      const maxH = Math.min(0.72 * innerHeight, 780) - chrome.y;
+      const fit = Math.min(1, maxW / w, maxH / h);
+      shotBox = { width: Math.round(w * fit), height: Math.round(h * fit) };
+      viewerArt.style.width = `${shotBox.width}px`;
+      viewerArt.style.height = `${shotBox.height}px`;
+    };
+
+    const sizeArt = (card) => {
+      const [w, h] = (card.dataset.shotSize || '').split('x').map(Number);
+      if (!w || !h) return false;
+      fitArt(w, h);
+      return true;
+    };
+
+    const faceFor = (card) => {
+      const style = getComputedStyle(card);
+      const shell = card.closest('.shell');
+      const wrap = document.createElement('div');
+      wrap.className = 'lightbox__face-wrap';
+      if (shell) {
+        const shellStyle = getComputedStyle(shell);
+        wrap.style.width = `${
+          shell.getBoundingClientRect().width -
+          parseFloat(shellStyle.paddingLeft) - parseFloat(shellStyle.paddingRight)
+        }px`;
+      }
+
+      const rect = card.getBoundingClientRect();
+      const face = card.cloneNode(true);
+      face.classList.remove('card--shot', 'is-lifted');
+      face.classList.add('lightbox__face');
+      face.removeAttribute('role');
+      face.removeAttribute('tabindex');
+      face.removeAttribute('aria-haspopup');
+      face.setAttribute('aria-hidden', 'true');
+      face.style.width = `${rect.width}px`;
+      face.style.height = `${rect.height}px`;
+      face.style.padding = style.padding;
+      face.style.filter = style.filter;
+      wrap.appendChild(face);
+      return wrap;
+    };
+
+    const endsFor = (card) => {
+      const from = card.getBoundingClientRect();
+      const to = viewerPanel.getBoundingClientRect();
+      const chrome = chromeOf(viewerPanel);
+      const cardStyle = getComputedStyle(card);
+      const panelStyle = getComputedStyle(viewerPanel);
+      return {
+        frame: [
+          {
+            left: `${from.left}px`,
+            top: `${from.top}px`,
+            width: `${from.width}px`,
+            height: `${from.height}px`,
+            margin: '0px',
+            borderRadius: cardStyle.borderRadius,
+            boxShadow: `0 0 0 0 rgba(0, 0, 0, 0), ${cardStyle.boxShadow}`
+          },
+          {
+            left: `${to.left}px`,
+            top: `${to.top}px`,
+            width: `${to.width}px`,
+            height: `${to.height}px`,
+            margin: '0px',
+            borderRadius: panelStyle.borderRadius,
+            boxShadow: panelStyle.boxShadow
+          }
+        ],
+        shot: [
+          {
+            width: `${Math.max(1, from.width - chrome.x)}px`,
+            height: `${Math.max(1, from.height - chrome.y)}px`
+          },
+          {
+            width: `${shotBox.width}px`,
+            height: `${shotBox.height}px`
+          }
+        ]
+      };
+    };
+
+    const timing = () => ({
+      duration: reducedMotion.matches ? 0 : MORPH,
+      easing: MORPH_EASE,
+      fill: 'both'
+    });
+
+    const begin = (card) => {
+      viewerPanel.appendChild(faceFor(card));
+      const ends = endsFor(card);
+      morph = viewerPanel.animate(ends.frame, timing());
+      shotMorph = viewerArt.animate(ends.shot, timing());
+
+      void viewerPanel.offsetHeight;
+      viewer.classList.add('is-open');
+      card.classList.add('is-lifted');
+      pressed = card;
+    };
+
+    const resetPanel = () => {
+      morph?.cancel();
+      shotMorph?.cancel();
+      morph = null;
+      shotMorph = null;
+      viewerPanel.querySelector('.lightbox__face-wrap')?.remove();
+    };
+
+    const openShot = (card) => {
+      const title = card.querySelector('.card__title').textContent;
+      viewerArt.alt = title;
+      viewer.setAttribute('aria-label', title);
+
+      if (viewer.open) viewer.close();
+      viewer.classList.remove('is-open', 'is-closing');
+      resetPanel();
+      viewerPanel.style.opacity = '';
+      if (pressed && pressed !== card) pressed.classList.remove('is-lifted');
+      pressed = null;
+      viewerArt.src = card.dataset.shot;
+
+      const sized = sizeArt(card);
+      viewer.showModal();
+      if (sized) {
+        begin(card);
+      } else {
+        viewerPanel.style.opacity = '0';
+        viewerArt.addEventListener('load', () => {
+          viewerPanel.style.opacity = '';
+          fitArt(viewerArt.naturalWidth, viewerArt.naturalHeight);
+          begin(card);
+        }, { once: true });
+      }
+    };
+
+    const closeShot = () => {
+      if (!viewer.open || viewer.classList.contains('is-closing')) return;
+      viewer.classList.remove('is-open');
+      viewer.classList.add('is-closing');
+
+      if (pressed) {
+        morph?.cancel();
+        shotMorph?.cancel();
+        const ends = endsFor(pressed);
+        morph = viewerPanel.animate([...ends.frame].reverse(), timing());
+        shotMorph = viewerArt.animate([...ends.shot].reverse(), timing());
+      }
+      clearTimeout(closeTimer);
+      closeTimer = setTimeout(() => viewer.close(), reducedMotion.matches ? 0 : MORPH + 20);
+    };
+
+    document.querySelectorAll('.card--shot').forEach((card) => {
+      card.addEventListener('click', () => openShot(card));
+      card.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        openShot(card);
+      });
+    });
+
+    viewer.addEventListener('click', (event) => {
+      if (event.target === viewer) closeShot();
+    });
+
+    viewer.querySelector('.lightbox__close').addEventListener('click', closeShot);
+
+    viewer.addEventListener('cancel', (event) => {
+      event.preventDefault();
+      closeShot();
+    });
+
+    viewer.addEventListener('close', () => {
+      if (viewer.open) return;
+      clearTimeout(closeTimer);
+      viewer.classList.remove('is-open', 'is-closing');
+      resetPanel();
+      viewerArt.style.width = '';
+      viewerArt.style.height = '';
+      if (pressed) pressed.classList.remove('is-lifted');
+      pressed = null;
+    });
+
+    const setActive = (id) => {
+      tabs.forEach((tab) => {
+        if (tab.dataset.view === id) {
+          tab.setAttribute('aria-current', 'page');
+          document.title = `${tab.dataset.title} | Koji`;
+        } else {
+          tab.removeAttribute('aria-current');
+        }
+      });
+    };
+
+    const nearestIndex = () => {
+      const y = stage.scrollTop;
+      let best = 0;
+      screens.forEach((screen, index) => {
+        if (Math.abs(screen.offsetTop - y) < Math.abs(screens[best].offsetTop - y)) best = index;
+      });
+      return best;
+    };
+
+    let targetIndex = 0;
+    let gliding = false;
+    let glideTimer = 0;
+
+    const settle = () => {
+      gliding = false;
+      clearTimeout(glideTimer);
+    };
+
+    stage.addEventListener('scrollend', settle);
+
+    const goTo = (index) => {
+      targetIndex = Math.max(0, Math.min(screens.length - 1, index));
+      gliding = true;
+      clearTimeout(glideTimer);
+      stage.scrollTo({
+        top: screens[targetIndex].offsetTop,
+        behavior: reducedMotion.matches ? 'auto' : 'smooth'
+      });
+      glideTimer = setTimeout(settle, 800);
+    };
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const index = screens.findIndex((screen) => screen.id === tab.dataset.view);
+        if (index !== -1) goTo(index);
+      });
+    });
+
+    window.addEventListener(
+      'wheel',
+      (event) => {
+        if (viewer.open) return;
+        if (event.ctrlKey || !Math.sign(event.deltaY)) return;
+        event.preventDefault();
+        goTo((gliding ? targetIndex : nearestIndex()) + Math.sign(event.deltaY));
+      },
+      { passive: false }
+    );
+
+    document.querySelectorAll('a[href="#"]').forEach((link) => {
+      link.addEventListener('click', (event) => event.preventDefault());
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { threshold: 0.55 }
+    );
+
+    screens.forEach((screen) => observer.observe(screen));
+  </script>
+</body>
+</html>
