@@ -1,0 +1,27 @@
+---
+const {
+  title,
+  icon,
+  href,
+  label,
+  tint,
+  ctaTop,
+  ctaBottom,
+  ink,
+  inkSoft,
+  wide = false,
+  external = false
+} = Astro.props;
+
+const linkAttrs = external ? { target: '_blank', rel: 'noreferrer' } : {};
+---
+<article
+  class:list={['card', wide && 'card--wide']}
+  style={`--tint: ${tint}; --cta-top: ${ctaTop}; --cta-bottom: ${ctaBottom}; --ink: ${ink}; --ink-soft: ${inkSoft}`}
+>
+  <div class="card__head">
+    <h2 class="card__title">{title}</h2>
+    <img class="card__icon" src={icon} alt="" loading="lazy" decoding="async" />
+  </div>
+  <a class="card__cta" href={href} {...linkAttrs}>{label}</a>
+</article>

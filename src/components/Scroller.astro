@@ -1,0 +1,35 @@
+---
+const items = [
+  {
+    src: '/assets/icons/scroller/jumpback-1x2.webp',
+    alt: 'Jump back in',
+    tip: 'Jump back into your most recently played game with this widget!',
+    wide: true
+  },
+  { src: '/assets/icons/scroller/box.webp', alt: 'Box', tip: 'Unfetched games get stored in a box.' },
+  { src: '/assets/icons/scroller/kodo.webp', alt: 'Kodo', tip: 'Our funni mascot lol' },
+  { src: '/assets/icons/scroller/mm.webp', alt: 'Mark your games', tip: 'Mark your games as favourites' },
+  { src: '/assets/icons/scroller/folder.webp', alt: 'Folder', tip: 'Keep your home screen tidy with folders.' },
+  { src: '/assets/icons/scroller/gift.webp', alt: 'Gift', tip: 'New games feel like Christmas morning!' },
+  { src: '/assets/icons/scroller/random.webp', alt: 'Random pick', tip: 'Feeling lucky? Let Koji pick your next game.' },
+  { src: '/assets/icons/scroller/stat.webp', alt: 'Stats', tip: 'Your playtime and stats at a glance.' },
+  { src: '/assets/icons/scroller/cloud.webp', alt: 'Cloud saves', tip: 'Back up your saves and ROMs to a NAS' }
+];
+---
+<div class="scroller">
+  <div class="scroller__track">
+    <div class="scroller__group">
+      {
+        items.map((item) => (
+          <img
+            class:list={['scroller__item', item.wide && 'scroller__item--wide']}
+            src={item.src}
+            alt={item.alt}
+            data-tip={item.tip}
+            decoding="async"
+          />
+        ))
+      }
+    </div>
+  </div>
+</div>

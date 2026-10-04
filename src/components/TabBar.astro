@@ -1,0 +1,31 @@
+---
+const tabs = [
+  { view: 'home', title: 'Home', label: 'Home', icon: '/assets/icons/tabs/home.webp', current: true },
+  { view: 'bento', title: 'What Koji is', label: 'What Koji is', icon: '/assets/icons/tabs/bento.webp', current: false },
+  { view: 'more', title: 'More', label: 'More', icon: '/assets/icons/tabs/more.webp', current: false }
+];
+---
+<nav class="tabbar" aria-label="Primary">
+  {
+    tabs.map((tab) => (
+      <button
+        class="tabbar__tab"
+        type="button"
+        data-view={tab.view}
+        data-title={tab.title}
+        aria-label={tab.label}
+        aria-current={tab.current ? 'page' : undefined}
+      >
+        <img src={tab.icon} alt="" />
+      </button>
+    ))
+  }
+  <div class="tabbar__pill">
+    <a href="#" aria-label="Download">
+      <img src="/assets/icons/tabs/download.webp" alt="" />
+    </a>
+    <a href="https://dsc.gg/brocolabs" target="_blank" rel="noreferrer" aria-label="Join the Discord community">
+      <img src="/assets/icons/tabs/discord.webp" alt="" />
+    </a>
+  </div>
+</nav>

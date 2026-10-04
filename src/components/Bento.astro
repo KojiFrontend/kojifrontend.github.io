@@ -1,0 +1,64 @@
+---
+import BentoCard from './BentoCard.astro';
+
+const cards = [
+  {
+    title: 'KoShop',
+    text: 'A built-in shop for themes, games, and more!',
+    icon: '/assets/icons/bento/shop.webp',
+    shot: '/assets/shots/shop.webp',
+    shotSize: '1163x1400',
+    tint: '240 96 48',
+    ink: '#5E3F3F',
+    inkSoft: '#89675D'
+  },
+  {
+    title: 'Leaflet',
+    text: 'Our PictoChat-inspired social platform built on Pocketpass.',
+    icon: '/assets/icons/bento/social.webp',
+    shot: '/assets/shots/leaflet.webp',
+    shotSize: '508x594',
+    tint: '72 200 72',
+    ink: '#3F5F3F',
+    inkSoft: '#5D895D'
+  },
+  {
+    title: 'Discord',
+    text: 'Supports Discord Rich Presence when browsing or playing a game.',
+    icon: '/assets/icons/tabs/discord.webp',
+    shot: '/assets/shots/discord.webp',
+    shotSize: '1240x1208',
+    tint: '88 101 242',
+    ink: '#3F425F',
+    inkSoft: '#5D6189'
+  },
+  {
+    title: 'Media',
+    text: 'Relive your best moments with media!',
+    icon: '/assets/icons/bento/media.webp',
+    shot: '/assets/shots/media.webp',
+    shotSize: '1163x1400',
+    tint: '240 96 96',
+    ink: '#5F3F3F',
+    inkSoft: '#895D5D'
+  },
+  {
+    title: 'The Little Things',
+    text: 'Koji is a closed loop, where nothing is added without considering its effect on other features. Everything is built to fit the ones already there, and polished like a real console.',
+    icon: '/assets/icons/bento/logohlyph.webp',
+    wide: true,
+    tint: '144 120 240',
+    ink: '#463F5F',
+    inkSoft: '#665D89'
+  }
+];
+---
+<section class="screen panel-screen" id="bento" aria-label="What Koji is">
+  <div class="shell bento">
+    <article class="card card--art">
+      <p class="card__lead">A reimagining of the 3DS, as if it were made today.</p>
+    </article>
+    {cards.map((card) => <BentoCard {...card} />)}
+  </div>
+  <p class="bento-hint">Press a box to expand it!</p>
+</section>

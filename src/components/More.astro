@@ -1,0 +1,47 @@
+---
+import MoreCard from './MoreCard.astro';
+
+const cards = [
+  {
+    title: 'Have any more questions?',
+    icon: '/assets/icons/more/questionicon.webp',
+    href: '#',
+    label: 'Visit Koji Wiki',
+    tint: '250 110 109',
+    ctaTop: '#FA8584',
+    ctaBottom: '#FA6E6D',
+    ink: '#5F3F3F',
+    inkSoft: '#895D5D'
+  },
+  {
+    title: 'Want early access to Koji?',
+    icon: '/assets/icons/more/hearticon.webp',
+    href: 'https://ko-fi.com/brocolabs',
+    label: 'See our Ko-fi',
+    external: true,
+    tint: '206 111 248',
+    ctaTop: '#D685F8',
+    ctaBottom: '#CE6FF8',
+    ink: '#553F5F',
+    inkSoft: '#7B5D89'
+  },
+  {
+    title: 'Want to be a part of our community?',
+    icon: '/assets/icons/tabs/discord.webp',
+    href: 'https://dsc.gg/brocolabs',
+    label: 'Join the Discord Server!',
+    external: true,
+    wide: true,
+    tint: '111 139 250',
+    ctaTop: '#869DF9',
+    ctaBottom: '#6F8BFA',
+    ink: '#3F465F',
+    inkSoft: '#5D6689'
+  }
+];
+---
+<section class="screen panel-screen" id="more" aria-label="More from Koji">
+  <div class="shell more">
+    {cards.map((card) => <MoreCard {...card} />)}
+  </div>
+</section>

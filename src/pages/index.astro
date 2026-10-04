@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Background from '../components/Background.astro';
+import Home from '../components/Home.astro';
+import Bento from '../components/Bento.astro';
+import Community from '../components/Community.astro';
+import More from '../components/More.astro';
+import TabBar from '../components/TabBar.astro';
+import Lightbox from '../components/Lightbox.astro';
+import Tip from '../components/Tip.astro';
+---
+<Layout>
+  <Background />
+  <main class="stage">
+    <Home />
+    <Bento />
+    <Community />
+    <More />
+  </main>
+  <TabBar />
+  <Lightbox />
+  <Tip />
+  <script>
+    import '../scripts/site.js';
+  </script>
+</Layout>
