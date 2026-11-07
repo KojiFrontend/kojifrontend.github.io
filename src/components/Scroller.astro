@@ -35,39 +35,67 @@ const items = [
 
   if (strip && viewport && track && 'IntersectionObserver' in window) {
     let frame = 0;
+    let currentSpeed = 1;
+
+    const getAnimation = () => track.getAnimations()[0];
 
     function easeSpeed(target: number, duration: number) {
       cancelAnimationFrame(frame);
-      if (!strip?.classList.contains('is-visible')) return;
 
-      const animation = track?.getAnimations()[0];
-      if (!animation || animation.playbackRate === target) return;
+      const animation = getAnimation();
+      if (!animation) return;
 
       const start = performance.now();
-      const initialSpeed = animation.playbackRate;
+      const initialSpeed = currentSpeed;
 
       const update = (now: number) => {
-        if (animation.playState === 'idle') return;
         const progress = Math.min(1, (now - start) / duration);
-        const eased = progress * progress * (3 - 2 * progress);
-        animation.updatePlaybackRate(initialSpeed + (target - initialSpeed) * eased);
-        if (progress < 1) frame = requestAnimationFrame(update);
+
+        // Smooth cubic easing
+        const eased = target === 0
+          ? 1 - Math.pow(1 - progress, 3)
+          : progress * progress * (3 - 2 * progress);
+
+        currentSpeed = initialSpeed + (target - initialSpeed) * eased;
+
+        // Directly control animation speed
+        animation.playbackRate = currentSpeed;
+
+        if (progress < 1) {
+          frame = requestAnimationFrame(update);
+        } else {
+          currentSpeed = target;
+          animation.playbackRate = target;
+        }
       };
 
       frame = requestAnimationFrame(update);
     }
 
-    if (typeof track.getAnimations === 'function' && typeof Animation.prototype.updatePlaybackRate === 'function') {
+    if (typeof track.getAnimations === 'function') {
       strip.classList.add('has-hover-easing');
-      viewport.addEventListener('pointerenter', () => easeSpeed(0, 520));
-      viewport.addEventListener('pointerleave', () => easeSpeed(1, 360));
-      viewport.addEventListener('blur', () => easeSpeed(viewport.matches(':hover') ? 0 : 1, 360));
+
+      viewport.addEventListener('pointerenter', () => {
+        easeSpeed(0, 700);
+      });
+
+      viewport.addEventListener('pointerleave', () => {
+        easeSpeed(1, 500);
+      });
+
+      viewport.addEventListener('blur', () => {
+        easeSpeed(viewport.matches(':hover') ? 0 : 1, 500);
+      });
     }
 
     new IntersectionObserver(([entry]) => {
       strip.classList.toggle('is-visible', entry.isIntersecting);
-      if (!entry.isIntersecting) cancelAnimationFrame(frame);
-      else if (strip.classList.contains('has-hover-easing')) easeSpeed(viewport.matches(':hover') ? 0 : 1, 520);
+
+      if (!entry.isIntersecting) {
+        cancelAnimationFrame(frame);
+      } else if (strip.classList.contains('has-hover-easing')) {
+        easeSpeed(viewport.matches(':hover') ? 0 : 1, 500);
+      }
     }).observe(strip);
   }
 </script>
