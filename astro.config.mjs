@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://kojifrontend.github.io',
+  site: 'https://koji.fyi',
   build: {
     inlineStylesheets: 'auto'
   }
