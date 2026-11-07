@@ -1,5 +1,11 @@
-<dialog class="lightbox">
-  <figure class="lightbox__panel">
-    <img class="lightbox__art" alt="" />
-  </figure>
+<dialog class="lightbox" aria-labelledby="preview-title">
+  <div class="lightbox__heading">
+    <h2 id="preview-title">Screenshot</h2>
+    <form method="dialog"><button type="submit" autofocus>Close</button></form>
+  </div>
+  <img class="lightbox__art" alt="" />
 </dialog>
+
+<script>
+  import '../scripts/site.js';
+</script>

@@ -1,49 +1,23 @@
 ---
-import { readdirSync } from 'node:fs';
-import { join } from 'node:path';
-
-const dir = join(process.cwd(), 'public/assets/pfps');
-const files = readdirSync(dir)
-  .filter((name) => name.endsWith('.webp'))
-  .sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
-
-const outerCount = Math.min(files.length, Math.ceil(files.length / 2) + 2);
-
-const ring = (names, offset) =>
-  names.map((name, index) => ({
-    src: `/assets/pfps/${name}`,
-    angle: Math.round((360 / names.length) * index + offset)
-  }));
-
-const outer = ring(files.slice(0, outerCount), 0);
-const inner = ring(files.slice(outerCount), 180 / Math.max(1, files.length - outerCount));
+const avatars = [2, 5, 9, 12, 16, 21, 27, 36, 7, 14, 23, 32, 3, 11, 17, 25, 31, 40];
 ---
-
-<section class="screen panel-screen" id="community" aria-label="Community">
-  <div class="community">
-    <div class="orbit">
-      <div class="orbit__ring orbit__ring--outer">
-        {
-          outer.map((pfp) => (
-            <span class="orbit__slot" style={`--a: ${pfp.angle}deg`}>
-              <img class="orbit__pfp" src={pfp.src} alt="" loading="lazy" decoding="async" />
-            </span>
-          ))
-        }
-      </div>
-      <div class="orbit__ring orbit__ring--inner">
-        {
-          inner.map((pfp) => (
-            <span class="orbit__slot" style={`--a: ${pfp.angle}deg`}>
-              <img class="orbit__pfp" src={pfp.src} alt="" loading="lazy" decoding="async" />
-            </span>
-          ))
-        }
-      </div>
-      <div class="orbit__core">
-        <h2 class="orbit__title">Built with our community</h2>
-        <p class="orbit__sub">Feedback is essential to Koji's progress.</p>
-      </div>
+<section class="section content-width community" id="community" aria-labelledby="community-title" data-orbit>
+  <div class="orbit">
+    <div class="orbit__ring" aria-hidden="true">
+      {avatars.map((id, slot) => {
+        const angle = slot / avatars.length * 2 * Math.PI;
+        return (
+          <span class="orbit__avatar" style={`--x: ${50 + 50 * Math.sin(angle)}%; --y: ${50 - 50 * Math.cos(angle)}%`}>
+            <img src={`/assets/pfps/${id}.webp`} width="56" height="56" alt="" loading="lazy" decoding="async" />
+          </span>
+        );
+      })}
+    </div>
+    <div class="community__copy">
+      <h2 id="community-title">Built with our community.</h2>
+      <p>Share what you’re playing, give feedback, and follow Koji’s development.</p>
+      <a class="text-link" href="https://dsc.gg/brocolabs">Join the Discord <span aria-hidden="true">↗</span></a>
     </div>
   </div>
+  <button class="orbit__toggle" type="button" hidden>Pause motion</button>
 </section>

@@ -1,35 +1,73 @@
 ---
 const items = [
-  {
-    src: '/assets/icons/scroller/jumpback-1x2.webp',
-    alt: 'Jump back in',
-    tip: 'Jump back into your most recently played game with this widget!',
-    wide: true
-  },
-  { src: '/assets/icons/scroller/box.webp', alt: 'Box', tip: 'Unfetched games get stored in a box.' },
-  { src: '/assets/icons/scroller/kodo.webp', alt: 'Kodo', tip: 'Our funni mascot lol' },
-  { src: '/assets/icons/scroller/mm.webp', alt: 'Mark your games', tip: 'Mark your games as favourites' },
-  { src: '/assets/icons/scroller/folder.webp', alt: 'Folder', tip: 'Keep your home screen tidy with folders.' },
-  { src: '/assets/icons/scroller/gift.webp', alt: 'Gift', tip: 'New games feel like Christmas morning!' },
-  { src: '/assets/icons/scroller/random.webp', alt: 'Random pick', tip: 'Feeling lucky? Let Koji pick your next game.' },
-  { src: '/assets/icons/scroller/stat.webp', alt: 'Stats', tip: 'Your playtime and stats at a glance.' },
-  { src: '/assets/icons/scroller/cloud.webp', alt: 'Cloud saves', tip: 'Back up your saves and ROMs to a NAS' }
+  { name: 'Jump back in', image: 'jumpback-1x2', width: 480 },
+  { name: 'Box', image: 'box', width: 240 },
+  { name: 'Kodo', image: 'kodo', width: 240 },
+  { name: 'Favorites', image: 'mm', width: 240 },
+  { name: 'Folders', image: 'folder', width: 240 },
+  { name: 'New games', image: 'gift', width: 240 },
+  { name: 'Random pick', image: 'random', width: 240 },
+  { name: 'Playtime', image: 'stat', width: 240 },
+  { name: 'Cloud saves', image: 'cloud', width: 240 }
 ];
 ---
-<div class="scroller">
-  <div class="scroller__track">
-    <div class="scroller__group">
-      {
-        items.map((item) => (
-          <img
-            class:list={['scroller__item', item.wide && 'scroller__item--wide']}
-            src={item.src}
-            alt={item.alt}
-            data-tip={item.tip}
-            decoding="async"
-          />
-        ))
-      }
+<section class="scroller" aria-label="Koji widgets" data-scroller>
+  <div class="scroller__backdrop" aria-hidden="true"></div>
+  <div class="scroller__viewport" role="region" aria-label="Browse widgets" tabindex="0">
+    <div class="scroller__track">
+      {[false, true].map((duplicate) => (
+        <ul class:list={['scroller__group', duplicate && 'scroller__group--duplicate']} role="list" aria-hidden={duplicate ? 'true' : undefined}>
+          {items.map(({ name, image, width }) => (
+            <li class="scroller__item">
+              <img src={`/assets/icons/scroller/${image}.webp`} width={width} height="240" alt={duplicate ? '' : name} loading="lazy" decoding="async" />
+            </li>
+          ))}
+        </ul>
+      ))}
     </div>
   </div>
-</div>
+</section>
+
+<script>
+  const strip = document.querySelector('[data-scroller]');
+  const viewport = strip?.querySelector('.scroller__viewport');
+  const track = viewport?.querySelector('.scroller__track');
+
+  if (strip && viewport && track && 'IntersectionObserver' in window) {
+    let frame = 0;
+
+    function easeSpeed(target: number, duration: number) {
+      cancelAnimationFrame(frame);
+      if (!strip?.classList.contains('is-visible')) return;
+
+      const animation = track?.getAnimations()[0];
+      if (!animation || animation.playbackRate === target) return;
+
+      const start = performance.now();
+      const initialSpeed = animation.playbackRate;
+
+      const update = (now: number) => {
+        if (animation.playState === 'idle') return;
+        const progress = Math.min(1, (now - start) / duration);
+        const eased = progress * progress * (3 - 2 * progress);
+        animation.updatePlaybackRate(initialSpeed + (target - initialSpeed) * eased);
+        if (progress < 1) frame = requestAnimationFrame(update);
+      };
+
+      frame = requestAnimationFrame(update);
+    }
+
+    if (typeof track.getAnimations === 'function' && typeof Animation.prototype.updatePlaybackRate === 'function') {
+      strip.classList.add('has-hover-easing');
+      viewport.addEventListener('pointerenter', () => easeSpeed(0, 520));
+      viewport.addEventListener('pointerleave', () => easeSpeed(1, 360));
+      viewport.addEventListener('blur', () => easeSpeed(viewport.matches(':hover') ? 0 : 1, 360));
+    }
+
+    new IntersectionObserver(([entry]) => {
+      strip.classList.toggle('is-visible', entry.isIntersecting);
+      if (!entry.isIntersecting) cancelAnimationFrame(frame);
+      else if (strip.classList.contains('has-hover-easing')) easeSpeed(viewport.matches(':hover') ? 0 : 1, 520);
+    }).observe(strip);
+  }
+</script>

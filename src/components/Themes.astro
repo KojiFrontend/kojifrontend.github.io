@@ -1,0 +1,43 @@
+---
+const themes = [
+  { name: 'White', mood: 'Bright & breezy', art: 'island', color: '210 100% 94%', game: 'Link’s Awakening' },
+  { name: 'Pink', mood: 'Soft & colorful', art: 'pastel', color: '326 86% 94%', game: 'Hello Kitty Island Adventure' },
+  { name: 'Switch', mood: 'Clean & understated', art: 'after-dark', color: '240 14% 90%', game: 'Super Mario Odyssey' },
+  { name: 'Wii', mood: 'A console classic', art: 'wii', color: '192 65% 92%', game: 'Super Mario Galaxy' }
+];
+---
+<section class="section themes" id="themes" aria-labelledby="themes-title">
+  <div class="content-width">
+    <div class="section__heading">
+      <h2 id="themes-title">Themes for every occasion.</h2>
+      <p>Give both screens a fresh look, from breezy blues to soft pinks and a darker setup for late nights.</p>
+    </div>
+    <div class="theme-grid">
+      {themes.map(({ name, mood, art, color, game }) => (
+        <article class="theme-card">
+          <a class="theme-card__preview" href={`/assets/themes/${art}.webp`} data-preview={name} aria-label={`Enlarge ${name} theme`}>
+            <div class="theme-card__art" style={`--theme-color: ${color}`}>
+              <img
+                src={`/assets/themes/${art}.webp`}
+                srcset={`/assets/themes/${art}-small.webp 480w, /assets/themes/${art}.webp 900w`}
+                sizes="(max-width: 680px) 340px, (max-width: 950px) 42vw, 245px"
+                width="900"
+                height="1031"
+                alt={`Koji’s two screens in the ${name} theme, with ${game} selected`}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div class="theme-card__caption">
+              <div>
+                <h3>{name}</h3>
+                <p>{mood}</p>
+              </div>
+              <span aria-hidden="true">↗</span>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

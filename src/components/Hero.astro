@@ -1,7 +1,50 @@
-<article class="hero">
-  <div class="hero__copy">
-    <h1 class="hero__title">The frontend made for you</h1>
-    <p class="hero__sub">v1 out now!</p>
+<section class="hero" id="home" aria-labelledby="hero-title">
+  <div class="hero__sky" aria-hidden="true"></div>
+  <div class="hero__inner">
+    <div class="hero__copy">
+      <h1 id="hero-title">Your games.<br /><em>Right at home.</em></h1>
+      <p class="hero__description">Meet Koji, a game launcher for Android handhelds inspired by the 3DS home menu.</p>
+      <div class="hero__actions">
+        <a class="button button--light" href="#get-koji">Get Koji <span aria-hidden="true">↗</span></a>
+        <a class="hero__secondary" href="#bento">Explore features <span aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+    <figure class="console-preview" data-console>
+      <div class="console-preview__halo" aria-hidden="true"></div>
+      <img
+        class="console-preview__image"
+        src="/assets/home/console.webp"
+        srcset="/assets/home/console-small.webp 720w, /assets/home/console.webp 1440w"
+        sizes="(max-width: 680px) calc(100vw - 32px), (max-width: 1360px) 53vw, 750px"
+        width="1440"
+        height="897"
+        alt="A clamshell handheld and a single-screen handheld running Koji"
+        fetchpriority="high"
+      />
+      <picture class="hero__mascot">
+        <source media="(prefers-reduced-motion: reduce)" srcset="/assets/home/kodo-still.webp" />
+        <img src="/assets/home/kodo.webp" width="108" height="144" alt="Kodo, Koji’s balloon-riding mascot" />
+      </picture>
+    </figure>
   </div>
-  <div class="hero__banner"></div>
-</article>
+</section>
+
+<script>
+  const preview = document.querySelector<HTMLElement>('[data-console]');
+  const interactive = window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
+
+  if (preview) {
+    preview.addEventListener('pointermove', (event) => {
+      if (!interactive.matches || event.pointerType === 'touch') return;
+      const bounds = preview.getBoundingClientRect();
+      const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+      const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+      preview.style.setProperty('--console-tilt-x', `${-y * 7}deg`);
+      preview.style.setProperty('--console-tilt-y', `${x * 9}deg`);
+    });
+    preview.addEventListener('pointerleave', () => {
+      preview.style.removeProperty('--console-tilt-x');
+      preview.style.removeProperty('--console-tilt-y');
+    });
+  }
+</script>

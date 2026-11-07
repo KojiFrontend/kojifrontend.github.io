@@ -1,18 +1,11 @@
 ---
-const { title, text, icon, shot = null, shotSize = null, tint, ink, inkSoft, wide = false } = Astro.props;
-
-const shotAttrs = shot
-  ? { role: 'button', tabindex: '0', 'aria-haspopup': 'dialog', 'data-shot': shot, 'data-shot-size': shotSize }
-  : {};
+const { title, text, icon, shot, tint, wide = false } = Astro.props;
 ---
-<article
-  class:list={['card', shot && 'card--shot', wide && 'card--wide']}
-  {...shotAttrs}
-  style={`--tint: ${tint}; --ink: ${ink}; --ink-soft: ${inkSoft}`}
->
-  <div class="card__head">
-    <h2 class="card__title">{title}</h2>
-    <img class="card__icon" src={icon} alt="" loading="lazy" decoding="async" />
+<article class:list={['feature-card', wide && 'feature-card--wide']} style={`--tint: ${tint}`}>
+  <div class="tile-heading">
+    <h3>{title}</h3>
+    <img src={icon} width="42" height="42" alt="" loading="lazy" decoding="async" />
   </div>
-  <p class="card__text">{text}</p>
+  <p>{text}</p>
+  {shot && <a class="feature-card__preview text-link" href={shot} data-preview={title}>View screenshot <span aria-hidden="true">↗</span><span class="sr-only"> of {title}</span></a>}
 </article>

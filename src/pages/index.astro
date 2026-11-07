@@ -1,26 +1,22 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Background from '../components/Background.astro';
 import Home from '../components/Home.astro';
 import Bento from '../components/Bento.astro';
+import Themes from '../components/Themes.astro';
 import Community from '../components/Community.astro';
-import More from '../components/More.astro';
+import Footer from '../components/Footer.astro';
 import TabBar from '../components/TabBar.astro';
 import Lightbox from '../components/Lightbox.astro';
-import Tip from '../components/Tip.astro';
 ---
 <Layout>
-  <Background />
-  <main class="stage">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <TabBar />
+  <main id="main">
     <Home />
     <Bento />
+    <Themes />
     <Community />
-    <More />
   </main>
-  <TabBar />
+  <Footer />
   <Lightbox />
-  <Tip />
-  <script>
-    import '../scripts/site.js';
-  </script>
 </Layout>
