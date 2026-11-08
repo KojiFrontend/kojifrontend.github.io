@@ -13,7 +13,7 @@ export const members = [
     group: 'contributors',
     url: 'https://loyah.vercel.app',
     contribution: 'Web development',
-    miiWidth: 216
+    miiWidth: 239
   },
   {
     id: 'k0ol',
@@ -31,5 +31,14 @@ export const members = [
     contribution: 'Soundtrack, sound effects & early testing',
     miiWidth: 292,
     miiHeight: 486
+  },
+  {
+    id: 'kewlaid',
+    name: 'kewlaid',
+    group: 'contributors',
+    url: 'https://x.com/kqwlaid',
+    contribution: 'Design & motion',
+    miiWidth: 224,
+    miiHeight: 321
   }
 ];

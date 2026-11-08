@@ -1,0 +1,8 @@
+{"message":"connected.","label":"vite","level":"info"}
+{"message":"Generated 0ms","label":"types","level":"info"}
+{"message":"connected.","label":"vite","level":"info"}
+{"message":"Re-optimizing dependencies because vite config has changed","label":"vite","level":"info"}
+{"message":"Port 4321 is in use, trying another one...","label":"vite","level":"info"}
+{"message":" astro  v7.3.5 ready in 152 ms\n┃ Local    http://127.0.0.1:4322/","label":"SKIP_FORMAT","level":"info"}
+{"message":"watching for file changes...","label":null,"level":"info"}
+{"message":"\n update  ▶ New version of Astro available: 7.4.7\n  Run npx @astrojs/upgrade to update\n","label":"SKIP_FORMAT","level":"warn"}

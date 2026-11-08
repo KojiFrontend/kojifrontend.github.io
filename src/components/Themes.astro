@@ -15,8 +15,15 @@ const themes = [
     <div class="theme-grid">
       {themes.map(({ name, mood, art, color, game }) => (
         <article class="theme-card">
-          <a class="theme-card__preview" href={`/assets/themes/${art}.webp`} data-preview={name} aria-label={`Enlarge ${name} theme`}>
-            <div class="theme-card__art" style={`--theme-color: ${color}`}>
+          <a class="theme-card__preview" href={`/assets/themes/${art}.webp`} data-preview={name} aria-label={`Enlarge ${name} theme`} style={`--theme-color: ${color}`}>
+            <div class="tile-heading theme-card__caption">
+              <div>
+                <h3>{name}</h3>
+                <p>{mood}</p>
+              </div>
+              <span aria-hidden="true">↗</span>
+            </div>
+            <div class="theme-card__art">
               <img
                 src={`/assets/themes/${art}.webp`}
                 srcset={`/assets/themes/${art}-small.webp 480w, /assets/themes/${art}.webp 900w`}
@@ -27,13 +34,6 @@ const themes = [
                 loading="lazy"
                 decoding="async"
               />
-            </div>
-            <div class="theme-card__caption">
-              <div>
-                <h3>{name}</h3>
-                <p>{mood}</p>
-              </div>
-              <span aria-hidden="true">↗</span>
             </div>
           </a>
         </article>
