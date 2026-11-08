@@ -1,11 +1,11 @@
 <section class="hero" id="home" aria-labelledby="hero-title">
-  <div class="hero__sky" aria-hidden="true"></div>
+  <div class="hero__backdrop" aria-hidden="true"></div>
   <div class="hero__inner">
     <div class="hero__copy">
       <h1 id="hero-title">Your games.<br /><em>Right at home.</em></h1>
       <p class="hero__description">Meet Koji, a game launcher for Android handhelds inspired by the 3DS home menu.</p>
       <div class="hero__actions">
-        <a class="button button--light" href="#get-koji">Get Koji <span aria-hidden="true">↗</span></a>
+        <a class="button button--hero" href="#get-koji">Get Koji <span aria-hidden="true">↗</span></a>
         <a class="hero__secondary" href="#bento">Explore features <span aria-hidden="true">↓</span></a>
       </div>
     </div>
@@ -13,20 +13,20 @@
       <div class="console-preview__halo" aria-hidden="true"></div>
       <img
         class="console-preview__image console-preview__image--thor"
-        src="/assets/home/thor-720.webp"
-        srcset="/assets/home/thor-400.webp 400w, /assets/home/thor-720.webp 720w"
+        src="/assets/home/thor-640.webp"
+        srcset="/assets/home/thor-640.webp 640w, /assets/home/thor-1080.webp 1080w"
         sizes="(max-width: 512px) calc((100vw - 32px) * .48), (max-width: 680px) 230px, (max-width: 1380px) 28vw, 360px"
-        width="720"
-        height="826"
+        width="1080"
+        height="1239"
         alt="Thor clamshell handheld running Koji across both screens"
       />
       <img
         class="console-preview__image console-preview__image--odin"
-        src="/assets/home/odin-1080.webp"
-        srcset="/assets/home/odin-560.webp 560w, /assets/home/odin-1080.webp 1080w"
+        src="/assets/home/odin-880.webp"
+        srcset="/assets/home/odin-880.webp 880w, /assets/home/odin-1560.webp 1560w"
         sizes="(max-width: 512px) calc((100vw - 32px) * .7), (max-width: 680px) 336px, (max-width: 1380px) 41vw, 525px"
-        width="1080"
-        height="445"
+        width="1560"
+        height="643"
         alt="Odin handheld showing the Koji game library"
         fetchpriority="high"
       />
@@ -36,6 +36,9 @@
       </picture>
     </figure>
   </div>
+  <svg class="hero__wave" viewBox="0 0 1440 72" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 22C250 2 450 10 720 36S1170 58 1440 18V72H0Z" />
+  </svg>
 </section>
 
 <script>
@@ -44,6 +47,11 @@
   const interactive = window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
 
   if (hero instanceof HTMLElement && preview) {
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([entry]) => {
+        hero.classList.toggle('is-visible', entry.isIntersecting);
+      }).observe(hero);
+    }
     hero.addEventListener('pointermove', (event) => {
       if (!interactive.matches || event.pointerType === 'touch') return;
       const bounds = hero.getBoundingClientRect();

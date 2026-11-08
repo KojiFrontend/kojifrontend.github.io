@@ -1,0 +1,179 @@
+---
+import { members } from '../data/team';
+
+const { preview = false } = Astro.props;
+const Heading = preview ? 'h1' : 'h2';
+const GroupHeading = preview ? 'h2' : 'h3';
+const groups = [
+  { id: 'core-team', title: 'Koji Team', members: members.filter((member) => member.group === 'team') },
+  { id: 'contributors', title: 'Contributors', members: members.filter((member) => member.group === 'contributors') }
+];
+---
+
+<section class="section content-width team" id="team" aria-labelledby="team-title">
+  <header class="section__heading team__heading">
+    <Heading id="team-title">The people behind Koji</Heading>
+  </header>
+  <div class="team__groups">
+    {groups.map((group) => (
+      <section class:list={['team__group', { 'team__group--core': group.id === 'core-team' }]} aria-labelledby={group.id}>
+        <GroupHeading class="team__group-title" id={group.id}>{group.title}</GroupHeading>
+        <ul class="team__roster">
+          {group.members.map((member) => {
+            const Profile = member.url ? 'a' : 'div';
+            return (
+              <li class="team__member">
+                <Profile class="team__profile" href={member.url} aria-labelledby={member.url ? `team-name-${member.id}` : undefined}>
+                  <div class="team__portrait">
+                    <img
+                      src={`/assets/team/${member.id}-mii.webp`}
+                      width={member.miiWidth}
+                      height={member.miiHeight ?? 560}
+                      alt={`${member.name}’s Pocketpass Mii`}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <span class="team__identity">
+                    <img src={`/assets/team/${member.id}-profile.webp`} width="144" height="144" alt="" loading="lazy" decoding="async" />
+                    <span class="team__name" id={`team-name-${member.id}`}>{member.name}</span>
+                    {member.url && <span class="team__arrow" aria-hidden="true">↗</span>}
+                  </span>
+                  <span class="team__credit">{member.contribution}</span>
+                </Profile>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    ))}
+  </div>
+</section>
+
+<style>
+  .team { padding-block: clamp(36px, 6vw, 76px) clamp(52px, 7vw, 90px); }
+  .team__heading { margin: 0 auto 22px; text-align: center; }
+  .team__heading h1 {
+    font-size: clamp(2rem, 4.6vw, 3.5rem);
+    line-height: 1.07;
+    letter-spacing: -.06em;
+  }
+  .team__groups {
+    display: grid;
+    gap: clamp(22px, 3.5vw, 44px);
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .team__group {
+    --mii-height: clamp(104px, 13vw, 146px);
+    --podium-width: 132px;
+    --profile-width: 168px;
+  }
+  .team__group--core {
+    --mii-height: clamp(126px, 16vw, 180px);
+    --podium-width: 156px;
+    --profile-width: 200px;
+  }
+  .team__group + .team__group {
+    border-block-start: 1px solid #ddd6ed;
+    padding-top: clamp(20px, 3vw, 36px);
+  }
+  .team .team__group-title {
+    margin: 0;
+    font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+    line-height: 1.25;
+    letter-spacing: -.02em;
+    text-align: center;
+  }
+  .team .team__group--core .team__group-title {
+    font-size: clamp(1.35rem, 3vw, 1.8rem);
+  }
+  .team__roster {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px clamp(10px, 1.5vw, 18px);
+    margin: 0;
+    padding: 16px 0 0;
+    list-style: none;
+    background: radial-gradient(ellipse at 50% 42%, #e3dafc9c, transparent 68%);
+  }
+  .team__member {
+    --platform: #d8caff;
+    --rim: #b6a2ec;
+    flex: 1 1 125px;
+    max-width: var(--profile-width);
+    min-width: 0;
+  }
+  .team__member:nth-child(3n + 2) {
+    --platform: #cfeaff;
+    --rim: #95c8e8;
+  }
+  .team__member:nth-child(3n) {
+    --platform: #f1ddfc;
+    --rim: #d8b5e8;
+  }
+  .team__profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    min-height: 100%;
+    padding: 4px 4px 10px;
+    border-radius: 16px;
+    text-align: center;
+    text-decoration: none;
+  }
+  .team__portrait {
+    display: grid;
+    place-items: end center;
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    padding-bottom: 11px;
+  }
+  .team__portrait::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    bottom: 0;
+    width: min(88%, var(--podium-width));
+    height: clamp(18px, 2.5vw, 28px);
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #fff9, transparent), var(--platform);
+    box-shadow: 0 4px 0 var(--rim), 0 10px 18px #49318d28;
+  }
+  .team__portrait img {
+    width: auto;
+    height: var(--mii-height);
+    object-fit: contain;
+    filter: drop-shadow(0 6px 4px #46326b2c);
+  }
+  .team__identity {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 6px;
+  }
+  .team__identity img {
+    width: 28px;
+    height: 28px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .team__name { font-size: clamp(.98rem, 1.7vw, 1.23rem); font-weight: 700; }
+  .team__arrow { font-size: .86rem; color: var(--accent); }
+  .team__credit { max-width: 20ch; color: var(--muted); font-size: .84rem; line-height: 1.35; }
+  .team__profile:is(:hover, :focus-visible) .team__name {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .team__portrait img { transition: transform .22s ease-out; }
+    .team__profile:hover .team__portrait img { transform: translateY(-6px); }
+  }
+</style>
