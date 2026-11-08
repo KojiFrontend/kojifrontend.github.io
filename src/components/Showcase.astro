@@ -1,0 +1,193 @@
+---
+const groups = [
+  {
+    label: 'Home menu',
+    icon: '/assets/icons/tabs/home.webp',
+    scenes: [
+      { id: 'home', label: 'Game library', title: 'Your games, at a glance.', text: 'Browse your library on the lower screen while the upper screen shows artwork, playtime, and snapshots for the game you’ve selected.', top: 'New Super Mario Bros. 2 artwork and playtime', bottom: 'Game grid with the recently played tile selected' },
+      { id: 'widgets', label: 'Custom widgets', title: 'Make the grid your own.', text: 'Mix custom widgets and folders with game tiles, and give the home menu a different look with a dark theme.', top: 'Mario artwork for the selected folder', bottom: 'Dark home menu with custom folders and tall image widgets' },
+      { id: 'gift', label: 'Wrapped games', title: 'A little surprise on the home menu.', text: 'A new addition can sit in your library as a wrapped gift, ready to open.', top: 'Wrapped present and Open prompt', bottom: 'Gift tile selected on the home menu' }
+    ]
+  },
+  {
+    label: 'Playing',
+    icon: '/assets/icons/bento/media.webp',
+    scenes: [
+      { id: 'pause', label: 'Pause menu', title: 'Take a breather mid-game.', text: 'The pause menu keeps your game in view and puts playtime, achievements, and recent captures within reach.', top: 'Koji pause menu over Sonic Mania with recent captures', bottom: 'Sonic Mania title artwork, session time, and battery status' },
+      { id: 'resume', label: 'Suspended games', title: 'Pick up where you paused.', text: 'A suspended game stays marked in the home menu with a clear prompt to resume.', top: 'Suspended Super Mario 3D World with a Resume prompt', bottom: 'Home menu with the suspended game tile selected' },
+      { id: 'media', label: 'Photo viewer', title: 'Revisit your favorite moments.', text: 'Browse recent screenshots on the lower screen and open a larger view on top, ready to share.', top: 'A Super Mario 3D World capture in the photo viewer', bottom: 'Recent captures and the game’s media folder' }
+    ]
+  },
+  {
+    label: 'KoShop',
+    icon: '/assets/icons/bento/shop.webp',
+    scenes: [
+      { id: 'shop', label: 'Theme browser', title: 'Find a fresh look in KoShop.', text: 'Browse built-in and user themes, then see the selected theme’s details before applying it.', top: 'Classic theme details and Applied status', bottom: 'KoShop theme browser with in-house and user themes' }
+    ]
+  },
+  {
+    label: 'Social',
+    icon: '/assets/icons/bento/social.webp',
+    scenes: [
+      { id: 'leaflet-post', label: 'Leaflet posts', title: 'Share a doodle on Leaflet.', text: 'Open a post to see its drawing on the upper screen while the conversation stays on the lower one.', top: 'A hand-drawn crown attached to a Leaflet post', bottom: 'Leaflet feed with the post selected' },
+      { id: 'leaflet', label: 'Leaflet boards', title: 'Find a conversation.', text: 'Browse Leaflet boards and open a space to see what people are posting.', top: 'Leaflet title screen with menu and open prompts', bottom: 'Leaflet board list with member avatars' },
+      { id: 'friends', label: 'Friends list', title: 'See who’s around.', text: 'Open the friends list from the home menu to see when your friends were last active.', top: 'Friends list and recent activity over game artwork', bottom: 'Game library under the friends overlay' }
+    ]
+  }
+];
+---
+
+<section class="section content-width showcase" id="showcase" aria-labelledby="showcase-title" data-showcase>
+  <div class="section__heading">
+    <h2 id="showcase-title">Make yourself at home.</h2>
+    <p>Take a closer look at Koji’s game library, pause menu, theme shop, and community boards.</p>
+  </div>
+
+  <div class="showcase__controls" data-showcase-controls hidden>
+    <div class="showcase__groups" role="group" aria-label="Choose a part of Koji">
+      {groups.map((group, index) => (
+        <button type="button" data-group={index} aria-controls="showcase-scenes" aria-pressed={index === 0 ? 'true' : 'false'}>
+          <img src={group.icon} alt="" width="28" height="28" />{group.label}
+        </button>
+      ))}
+    </div>
+    {groups.map((group, index) => (
+      <div class="showcase__choices" data-choices={index} role="group" aria-label={`${group.label} screenshots`} hidden={index !== 0 || group.scenes.length === 1}>
+        {group.scenes.map((scene, sceneIndex) => (
+          <button type="button" data-scene={scene.id} aria-controls={`showcase-${scene.id}`} aria-pressed={sceneIndex === 0 ? 'true' : 'false'}>
+            {scene.label}
+          </button>
+        ))}
+      </div>
+    ))}
+  </div>
+
+  <div id="showcase-scenes">
+    {groups.flatMap(({ scenes }) => scenes).map((scene, index) => (
+      <figure data-panel={scene.id} id={`showcase-${scene.id}`} hidden={index !== 0}>
+        <div class="showcase__screens">
+          {(['top', 'bottom'] as const).map((side) => {
+            const src = `/assets/showcase/${scene.id}-${side}.webp`;
+            return (
+              <a class:list={['showcase__screen', `showcase__screen--${side}`]} href={src} data-preview={`${scene.label} · ${side === 'top' ? 'Upper' : 'Lower'} screen`} aria-label={`Enlarge ${scene.label}, ${side === 'top' ? 'upper' : 'lower'} screen`}>
+                <img src={src} alt={scene[side]} loading="lazy" decoding="async" />
+              </a>
+            );
+          })}
+        </div>
+        <figcaption class="showcase__caption">
+          <h3>{scene.title}</h3>
+          <p>{scene.text}</p>
+        </figcaption>
+      </figure>
+    ))}
+  </div>
+</section>
+
+<script>
+  const showcase = document.querySelector<HTMLElement>('[data-showcase]');
+  const controls = showcase?.querySelector<HTMLElement>('[data-showcase-controls]');
+
+  if (showcase && controls) {
+    const groups = Array.from(controls.querySelectorAll<HTMLButtonElement>('[data-group]'));
+    const choices = Array.from(controls.querySelectorAll<HTMLElement>('[data-choices]'));
+    const panels = Array.from(showcase.querySelectorAll<HTMLElement>('[data-panel]'));
+
+    const show = (button: HTMLButtonElement) => {
+      showcase.classList.add('showcase--interacted');
+      button.parentElement?.querySelectorAll('[data-scene]').forEach((choice) => {
+        choice.setAttribute('aria-pressed', String(choice === button));
+      });
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.panel !== button.dataset.scene;
+      });
+    };
+
+    groups.forEach((group) => {
+      group.addEventListener('click', () => {
+        groups.forEach((item) => item.setAttribute('aria-pressed', String(item === group)));
+        choices.forEach((row) => {
+          const buttons = row.querySelectorAll<HTMLButtonElement>('[data-scene]');
+          const active = row.dataset.choices === group.dataset.group;
+          row.hidden = !active || buttons.length === 1;
+          const selected = row.querySelector<HTMLButtonElement>('[aria-pressed="true"]');
+          if (active && selected) show(selected);
+        });
+      });
+    });
+
+    controls.querySelectorAll<HTMLButtonElement>('[data-scene]').forEach((button) => {
+      button.addEventListener('click', () => show(button));
+    });
+    controls.hidden = false;
+  }
+</script>
+
+<style>
+  .showcase { padding-bottom: 0; }
+  .showcase__groups, .showcase__choices { display: flex; flex-wrap: wrap; gap: 8px; }
+  .showcase__groups button, .showcase__choices button {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 44px;
+    padding: 6px 13px;
+    color: var(--ink);
+    font-weight: 700;
+    border: 2px solid #fff;
+    border-radius: 12px;
+    background: #fff9;
+    box-shadow: 0 2px 0 #30265819;
+  }
+  .showcase__groups button[aria-pressed="true"], .showcase__choices button[aria-pressed="true"] {
+    color: #343076;
+    background: #e9e3ff;
+    border-color: #fff;
+    box-shadow: 0 2px 0 #8a77ce, inset 0 0 0 1px #bca8ef;
+  }
+  .showcase__choices { margin-top: 12px; }
+  .showcase__choices[hidden] { display: none; }
+  .showcase__choices button { min-height: 36px; font-size: .85rem; }
+  .showcase__controls { margin-bottom: 16px; }
+  .showcase__screens {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(12px, 2vw, 24px);
+    padding: clamp(12px, 3vw, 32px);
+    border: 3px solid #fff;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #e3edff, #f4efff 55%, #f7e9fb);
+    box-shadow: 0 3px 0 #2f284812, 0 7px 20px #2f28480a;
+  }
+  .showcase__screen {
+    display: block;
+    overflow: hidden;
+    border-radius: 3.3% / 5.8%;
+    box-shadow: 0 4px 12px #21284a29;
+  }
+  .showcase__screen--top { aspect-ratio: 16 / 9; }
+  .showcase__screen--bottom { aspect-ratio: 960 / 835; border-radius: 4% / 4.6%; }
+  .showcase__screen img { width: 100%; height: 100%; object-fit: cover; }
+  .showcase__caption { margin-top: 18px; max-width: 65ch; }
+  .showcase__caption h3 { font-size: clamp(1.3rem, 2.7vw, 1.7rem); }
+  .showcase__caption p { margin-top: 5px; color: var(--muted); line-height: 1.55; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .showcase__controls button {
+      transition: background-color 160ms ease-out, box-shadow 160ms ease-out, color 160ms ease-out;
+    }
+    .showcase--interacted [data-panel]:not([hidden]) :is(.showcase__screen, .showcase__caption) {
+      animation: showcase-enter 200ms ease-out;
+    }
+    @keyframes showcase-enter {
+      from { opacity: .4; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  }
+
+  @media (max-width: 620px) {
+    .showcase__screens { grid-template-columns: minmax(0, 1fr); }
+    .showcase__screen--bottom { width: 76%; justify-self: center; }
+  }
+</style>

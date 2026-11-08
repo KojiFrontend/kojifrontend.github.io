@@ -336,6 +336,7 @@ body { --header-height: 76px; }
   font-size: 1.06rem;
   line-height: 1.55;
 }
+#bento { padding-block-end: 0; }
 .feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .feature-card, .feature-intro, .theme-card__preview {
   border: 3px solid #fff;
