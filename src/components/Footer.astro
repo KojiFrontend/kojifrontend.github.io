@@ -1,49 +1,39 @@
+---
+import FooterHorizon from './FooterHorizon.astro';
+---
 <footer class="site-footer">
   <div class="content-width">
     <div class="site-footer__top">
       <section class="get-koji" id="get-koji" aria-labelledby="access-title">
         <h2 id="access-title">Get Koji</h2>
-        <p>Visit Koji’s Discord for release updates and help getting started.</p>
+        <p>Find release updates and help getting started on Discord.</p>
         <div class="get-koji__actions">
-          <div class="access-tile access-tile--discord">
-            <div class="tile-heading">
-              <h3>Join the community</h3>
-              <img src="/assets/icons/tabs/discord.webp" width="36" height="36" alt="" loading="lazy" decoding="async" />
-            </div>
-            <a class="button access-tile__button" href="https://dsc.gg/brocolabs">Open Discord <span aria-hidden="true">↗</span></a>
-          </div>
-          <div class="access-tile access-tile--support">
-            <div class="tile-heading">
-              <h3>Support Koji</h3>
-              <img src="/assets/icons/more/hearticon.webp" width="36" height="36" alt="" loading="lazy" decoding="async" />
-            </div>
-            <a class="button access-tile__button" href="https://ko-fi.com/brocolabs">Visit Ko-fi <span aria-hidden="true">↗</span></a>
-          </div>
+          <a class="button footer-discord" href="https://dsc.gg/brocolabs">
+            <img src="/assets/icons/tabs/discord.webp" width="22" height="22" alt="" loading="lazy" />
+            Open Discord <span aria-hidden="true">↗</span>
+          </a>
         </div>
       </section>
-      <nav class="site-footer__nav" aria-label="Footer">
-        <a href="#bento">Features</a>
-        <a href="#themes">Themes</a>
-        <a href="#community">Community</a>
-      </nav>
-    </div>
-    <div class="site-footer__art">
-      <img
-        class="site-footer__logo"
-        src="/assets/brand/footer-wordmark.webp"
-        srcset="/assets/brand/footer-wordmark-small.webp 480w, /assets/brand/footer-wordmark.webp 900w"
-        sizes="(max-width: 680px) 74vw, 610px"
-        width="900"
-        height="546"
-        alt="Koji"
-        loading="lazy"
-        decoding="async"
-      />
-      <img class="site-footer__mascot" src="/assets/home/kodo-still.webp" width="108" height="144" alt="" loading="lazy" decoding="async" />
+      <div class="site-footer__directories">
+        <nav class="site-footer__nav" aria-labelledby="footer-explore">
+          <h3 id="footer-explore">Explore</h3>
+          <a href="#bento">Features</a>
+          <a href="#themes">Themes</a>
+          <a href="#community">Community</a>
+        </nav>
+        <div class="site-footer__nav">
+          <h3>Support</h3>
+          <a href="https://ko-fi.com/brocolabs">Ko-fi <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
     </div>
     <div class="site-footer__bottom">
-      <span>Koji for Android</span>
+      <a class="site-footer__brand" href="#home" aria-label="Koji for Android, home">
+        <img src="/assets/brand/koji-mark.png" width="26" height="26" alt="" loading="lazy" />
+        <span>Koji for Android</span>
+      </a>
       <a href="#home">Back to top <span aria-hidden="true">↑</span></a>
     </div>
   </div>
+  <FooterHorizon />
 </footer>
