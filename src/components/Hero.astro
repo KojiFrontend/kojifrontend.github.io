@@ -12,13 +12,22 @@
     <figure class="console-preview" data-console>
       <div class="console-preview__halo" aria-hidden="true"></div>
       <img
-        class="console-preview__image"
-        src="/assets/home/console.webp"
-        srcset="/assets/home/console-small.webp 720w, /assets/home/console.webp 1440w"
-        sizes="(max-width: 680px) calc(100vw - 32px), (max-width: 1360px) 53vw, 750px"
-        width="1440"
-        height="897"
-        alt="A clamshell handheld and a single-screen handheld running Koji"
+        class="console-preview__image console-preview__image--thor"
+        src="/assets/home/thor-720.webp"
+        srcset="/assets/home/thor-400.webp 400w, /assets/home/thor-720.webp 720w"
+        sizes="(max-width: 512px) calc((100vw - 32px) * .48), (max-width: 680px) 230px, (max-width: 1380px) 28vw, 360px"
+        width="720"
+        height="826"
+        alt="Thor clamshell handheld running Koji across both screens"
+      />
+      <img
+        class="console-preview__image console-preview__image--odin"
+        src="/assets/home/odin-1080.webp"
+        srcset="/assets/home/odin-560.webp 560w, /assets/home/odin-1080.webp 1080w"
+        sizes="(max-width: 512px) calc((100vw - 32px) * .7), (max-width: 680px) 336px, (max-width: 1380px) 41vw, 525px"
+        width="1080"
+        height="445"
+        alt="Odin handheld showing the Koji game library"
         fetchpriority="high"
       />
       <picture class="hero__mascot">
@@ -31,20 +40,23 @@
 
 <script>
   const preview = document.querySelector<HTMLElement>('[data-console]');
+  const hero = preview?.closest('.hero');
   const interactive = window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
 
-  if (preview) {
-    preview.addEventListener('pointermove', (event) => {
+  if (hero instanceof HTMLElement && preview) {
+    hero.addEventListener('pointermove', (event) => {
       if (!interactive.matches || event.pointerType === 'touch') return;
-      const bounds = preview.getBoundingClientRect();
-      const x = (event.clientX - bounds.left) / bounds.width - 0.5;
-      const y = (event.clientY - bounds.top) / bounds.height - 0.5;
-      preview.style.setProperty('--console-tilt-x', `${-y * 7}deg`);
-      preview.style.setProperty('--console-tilt-y', `${x * 9}deg`);
+      const bounds = hero.getBoundingClientRect();
+      const x = 2 * (event.clientX - bounds.left) / bounds.width - 1;
+      const y = 2 * (event.clientY - bounds.top) / bounds.height - 1;
+      preview.style.setProperty('--console-x', x.toFixed(3));
+      preview.style.setProperty('--console-y', y.toFixed(3));
     });
-    preview.addEventListener('pointerleave', () => {
-      preview.style.removeProperty('--console-tilt-x');
-      preview.style.removeProperty('--console-tilt-y');
-    });
+    const reset = () => {
+      preview.style.removeProperty('--console-x');
+      preview.style.removeProperty('--console-y');
+    };
+    hero.addEventListener('pointerleave', reset);
+    interactive.addEventListener('change', reset);
   }
 </script>

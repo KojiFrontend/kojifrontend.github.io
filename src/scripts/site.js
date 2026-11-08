@@ -26,15 +26,8 @@ if (dialog instanceof HTMLDialogElement && typeof dialog.showModal === 'function
 const orbit = document.querySelector('[data-orbit]');
 
 if (orbit && 'IntersectionObserver' in window) {
-  const toggle = orbit.querySelector('button');
   const observer = new IntersectionObserver(([entry]) => {
     orbit.classList.toggle('is-visible', entry.isIntersecting);
   });
   observer.observe(orbit);
-
-  toggle.hidden = false;
-  toggle.addEventListener('click', () => {
-    const paused = orbit.classList.toggle('is-paused');
-    toggle.textContent = paused ? 'Resume motion' : 'Pause motion';
-  });
 }

@@ -152,7 +152,7 @@ body { --header-height: 76px; }
   position: relative;
   justify-self: center;
   width: min(100%, 750px);
-  perspective: 1000px;
+  aspect-ratio: 3 / 2;
 }
 .console-preview__halo {
   position: absolute;
@@ -170,15 +170,31 @@ body { --header-height: 76px; }
   border: 1px dashed #def2ff55;
 }
 .console-preview__image {
-  position: relative;
-  width: 100%;
+  position: absolute;
   height: auto;
-  filter: drop-shadow(0 12px 18px #17327b44);
+  pointer-events: none;
+}
+.console-preview__image--thor {
+  top: 1%;
+  left: 3%;
+  width: 48%;
+  --console-pull-x: 12px;
+  --console-pull-y: 9px;
+}
+.console-preview__image--odin {
+  right: 1%;
+  bottom: 2%;
+  width: 70%;
+  --console-pull-x: 28px;
+  --console-pull-y: 18px;
 }
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .console-preview__image {
-    transform: rotateX(var(--console-tilt-x, 0deg)) rotateY(var(--console-tilt-y, 0deg));
-    transition: transform .18s ease-out;
+    transform: translate(
+      calc(var(--console-x, 0) * var(--console-pull-x)),
+      calc(var(--console-y, 0) * var(--console-pull-y))
+    );
+    transition: transform .28s ease-out;
   }
 }
 
@@ -401,21 +417,11 @@ body { --header-height: 76px; }
   box-shadow: 0 4px 10px #6653a32a;
   animation: orbit-turn var(--orbit-duration) linear infinite reverse paused;
 }
-.is-visible:not(.is-paused) :is(.orbit__ring, .orbit__avatar img) { animation-play-state: running; }
+.community.is-visible :is(.orbit__ring, .orbit__avatar img) { animation-play-state: running; }
 @keyframes orbit-turn { to { transform: rotate(1turn); } }
 
-.orbit__toggle {
-  margin-top: 10px;
-  padding: 7px 12px;
-  border: 1px solid #cfc4f0;
-  border-radius: 999px;
-  color: var(--accent);
-  background: #fff;
-  font-size: .8rem;
-}
 @media (prefers-reduced-motion: reduce) {
   .orbit__ring, .orbit__avatar img { animation: none; }
-  .orbit__toggle { display: none; }
 }
 .site-footer { background: linear-gradient(180deg, #f8faff, #f4f2fc 56%, #f8faff 80%); }
 .site-footer__top {
