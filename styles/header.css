@@ -1,5 +1,10 @@
 .masthead {
   --text: var(--ink);
+  --masthead-artwork:
+    radial-gradient(62% 58% at 6% -6%, rgba(173, 214, 255, 0.95) 0%, rgba(173, 214, 255, 0) 64%),
+    radial-gradient(56% 60% at 96% 4%, rgba(56, 156, 255, 0.55) 0%, rgba(56, 156, 255, 0) 66%),
+    radial-gradient(66% 56% at 72% 86%, rgba(173, 214, 255, 0.72) 0%, rgba(173, 214, 255, 0) 72%),
+    radial-gradient(48% 46% at 22% 94%, rgba(116, 56, 255, 0.22) 0%, rgba(116, 56, 255, 0) 74%);
   color: var(--ink);
   position: relative;
   isolation: isolate;
@@ -14,11 +19,7 @@
   border-radius: clamp(22px, 3.2vw, 38px);
   box-shadow: var(--panel-shadow);
   background-color: var(--panel-bg);
-  background-image:
-    radial-gradient(62% 58% at 6% -6%, rgba(173, 214, 255, 0.95) 0%, rgba(173, 214, 255, 0) 64%),
-    radial-gradient(56% 60% at 96% 4%, rgba(56, 156, 255, 0.55) 0%, rgba(56, 156, 255, 0) 66%),
-    radial-gradient(66% 56% at 72% 86%, rgba(173, 214, 255, 0.72) 0%, rgba(173, 214, 255, 0) 72%),
-    radial-gradient(48% 46% at 22% 94%, rgba(116, 56, 255, 0.22) 0%, rgba(116, 56, 255, 0) 74%);
+  background-image: var(--masthead-artwork);
 }
 
 .topbar {

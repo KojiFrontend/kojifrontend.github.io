@@ -224,7 +224,7 @@
     flex-direction: column;
     align-items: center;
     gap: clamp(20px, 4vw, 30px);
-    padding-block: clamp(24px, 4svh, 36px) max(clamp(30px, 5svh, 46px), calc(env(safe-area-inset-bottom) + 20px));
+    padding-block: clamp(24px, 4svh, 36px) max(clamp(40px, 5svh, 46px), calc(env(safe-area-max-inset-bottom, 0px) + 12px));
   }
 
   .hero__title {
@@ -306,30 +306,28 @@
 
   .masthead {
     --hero-nav-space: calc(var(--nav-height) + env(safe-area-inset-top));
+    --hero-bleed: max(0px, 100lvh - 100svh, var(--hero-screen-height, 0px) - 100svh);
     min-height: 100vh;
-    min-height: max(100lvh, var(--hero-screen-height, 0px));
+    min-height: 100svh;
     margin: 0 0 10px;
     padding-top: var(--hero-nav-space);
     border: 0;
     border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+    z-index: 1;
+    background: none;
+  }
+
+  .masthead__floaters {
+    /* Extend the artwork behind the browser controls without moving the content. */
+    bottom: 0;
+    bottom: calc(-1 * var(--hero-bleed));
     background-color: var(--hero-edge);
-    clip-path: inset(0 calc(var(--hero-frame, 0) * 10px) round calc(var(--hero-frame, 0) * 22px));
-  }
-
-  .masthead > .hero {
-    /* Keep the buttons above browser controls while the artwork extends behind them. */
-    flex: none;
-    min-height: calc(100vh - var(--hero-nav-space));
-    min-height: calc(100dvh - var(--hero-nav-space));
-  }
-
-  .masthead::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    /* Give the browser a consistent color at the bottom edge of the artwork. */
-    background: linear-gradient(to bottom, transparent calc(100dvh - 2rem), var(--hero-edge) 100dvh);
+    background-image:
+      linear-gradient(to bottom, transparent calc(100% - var(--hero-bleed) - 2rem), var(--hero-edge) calc(100% - var(--hero-bleed))),
+      var(--masthead-artwork);
+    clip-path: inset(0 calc(var(--hero-frame, 0) * 10px) calc(var(--hero-frame, 0) * var(--hero-bleed)) round calc(var(--hero-frame, 0) * 22px));
   }
 }
 
