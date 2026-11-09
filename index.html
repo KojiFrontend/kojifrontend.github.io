@@ -36,9 +36,9 @@
     <link rel="stylesheet" href="/styles/hero.css?v=100" />
     <link rel="stylesheet" href="/styles/sections.css?v=88" />
     <link rel="stylesheet" href="/styles/themes.css?v=89" />
-    <link rel="stylesheet" href="/styles/community.css?v=92" />
-    <link rel="stylesheet" href="/styles/team.css?v=87" />
-    <link rel="stylesheet" href="/styles/footer.css?v=86" />
+    <link rel="stylesheet" href="/styles/community.css?v=93" />
+    <link rel="stylesheet" href="/styles/team.css?v=88" />
+    <link rel="stylesheet" href="/styles/footer.css?v=89" />
     <link rel="stylesheet" href="/styles/responsive.css?v=91" />
   </head>
   <body>
@@ -55,7 +55,6 @@
           <a class="nav__link" href="#team">Team</a>
           <a class="nav__link" href="#more">More</a>
         </div>
-        <a class="btn btn--sm" href="https://ko-fi.com/brocolabs" target="_blank" rel="noreferrer">Download</a>
       </nav>
     </header>
 
@@ -186,7 +185,7 @@
           <div class="theme-showcase" data-theme-showcase>
             <div class="theme-showcase__stage" aria-hidden="true">
               <div class="theme-showcase__console">
-                <img class="theme-showcase__shell" data-theme-shell src="/assets/themes/thor-rainbow.webp" width="1400" height="1585" alt="" loading="lazy" decoding="async" />
+                <img class="theme-showcase__shell" data-theme-shell src="/assets/themes/thor-rainbow.webp" width="1400" height="1585" alt="" fetchpriority="low" decoding="async" />
                 <span class="theme-showcase__screen theme-showcase__screen--top">
                   <span class="theme-showcase__layer is-visible" data-screen="top" style="background-image: url(&quot;/assets/themes/light-top.webp&quot;)"></span>
                   <span class="theme-showcase__layer" data-screen="top"></span>
@@ -276,52 +275,54 @@
           </div>
 
           <div class="community-playground">
-            <div class="community-cameo" aria-hidden="true">
-              <img class="community-cameo__watcher" src="/assets/community/pommeswatch.webp" width="109" height="190" alt="" loading="lazy" decoding="async" />
-              <img class="community-cameo__dancer" data-dd src="/assets/community/dddance.webp" width="317" height="220" alt="" loading="lazy" decoding="async" />
-              <span class="community-cameo__swipe">
-                <img class="community-cameo__paw" src="/assets/community/cat-paw.webp" width="960" height="218" alt="" loading="lazy" decoding="async" />
+            <div class="community-cameo">
+              <img class="community-cameo__watcher" src="/assets/community/pommeswatch.webp" width="109" height="190" alt="" fetchpriority="low" decoding="async" />
+              <button class="community-cameo__trigger" type="button" aria-label="Tap DD">
+                <img class="community-cameo__dancer" data-dd src="/assets/community/dddance.webp" width="317" height="220" alt="" fetchpriority="low" decoding="async" />
+              </button>
+              <span class="community-cameo__swipe" aria-hidden="true">
+                <img class="community-cameo__paw" src="/assets/community/cat-paw.webp" width="960" height="218" alt="" fetchpriority="low" decoding="async" />
               </span>
             </div>
 
             <div class="playground" data-playground>
-              <div class="playground__layer" aria-hidden="true">
-                <img class="playground__avatar" src="/assets/pfps/2.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/3.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/4.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/5.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/7.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" data-dd-avatar src="/assets/pfps/9.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/10.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/11.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/12.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/13.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/14.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/15.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/16.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/17.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/18.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/19.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/20.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/21.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/22.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/23.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/24.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/25.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/26.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/27.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/28.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/29.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/30.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/31.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/32.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/33.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/36.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/37.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/38.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/39.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/40.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="playground__avatar" src="/assets/pfps/41.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <div class="playground__layer">
+                <img class="playground__avatar" src="/assets/pfps/2.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/3.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/4.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/5.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/7.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" data-dd-avatar src="/assets/pfps/9.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/10.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/11.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/12.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/13.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/14.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/15.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/16.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/17.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/18.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/19.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/20.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/21.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/22.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/23.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/24.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/25.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/26.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/27.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/28.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/29.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/30.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/31.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/32.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/33.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/36.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/37.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/38.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/39.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/40.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/41.webp" alt="" draggable="false" fetchpriority="low" decoding="async" />
               </div>
             </div>
           </div>
@@ -341,10 +342,10 @@
                 <li class="team__member">
                   <a class="team__profile" href="https://brocodev.cc" target="_blank" rel="noreferrer">
                     <div class="team__portrait">
-                      <img src="/assets/team/broco-still.webp" data-motion-src="/assets/team/broco.webp" width="286" height="444" alt="broco.dev’s Mii" loading="lazy" decoding="async" />
+                      <img src="/assets/team/broco-still.webp" data-motion-src="/assets/team/broco.webp" width="286" height="444" alt="broco.dev’s Mii" fetchpriority="low" decoding="async" />
                     </div>
                     <span class="team__identity">
-                      <img src="/assets/team/broco-avatar.webp" width="144" height="144" alt="" loading="lazy" decoding="async" />
+                      <img src="/assets/team/broco-avatar.webp" width="144" height="144" alt="" fetchpriority="low" decoding="async" />
                       <span class="team__name">broco.dev</span>
                       <span class="icon icon--external team__arrow" aria-hidden="true"></span>
                     </span>
@@ -355,10 +356,10 @@
                 <li class="team__member">
                   <div class="team__profile">
                     <div class="team__portrait">
-                      <img src="/assets/team/sabyy-still.webp" data-motion-src="/assets/team/sabyy.webp" width="286" height="444" alt="sabyy’s Mii" loading="lazy" decoding="async" />
+                      <img src="/assets/team/sabyy-still.webp" data-motion-src="/assets/team/sabyy.webp" width="286" height="444" alt="sabyy’s Mii" fetchpriority="low" decoding="async" />
                     </div>
                     <span class="team__identity">
-                      <img src="/assets/team/sabyy-avatar.webp" width="144" height="144" alt="" loading="lazy" decoding="async" />
+                      <img src="/assets/team/sabyy-avatar.webp" width="144" height="144" alt="" fetchpriority="low" decoding="async" />
                       <span class="team__name">sabyy</span>
                     </span>
                     <span class="team__credit">Soundtrack, sound effects &amp; early testing</span>
@@ -372,11 +373,11 @@
               <ul class="team__roster">
                 <li class="team__member">
                   <a class="team__profile" href="https://loyah.vercel.app" target="_blank" rel="noreferrer">
-                    <div class="team__portrait">
-                      <img src="/assets/team/loyah-still.webp" data-motion-src="/assets/team/loyah.webp" width="286" height="444" alt="loyah’s Mii" loading="lazy" decoding="async" />
+                    <div class="team__portrait team__portrait--scaled" style="--mii-scale: 1.24">
+                      <img src="/assets/team/loyah-still.webp" data-motion-src="/assets/team/loyah.webp" width="286" height="444" alt="loyah’s Mii" fetchpriority="low" decoding="async" />
                     </div>
                     <span class="team__identity">
-                      <img src="/assets/team/loyah-avatar.webp" width="144" height="144" alt="" loading="lazy" decoding="async" />
+                      <img src="/assets/team/loyah-avatar.webp" width="144" height="144" alt="" fetchpriority="low" decoding="async" />
                       <span class="team__name">loyah</span>
                       <span class="icon icon--external team__arrow" aria-hidden="true"></span>
                     </span>
@@ -387,10 +388,10 @@
                 <li class="team__member">
                   <a class="team__profile" href="https://discord.com/users/1066505285801365627" target="_blank" rel="noreferrer">
                     <div class="team__portrait">
-                      <img src="/assets/team/k0ol-still.webp" data-motion-src="/assets/team/k0ol.webp" width="216" height="470" alt="k0ol’s Mii" loading="lazy" decoding="async" />
+                      <img src="/assets/team/k0ol-still.webp" data-motion-src="/assets/team/k0ol.webp" width="216" height="470" alt="k0ol’s Mii" fetchpriority="low" decoding="async" />
                     </div>
                     <span class="team__identity">
-                      <img src="/assets/team/k0ol-avatar.webp" width="144" height="144" alt="" loading="lazy" decoding="async" />
+                      <img src="/assets/team/k0ol-avatar.webp" width="144" height="144" alt="" fetchpriority="low" decoding="async" />
                       <span class="team__name">k0ol</span>
                       <span class="icon icon--external team__arrow" aria-hidden="true"></span>
                     </span>
@@ -400,11 +401,11 @@
 
                 <li class="team__member">
                   <a class="team__profile" href="https://x.com/kqwlaid" target="_blank" rel="noreferrer">
-                    <div class="team__portrait">
-                      <img src="/assets/team/kewlaid-still.webp" data-motion-src="/assets/team/kewlaid.webp" width="286" height="444" alt="kewlaid’s Mii" loading="lazy" decoding="async" />
+                    <div class="team__portrait team__portrait--scaled" style="--mii-scale: 1.38">
+                      <img src="/assets/team/kewlaid-still.webp" data-motion-src="/assets/team/kewlaid.webp" width="286" height="444" alt="kewlaid’s Mii" fetchpriority="low" decoding="async" />
                     </div>
                     <span class="team__identity">
-                      <img src="/assets/team/kewlaid-avatar.webp" width="144" height="144" alt="" loading="lazy" decoding="async" />
+                      <img src="/assets/team/kewlaid-avatar.webp" width="144" height="144" alt="" fetchpriority="low" decoding="async" />
                       <span class="team__name">kewlaid</span>
                       <span class="icon icon--external team__arrow" aria-hidden="true"></span>
                     </span>
@@ -415,10 +416,10 @@
                 <li class="team__member">
                   <a class="team__profile" href="https://hinoaaaaaf212.github.io/" target="_blank" rel="noreferrer">
                     <div class="team__portrait">
-                      <img src="/assets/team/simply-still.webp" data-motion-src="/assets/team/simply.webp" width="360" height="396" alt="simply’s Mii" loading="lazy" decoding="async" />
+                      <img src="/assets/team/simply-still.webp" data-motion-src="/assets/team/simply.webp" width="360" height="396" alt="simply’s Mii" fetchpriority="low" decoding="async" />
                     </div>
                     <span class="team__identity">
-                      <img src="/assets/team/simply-avatar.webp" width="144" height="144" alt="" loading="lazy" decoding="async" />
+                      <img src="/assets/team/simply-avatar.webp" width="144" height="144" alt="" fetchpriority="low" decoding="async" />
                       <span class="team__name">simply</span>
                       <span class="icon icon--external team__arrow" aria-hidden="true"></span>
                     </span>
@@ -437,24 +438,16 @@
             <div>
               <h2 class="section__title"><span class="icon icon--sparkles section__icon section__icon--more" aria-hidden="true"></span>More from Koji</h2>
             </div>
-            <p class="section__lede">Get early access or join the Koji community on Discord.</p>
+            <p class="section__lede">A place for Koji setup guides and answers.</p>
           </div>
 
           <div class="card-grid">
-            <article class="card card--link" style="--tint: 206 111 248">
+            <article class="card card--link" style="--tint: 250 110 109">
               <div class="card__head">
-                <h3 class="card__title">Want early access to Koji?</h3>
-                <span class="card__icon"><span class="icon icon--heart" aria-hidden="true"></span></span>
+                <h3 class="card__title">Have any more questions?</h3>
+                <span class="card__icon"><span class="icon icon--question" aria-hidden="true"></span></span>
               </div>
-              <a class="card__link" href="https://ko-fi.com/brocolabs" target="_blank" rel="noreferrer">See our Ko-fi <span class="icon icon--right" aria-hidden="true"></span></a>
-            </article>
-
-            <article class="card card--link" style="--tint: 111 139 250">
-              <div class="card__head">
-                <h3 class="card__title">Want to be a part of our community?</h3>
-                <span class="card__icon"><span class="icon icon--discord" aria-hidden="true"></span></span>
-              </div>
-              <a class="card__link" href="https://dsc.gg/brocolabs" target="_blank" rel="noreferrer">Join the Discord server <span class="icon icon--right" aria-hidden="true"></span></a>
+              <span class="card__link">Wiki coming soon <span class="icon icon--right" aria-hidden="true"></span></span>
             </article>
           </div>
         </div>
@@ -492,14 +485,14 @@
 
       <div class="site-footer__horizon" data-footer-horizon aria-hidden="true">
         <div class="site-footer__icons">
-          <img class="site-footer__icon" src="/assets/icons/scroller/jumpback-1x2.webp" alt="" loading="lazy" decoding="async" data-art-top="0.035" />
-          <img class="site-footer__icon" src="/assets/icons/scroller/box.webp" alt="" loading="lazy" decoding="async" data-art-top="0.1" />
-          <img class="site-footer__icon" src="/assets/icons/scroller/mm.webp" alt="" loading="lazy" decoding="async" data-art-top="0.1" />
-          <img class="site-footer__icon" src="/assets/icons/scroller/folder.webp" alt="" loading="lazy" decoding="async" data-art-top="0.1" />
-          <img class="site-footer__icon" src="/assets/icons/scroller/gift.webp" alt="" loading="lazy" decoding="async" data-art-top="0.1" />
-          <img class="site-footer__icon" src="/assets/icons/scroller/random.webp" alt="" loading="lazy" decoding="async" data-art-top="0.1" />
-          <img class="site-footer__icon" src="/assets/icons/scroller/stat.webp" alt="" loading="lazy" decoding="async" data-art-top="0.1" />
-          <img class="site-footer__icon" src="/assets/icons/scroller/cloud.webp" alt="" loading="lazy" decoding="async" data-art-top="0.1" />
+          <img class="site-footer__icon" src="/assets/icons/scroller/jumpback-1x2.webp" alt="" fetchpriority="low" decoding="async" data-art-top="0.035" />
+          <img class="site-footer__icon" src="/assets/icons/scroller/box.webp" alt="" fetchpriority="low" decoding="async" data-art-top="0.1" />
+          <img class="site-footer__icon" src="/assets/icons/scroller/mm.webp" alt="" fetchpriority="low" decoding="async" data-art-top="0.1" />
+          <img class="site-footer__icon" src="/assets/icons/scroller/folder.webp" alt="" fetchpriority="low" decoding="async" data-art-top="0.1" />
+          <img class="site-footer__icon" src="/assets/icons/scroller/gift.webp" alt="" fetchpriority="low" decoding="async" data-art-top="0.1" />
+          <img class="site-footer__icon" src="/assets/icons/scroller/random.webp" alt="" fetchpriority="low" decoding="async" data-art-top="0.1" />
+          <img class="site-footer__icon" src="/assets/icons/scroller/stat.webp" alt="" fetchpriority="low" decoding="async" data-art-top="0.1" />
+          <img class="site-footer__icon" src="/assets/icons/scroller/cloud.webp" alt="" fetchpriority="low" decoding="async" data-art-top="0.1" />
         </div>
         <span class="site-footer__kodo"><span class="site-footer__sprite"></span></span>
       </div>
@@ -511,6 +504,6 @@
       </figure>
     </dialog>
 
-    <script type="module" src="/scripts/main.js?v=100"></script>
+    <script type="module" src="/scripts/main.js?v=102"></script>
   </body>
 </html>
