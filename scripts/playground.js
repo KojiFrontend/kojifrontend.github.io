@@ -75,6 +75,7 @@ if (playground) {
     const step = (dt) => {
       const targetX = pointer.inside ? clampAxis(pointer.x, view.w, 0) : view.w / 2;
       const targetY = pointer.inside ? clampAxis(pointer.y, view.h, 0) : view.h / 2;
+      const shardRestRadius = Math.min(view.w, view.h) * 0.12;
       const damping = Math.exp(-3.2 * dt);
 
       bodies.forEach((body) => {
@@ -83,9 +84,9 @@ if (playground) {
         const dx = targetX - body.x;
         const dy = targetY - body.y;
         const distance = Math.hypot(dx, dy) || 1;
-        // Let fragments drift near the magnet instead of squeezing into the avatar pile.
+        // Pull fragments across the box, leaving room to settle near the magnet.
         const pull = body.shard
-          ? Math.min(160, Math.max(0, distance - Math.min(view.w, view.h) * 0.32) * 2)
+          ? Math.min(1000, Math.max(0, distance - shardRestRadius) * 8)
           : Math.min(1200, distance * 9);
         body.vx = (body.vx + (dx / distance) * pull * dt) * damping;
         body.vy = (body.vy + (dy / distance) * pull * dt) * damping;

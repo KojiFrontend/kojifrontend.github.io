@@ -3,6 +3,8 @@ const portraits = [...document.querySelectorAll('[data-motion-src]')];
 if (portraits.length && 'IntersectionObserver' in window) {
   const motion = matchMedia('(prefers-reduced-motion: no-preference)');
   const stills = new Map(portraits.map((portrait) => [portrait, portrait.getAttribute('src')]));
+  const requested = new Set();
+  const ready = new Set();
   const visible = new Set();
   let timer = 0;
 
@@ -17,7 +19,9 @@ if (portraits.length && 'IntersectionObserver' in window) {
     if (!motion.matches || document.hidden || !visible.size) return;
     timer = setTimeout(() => {
       timer = 0;
-      visible.forEach((portrait) => show(portrait, true));
+      visible.forEach((portrait) => {
+        if (ready.has(portrait)) show(portrait, true);
+      });
     }, 160);
   };
 
@@ -35,6 +39,19 @@ if (portraits.length && 'IntersectionObserver' in window) {
 
   const sync = () => {
     if (!motion.matches || document.hidden) visible.forEach((portrait) => show(portrait, false));
+    if (motion.matches) {
+      portraits.forEach((portrait) => {
+        if (requested.has(portrait)) return;
+        requested.add(portrait);
+        const image = new Image();
+        image.fetchPriority = 'low';
+        image.onload = () => {
+          ready.add(portrait);
+          if (visible.has(portrait)) schedule();
+        };
+        image.src = portrait.dataset.motionSrc;
+      });
+    }
     schedule();
   };
 
@@ -44,4 +61,5 @@ if (portraits.length && 'IntersectionObserver' in window) {
   document.addEventListener('visibilitychange', sync);
   motion.addEventListener('change', sync);
   portraits.forEach((portrait) => observer.observe(portrait));
+  sync();
 }

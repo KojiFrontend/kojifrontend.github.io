@@ -9,6 +9,10 @@ if (communityCameo && communityDancer && communityPaw && communitySection) {
   const ddHidden = () => document.documentElement.classList.contains('dd-gone');
   const ddAvatar = document.querySelector('.playground__avatar[data-dd-avatar]');
   const stage = document.querySelector('[data-playground]');
+  const trigger = communityCameo.querySelector('.community-cameo__trigger');
+  const touchInput = matchMedia('(pointer: coarse)');
+  let restoreButton;
+  let fromLeft = false;
 
   const shatterAvatar = () => {
     if (!ddAvatar) return;
@@ -16,6 +20,16 @@ if (communityCameo && communityDancer && communityPaw && communitySection) {
       stage.ddShards.shatter(ddAvatar);
       return;
     }
+    if (restoreButton) return;
+    restoreButton = document.createElement('button');
+    restoreButton.type = 'button';
+    restoreButton.className = 'dd-shard-restore';
+    restoreButton.setAttribute('aria-label', 'Bring DD back');
+    const picture = new Image();
+    picture.src = ddAvatar.src;
+    picture.alt = '';
+    restoreButton.append(picture);
+    ddAvatar.after(restoreButton);
     ddAvatar.style.display = 'none';
   };
 
@@ -25,12 +39,15 @@ if (communityCameo && communityDancer && communityPaw && communitySection) {
       stage.ddShards.reform(ddAvatar);
       return;
     }
+    restoreButton?.remove();
+    restoreButton = null;
     ddAvatar.style.display = '';
   };
 
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
   let typed = '';
   let busy = false;
+  let finishPunch;
 
   const sectionOnScreen = () => {
     const rect = communitySection.getBoundingClientRect();
@@ -79,16 +96,18 @@ if (communityCameo && communityDancer && communityPaw && communitySection) {
   };
 
   const positionPaw = () => {
-    const cameo = communityCameo.getBoundingClientRect();
-    const x = cameo.left + communityDancer.offsetLeft + communityDancer.offsetWidth * 0.5;
-    const y = cameo.top + communityDancer.offsetTop + communityDancer.offsetHeight * 0.43;
+    const dancer = communityDancer.getBoundingClientRect();
+    const x = dancer.left + dancer.width * 0.5;
+    const y = dancer.top + dancer.height * 0.43;
+    const distance = fromLeft ? x : innerWidth - x;
     communityCameo.style.setProperty('--paw-x', `${x}px`);
     communityCameo.style.setProperty('--paw-y', `${y}px`);
-    communityCameo.style.setProperty('--paw-width', `${Math.max(360, innerWidth - x + 48)}px`);
+    communityCameo.style.setProperty('--paw-width', `${Math.max(360, distance + 48)}px`);
+    communityCameo.style.setProperty('--paw-facing', fromLeft ? '-1' : '1');
+    communityCameo.style.setProperty('--paw-anchor', fromLeft ? '-98%' : '-2%');
   };
 
   const swipe = async (onContact) => {
-    communityPaw.loading = 'eager';
     await communityPaw.decode().catch(() => {});
     positionPaw();
     communityCameo.classList.add('is-punching');
@@ -101,9 +120,10 @@ if (communityCameo && communityDancer && communityPaw && communitySection) {
   window.addEventListener('resize', followPaw);
   window.addEventListener('scroll', followPaw, { passive: true });
 
-  const punch = () => {
-    if (busy) return;
+  const punch = (swipeFromLeft = false) => {
+    if (busy || ddHidden()) return;
     busy = true;
+    fromLeft = swipeFromLeft;
     const playSound = prepareSound();
 
     if (reduceMotion.matches) {
@@ -124,19 +144,28 @@ if (communityCameo && communityDancer && communityPaw && communitySection) {
       flying.style.setProperty('--dd-top', `${rect.top}px`);
       flying.style.setProperty('--dd-w', `${rect.width}px`);
       flying.style.setProperty('--dd-h', `${rect.height}px`);
+      flying.style.setProperty('--dd-fling-direction', fromLeft ? '1' : '-1');
       document.body.append(flying);
       communityCameo.classList.add('is-flung');
       playSound();
       shatterAvatar();
-      setTimeout(() => {
+      ddIsGone();
+      const cleanup = () => {
         flying.remove();
-        ddIsGone();
+        finishPunch = null;
         settle();
-      }, 900);
+      };
+      const timer = setTimeout(cleanup, 900);
+      finishPunch = () => {
+        clearTimeout(timer);
+        cleanup();
+      };
     });
   };
 
   const bringDdBack = () => {
+    if (!ddHidden()) return;
+    finishPunch?.();
     if (busy) return;
     busy = true;
     reformAvatar();
@@ -164,6 +193,31 @@ if (communityCameo && communityDancer && communityPaw && communitySection) {
 
   new Image().src = '/assets/community/ddfling.webp';
 
+  trigger?.addEventListener('click', (event) => punch(event.pointerType === 'touch' || touchInput.matches));
+
+  // The avatar also supports dragging, so only a short touch counts as a tap.
+  let avatarTouch;
+  ddAvatar?.addEventListener('pointerdown', (event) => {
+    if (event.pointerType !== 'touch' || !event.isPrimary) return;
+    avatarTouch = { id: event.pointerId, x: event.clientX, y: event.clientY, time: event.timeStamp };
+  });
+  ddAvatar?.addEventListener('pointermove', (event) => {
+    if (avatarTouch?.id === event.pointerId && Math.hypot(event.clientX - avatarTouch.x, event.clientY - avatarTouch.y) > 10) {
+      avatarTouch = null;
+    }
+  });
+  ddAvatar?.addEventListener('pointercancel', () => { avatarTouch = null; });
+  ddAvatar?.addEventListener('pointerup', (event) => {
+    if (avatarTouch?.id !== event.pointerId) return;
+    const tap = event.timeStamp - avatarTouch.time < 500
+      && Math.hypot(event.clientX - avatarTouch.x, event.clientY - avatarTouch.y) <= 10;
+    avatarTouch = null;
+    if (tap) punch(true);
+  });
+  stage?.addEventListener('click', (event) => {
+    if (event.target.closest('.dd-shard, .dd-shard-restore')) bringDdBack();
+  });
+
   document.addEventListener('keydown', (event) => {
     if (event.key.length !== 1 || event.repeat || event.metaKey || event.ctrlKey || event.altKey) return;
     if (!sectionOnScreen()) {
@@ -180,9 +234,5 @@ if (communityCameo && communityDancer && communityPaw && communitySection) {
     }
   });
 
-  if (ddHidden()) {
-    setTimeout(() => {
-      if (!(stage && stage.ddShards) && ddAvatar) ddAvatar.style.display = 'none';
-    }, 0);
-  }
+  if (ddHidden() && !stage?.ddShards) shatterAvatar();
 }

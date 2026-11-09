@@ -122,6 +122,13 @@
   filter: drop-shadow(0 6px 4px rgba(70, 50, 107, 0.17));
 }
 
+/* Compensate for transparent padding without changing the podium layout. */
+.team__portrait--scaled img {
+  transform-origin: center bottom;
+  scale: var(--mii-scale);
+  translate: 0 calc(var(--mii-height) * 0.022);
+}
+
 .team__identity {
   display: inline-flex;
   align-items: center;

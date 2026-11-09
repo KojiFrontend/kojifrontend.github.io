@@ -2,6 +2,10 @@
   background: linear-gradient(180deg, #F8FAFF, #F4F2FC 56%, #F8FAFF 80%);
 }
 
+#more {
+  padding-bottom: clamp(28px, 4vw, 52px);
+}
+
 .get-koji {
   scroll-margin-top: 24px;
 }
@@ -16,7 +20,7 @@
   grid-template-columns: minmax(0, 1fr) minmax(220px, 32%);
   align-items: start;
   gap: 30px clamp(30px, 6vw, 86px);
-  padding-block: clamp(40px, 5vw, 64px) clamp(26px, 4vw, 42px);
+  padding-block: clamp(30px, 4vw, 52px) clamp(26px, 4vw, 42px);
 }
 
 .get-koji h2 {
@@ -125,4 +129,18 @@
   height: 100%;
   background: url("/assets/footer/kodo-hops.svg") left top / 600% 100% no-repeat;
   image-rendering: pixelated;
+}
+
+@media (max-width: 560px) {
+  .site-footer__horizon {
+    height: 210px;
+  }
+
+  .site-footer__icon:nth-child(even) {
+    display: none;
+  }
+
+  .site-footer__icon {
+    width: min(var(--size, 56px), 18vw);
+  }
 }

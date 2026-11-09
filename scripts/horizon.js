@@ -12,12 +12,12 @@ if (horizon) {
 
   const rand = (min, max) => min + Math.random() * (max - min);
 
-  const layoutIcons = () => {
+  const layoutIcons = (visibleIcons) => {
     const box = horizon.getBoundingClientRect();
     const width = box.width || 1;
     const height = box.height || 1;
-    const slotWidth = width / icons.length;
-    icons.forEach((icon, index) => {
+    const slotWidth = width / visibleIcons.length;
+    visibleIcons.forEach((icon, index) => {
       const size = Math.round(rand(Math.min(slotWidth * 0.78, 74), Math.min(slotWidth * 1.2, 132)));
       const rotation = rand(-11, 11);
       const radians = (rotation * Math.PI) / 180;
@@ -25,7 +25,7 @@ if (horizon) {
       const reach = (size / 2) * (Math.abs(Math.cos(radians)) + Math.abs(Math.sin(radians)));
       const padX = Math.max(7, ((reach + 4) / width) * 100);
       const padY = Math.max(6, ((reach + 4) / height) * 100);
-      const x = Math.min(100 - padX, Math.max(padX, ((index + 0.5) / icons.length) * 100 + rand(-2, 2)));
+      const x = Math.min(100 - padX, Math.max(padX, ((index + 0.5) / visibleIcons.length) * 100 + rand(-2, 2)));
       const y = Math.min(100 - padY, Math.max(padY, 66 + rand(-3, 3)));
       icon.style.setProperty('--x', `${x.toFixed(1)}%`);
       icon.style.setProperty('--y', `${y.toFixed(1)}%`);
@@ -34,19 +34,18 @@ if (horizon) {
     });
   };
 
-  layoutIcons();
-
   const kodoPose = (x, y, rotation, facing) =>
     `translate3d(${x}px, ${y}px, 0) translate(-50%, -92.857%) rotate(${rotation}deg) scaleX(${facing})`;
 
   const updatePath = () => {
     animations.forEach((animation) => animation.cancel());
     animations = [];
-    if (!kodo || !sprite || !icons.length) return;
+    const visibleIcons = icons.filter((icon) => icon.getClientRects().length);
+    if (!kodo || !sprite || !visibleIcons.length) return;
     kodo.classList.toggle('is-hopping', motion.matches);
 
     const bounds = horizon.getBoundingClientRect();
-    const stops = icons
+    const stops = visibleIcons
       .map((icon) => {
         const rect = icon.getBoundingClientRect();
         const angle = parseFloat(icon.style.getPropertyValue('--rot')) || 0;
@@ -93,7 +92,7 @@ if (horizon) {
       const duration = Math.max(430, Math.min(1000, 300 + distance * 6.4));
 
       const headroom = Math.max(16, Math.min(from.y, to.y) - 8);
-      const lift = Math.max(14, Math.min(48, 14 + distance * 0.2, headroom));
+      const lift = Math.max(14, Math.min(bounds.width <= 560 ? 58 : 48, 14 + distance * 0.24, headroom));
       const takeoff = time + 130;
       const landing = takeoff + duration;
 
@@ -141,7 +140,7 @@ if (horizon) {
   };
 
   const relayout = () => {
-    layoutIcons();
+    layoutIcons(icons.filter((icon) => icon.getClientRects().length));
     updatePath();
   };
 
@@ -168,6 +167,6 @@ if (horizon) {
     if (!icon.complete) icon.addEventListener('load', schedulePath, { once: true });
   });
 
-  updatePath();
+  relayout();
   window.addEventListener('load', updatePath, { once: true });
 }
