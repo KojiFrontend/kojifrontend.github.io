@@ -147,11 +147,7 @@ if (horizon) {
   const resizeObserver = new ResizeObserver(relayout);
   resizeObserver.observe(horizon);
 
-  let layoutTimer = 0;
-  window.addEventListener('resize', () => {
-    clearTimeout(layoutTimer);
-    layoutTimer = setTimeout(relayout, 120);
-  });
+  // Rebuild only when the footer changes size. Toolbar resize events can restart a hop.
   const visibilityObserver = new IntersectionObserver(([entry]) => {
     visible = entry.isIntersecting;
     animations.forEach((animation) => (visible ? animation.play() : animation.pause()));
