@@ -295,13 +295,21 @@
   }
 
   .masthead {
+    --hero-nav-space: calc(var(--nav-height) + env(safe-area-inset-top));
     min-height: 100vh;
-    min-height: 100dvh;
+    min-height: 100lvh;
     margin: 0 0 10px;
-    padding-top: calc(var(--nav-height) + env(safe-area-inset-top));
+    padding-top: var(--hero-nav-space);
     border: 0;
     border-radius: 0;
     clip-path: inset(0 calc(var(--hero-frame, 0) * 10px) round calc(var(--hero-frame, 0) * 22px));
+  }
+
+  .masthead > .hero {
+    /* Keep the buttons above browser controls while the artwork extends behind them. */
+    flex: none;
+    min-height: calc(100vh - var(--hero-nav-space));
+    min-height: calc(100dvh - var(--hero-nav-space));
   }
 }
 

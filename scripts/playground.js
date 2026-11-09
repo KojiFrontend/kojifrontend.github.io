@@ -24,11 +24,11 @@ if (playground) {
       return Math.max(inset, Math.min(size - inset, value));
     };
 
-    const contain = (body) => {
+    const contain = (body, bounce = true) => {
       const x = clampAxis(body.x, view.w, body.r);
       const y = clampAxis(body.y, view.h, body.r);
-      if ((body.x - x) * body.vx > 0) body.vx *= -0.45;
-      if ((body.y - y) * body.vy > 0) body.vy *= -0.45;
+      if (bounce && (body.x - x) * body.vx > 0) body.vx *= -0.45;
+      if (bounce && (body.y - y) * body.vy > 0) body.vy *= -0.45;
       body.x = x;
       body.y = y;
     };
@@ -83,7 +83,10 @@ if (playground) {
         const dx = targetX - body.x;
         const dy = targetY - body.y;
         const distance = Math.hypot(dx, dy) || 1;
-        const pull = Math.min(1200, distance * 9);
+        // Let fragments drift near the magnet instead of squeezing into the avatar pile.
+        const pull = body.shard
+          ? Math.min(160, Math.max(0, distance - Math.min(view.w, view.h) * 0.32) * 2)
+          : Math.min(1200, distance * 9);
         body.vx = (body.vx + (dx / distance) * pull * dt) * damping;
         body.vy = (body.vy + (dy / distance) * pull * dt) * damping;
 
@@ -109,26 +112,27 @@ if (playground) {
             const distanceSquared = dx * dx + dy * dy;
             if (distanceSquared >= radius * radius) continue;
             const distance = Math.sqrt(distanceSquared);
-            const overlap = radius - distance;
+            const overlap = Math.max(0, radius - distance - 0.25);
 
             const nx = distance ? dx / distance : 1;
             const ny = distance ? dy / distance : 0;
             // Smaller pieces move more on impact. The dragged avatar stays under the pointer.
-          const aWeight = a === drag.body ? 0 : 1 / (a.r * a.r);
-          const bWeight = b === drag.body ? 0 : 1 / (b.r * b.r);
-          const aShare = aWeight / (aWeight + bWeight);
+            const aWeight = a === drag.body ? 0 : 1 / (a.r * a.r);
+            const bWeight = b === drag.body ? 0 : 1 / (b.r * b.r);
+            const aShare = aWeight / (aWeight + bWeight);
             const bShare = 1 - aShare;
             a.x -= nx * overlap * aShare;
             a.y -= ny * overlap * aShare;
             b.x += nx * overlap * bShare;
             b.y += ny * overlap * bShare;
-            contain(a);
-            contain(b);
+            contain(a, false);
+            contain(b, false);
 
             if (pass !== 0) continue;
             const approach = (b.vx - a.vx) * nx + (b.vy - a.vy) * ny;
             if (approach >= 0) continue;
-            const impulse = -1.35 * approach;
+            const restitution = Math.abs(approach) > 35 ? 0.35 : 0;
+            const impulse = -(1 + restitution) * approach;
             a.vx -= impulse * nx * aShare;
             a.vy -= impulse * ny * aShare;
             b.vx += impulse * nx * bShare;
@@ -142,7 +146,8 @@ if (playground) {
       if (!running) return;
       const dt = Math.min(0.032, Math.max(0.001, (now - previous) / 1000));
       previous = now;
-      step(dt);
+      const steps = bodies.length > avatars.length ? Math.ceil(dt * 144) : 1;
+      for (let index = 0; index < steps; index += 1) step(dt / steps);
       render();
       frame = requestAnimationFrame(tick);
     };
@@ -264,10 +269,10 @@ if (playground) {
     playground.ddShards = {
       shatter(el) {
         const body = bodyOf.get(el);
-        if (!body) return 0;
+        if (!body || !bodies.includes(body)) return 0;
         if (drag.body === body) endDrag();
 
-        const size = Math.max(24, Math.round(body.r * 2));
+        const size = body.r * 2;
         const cols = 5;
         const cell = size / cols;
         const src = `url("${el.currentSrc || el.src}")`;
@@ -285,23 +290,23 @@ if (playground) {
             ].join(';');
             layer.append(piece);
 
+            const offsetX = (col - (cols - 1) / 2) * cell;
+            const offsetY = (row - (cols - 1) / 2) * cell;
             const shard = {
               el: piece,
               shard: true,
               r: cell / 2,
-              x: body.x + (col - (cols - 1) / 2) * cell,
-              y: body.y + (row - (cols - 1) / 2) * cell,
-              vx: (Math.random() - 0.5) * 460,
-              vy: (Math.random() - 0.5) * 460
+              x: body.x + offsetX,
+              y: body.y + offsetY,
+              vx: body.vx * 0.35 + offsetX * 7 + (Math.random() - 0.5) * 60,
+              vy: body.vy * 0.35 + offsetY * 7 + (Math.random() - 0.5) * 60
             };
             contain(shard);
             bodies.push(shard);
           }
         }
 
-        el.ddHome = { x: body.x, y: body.y };
         bodies.splice(bodies.indexOf(body), 1);
-        bodyOf.delete(el);
         el.style.display = 'none';
         render();
         start();
@@ -309,7 +314,8 @@ if (playground) {
       },
 
       reform(el) {
-        if (!el) return 0;
+        const body = bodyOf.get(el);
+        if (!body || bodies.includes(body)) return 0;
         let removed = 0;
         for (let index = bodies.length - 1; index >= 0; index -= 1) {
           const candidate = bodies[index];
@@ -319,18 +325,11 @@ if (playground) {
             removed += 1;
           }
         }
-        if (bodyOf.has(el)) return removed;
-
         el.style.display = '';
-        const home = el.ddHome || { x: view.w / 2, y: view.h / 2 };
-        const body = {
-          el,
-          r: el.getBoundingClientRect().width / 2,
-          x: home.x,
-          y: home.y,
-          vx: 0,
-          vy: 0
-        };
+        body.r = el.getBoundingClientRect().width / 2;
+        body.vx = 0;
+        body.vy = 0;
+        body.renderedX = body.renderedY = undefined;
         contain(body);
         const clearance = (x, y) => Math.min(...bodies.map((other) =>
           Math.hypot(other.x - x, other.y - y) - other.r - body.r
@@ -348,7 +347,6 @@ if (playground) {
           body.y = best.y;
         }
         bodies.push(body);
-        bodyOf.set(el, body);
         render();
         start();
         return removed;
