@@ -1,0 +1,241 @@
+.wrap {
+  max-width: var(--max);
+  margin-inline: auto;
+}
+
+.section {
+  padding: clamp(64px, 9vw, 108px) clamp(16px, 4vw, 32px);
+}
+
+.section__head {
+  display: grid;
+  gap: 10px;
+  max-width: 64ch;
+}
+
+.section__title {
+  max-width: 26ch;
+  font-size: clamp(27px, 4.1vw, 40px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.032em;
+  text-wrap: balance;
+}
+
+.section__icon {
+  width: 0.86em;
+  height: 0.86em;
+  margin-right: 0.24em;
+  vertical-align: -0.05em;
+}
+
+.section__icon--themes {
+  color: #8E6BF3;
+}
+
+.section__icon--community {
+  color: #EF6B90;
+}
+
+.section__icon--more {
+  color: #3E9BFF;
+}
+
+.section__lede {
+  max-width: 56ch;
+  color: #5A5F71;
+  font-size: clamp(15px, 1.7vw, 16.5px);
+  font-weight: 600;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(10px, 1.3vw, 14px);
+  margin-top: clamp(24px, 3.6vw, 34px);
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow: hidden;
+  padding: clamp(15px, 1.8vw, 20px);
+  border: var(--panel-stroke-width) solid var(--panel-stroke);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(
+    90deg,
+    #FFFFFF 0%,
+    #FFFFFF 58%,
+    color-mix(in srgb, rgb(var(--tint, 206 222 255)) 14%, #FFFFFF) 100%
+  );
+  box-shadow: var(--panel-shadow);
+  text-align: left;
+}
+
+.card--wide {
+  grid-column: 1 / -1;
+}
+
+.card--shot {
+  cursor: pointer;
+  transition: transform 0.18s ease;
+}
+
+.card--shot:hover {
+  transform: translateY(-2px);
+}
+
+.card--shot:active {
+  transform: translateY(0);
+}
+
+.card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.card__title {
+  color: var(--ink);
+  font-size: clamp(17px, 1.9vw, 20px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.card__icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  color: rgb(var(--tint, 206 222 255));
+}
+
+.card__icon .icon {
+  width: 34px;
+  height: 34px;
+}
+
+.card__icon .icon::before {
+  -webkit-mask-size: contain, calc(100% - 8px) calc(100% - 8px);
+  mask-size: contain, calc(100% - 8px) calc(100% - 8px);
+}
+
+.card__text {
+  color: #5A5F71;
+  font-size: clamp(13.5px, 1.45vw, 14.5px);
+  font-weight: 600;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.card--wide .card__text {
+  max-width: 72ch;
+}
+
+.card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  align-self: flex-start;
+  margin-top: 6px;
+  color: #5A5F71;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+}
+
+.card__link span {
+  transition: transform 0.16s ease;
+}
+
+.card__link:hover {
+  color: var(--ink);
+}
+
+.card__link:hover span {
+  transform: translateX(3px);
+}
+
+.card--link:hover .card__link {
+  color: var(--ink);
+}
+
+.card--link:hover .card__link span {
+  transform: translateX(3px);
+}
+
+.card-divider {
+  grid-column: 1 / -1;
+  border: 0;
+  border-top: 1px solid var(--line-strong);
+  margin-block: 4px;
+}
+
+.card-hint {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.lightbox {
+  width: fit-content;
+  max-width: calc(100vw - 32px);
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: transparent;
+  box-shadow: 0 34px 80px -26px rgba(16, 16, 24, 0.45);
+}
+
+.lightbox::backdrop {
+  background: rgba(14, 14, 20, 0.55);
+}
+
+.lightbox__panel {
+  display: grid;
+  place-items: center;
+  padding: clamp(10px, 2vw, 16px);
+  border: 1px solid var(--line);
+  border-radius: inherit;
+  background: var(--card-surface);
+}
+
+.lightbox__art {
+  display: block;
+  max-width: min(720px, calc(100vw - 66px));
+  max-height: min(72dvh, 780px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: calc(var(--radius-lg) - 12px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .lightbox[open] {
+    animation: screenshot-in 150ms ease-out both;
+  }
+
+  .lightbox[open]::backdrop {
+    animation: backdrop-in 150ms ease-out both;
+  }
+
+  @keyframes screenshot-in {
+    from { opacity: 0; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes backdrop-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
