@@ -1,0 +1,7 @@
+cat > vercel.json <<'EOF'
+{
+  "framework": null,
+  "buildCommand": null,
+  "outputDirectory": "."
+}
+EOF
