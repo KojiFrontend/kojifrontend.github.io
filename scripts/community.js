@@ -10,7 +10,11 @@ if (communityCameo && communityDancer && communityPaw && communitySection) {
   const ddAvatar = document.querySelector('.playground__avatar[data-dd-avatar]');
   const stage = document.querySelector('[data-playground]');
   const trigger = communityCameo.querySelector('.community-cameo__trigger');
+  const swipeLayer = communityPaw.parentElement;
   const touchInput = matchMedia('(pointer: coarse)');
+  const danceSrc = communityDancer.getAttribute('src');
+  const flingArt = new Image();
+  flingArt.src = '/assets/community/ddfling.webp';
   let restoreButton;
   let fromLeft = false;
 
@@ -60,7 +64,8 @@ if (communityCameo && communityDancer && communityPaw && communitySection) {
   };
 
   const settle = () => {
-    communityCameo.classList.remove('is-punching', 'is-flung');
+    if (communityCameo.classList.contains('is-aiming')) communityDancer.src = danceSrc;
+    communityCameo.classList.remove('is-punching', 'is-flung', 'is-aiming');
     communityCameo.style.cssText = '';
     busy = false;
   };
@@ -96,16 +101,16 @@ if (communityCameo && communityDancer && communityPaw && communitySection) {
 
   const positionPaw = (target) => {
     const rect = target.getBoundingClientRect();
-    // The dancer moves sideways inside the image. Sweep across that space.
-    const contactX = target === communityDancer ? (fromLeft ? 0.78 : 0.23) : 0.5;
-    const x = rect.left + rect.width * contactX;
-    const y = rect.top + rect.height * 0.5;
-    const distance = fromLeft ? x : innerWidth - x;
+    const layer = swipeLayer.getBoundingClientRect();
+    // Measure both in client coordinates, then position inside the fixed swipe layer.
+    const x = rect.left + rect.width / 2 - layer.left;
+    const y = rect.top + rect.height / 2 - layer.top;
+    const distance = fromLeft ? x : layer.width - x;
     communityCameo.style.setProperty('--paw-x', `${x}px`);
     communityCameo.style.setProperty('--paw-y', `${y}px`);
     communityCameo.style.setProperty('--paw-width', `${Math.max(360, distance + 48)}px`);
     communityCameo.style.setProperty('--paw-facing', fromLeft ? '-1' : '1');
-    communityCameo.style.setProperty('--paw-anchor', fromLeft ? '-96.5%' : '-3.5%');
+    communityCameo.style.setProperty('--paw-anchor', fromLeft ? '-95%' : '-5%');
   };
 
   const swipe = async (target, onContact) => {
@@ -138,12 +143,21 @@ if (communityCameo && communityDancer && communityPaw && communitySection) {
       return;
     }
 
+    if (target === communityDancer && flingArt.naturalWidth) {
+      // Hold a centered pose during the swipe so the moving dance frame can't dodge it.
+      const rect = target.getBoundingClientRect();
+      communityCameo.style.setProperty('--dd-w', `${rect.width}px`);
+      communityCameo.style.setProperty('--dd-h', `${rect.height}px`);
+      communityCameo.classList.add('is-aiming');
+      communityDancer.src = flingArt.src;
+    }
+
     swipe(target, () => {
       const rect = target.getBoundingClientRect();
       const flying = communityDancer.cloneNode(true);
       flying.className = 'community-cameo__dancer is-flying';
       flying.removeAttribute('data-dd');
-      flying.src = '/assets/community/ddfling.webp';
+      flying.src = flingArt.src;
       flying.style.setProperty('--dd-left', `${rect.left}px`);
       flying.style.setProperty('--dd-top', `${rect.top}px`);
       flying.style.setProperty('--dd-w', `${rect.width}px`);
@@ -185,17 +199,15 @@ if (communityCameo && communityDancer && communityPaw && communitySection) {
     const rect = communityDancer.getBoundingClientRect();
     communityCameo.style.setProperty('--dd-w', `${rect.width}px`);
     communityCameo.style.setProperty('--dd-h', `${rect.height}px`);
-    communityDancer.src = '/assets/community/ddfling.webp';
+    communityDancer.src = flingArt.src;
     communityCameo.classList.add('is-returning');
 
     setTimeout(() => {
       communityCameo.classList.remove('is-returning');
-      communityDancer.src = '/assets/community/dddance.webp';
+      communityDancer.src = danceSrc;
       settle();
     }, 800);
   };
-
-  new Image().src = '/assets/community/ddfling.webp';
 
   trigger?.addEventListener('click', (event) => punch(event.pointerType === 'touch' || touchInput.matches));
 
@@ -222,12 +234,11 @@ if (communityCameo && communityDancer && communityPaw && communitySection) {
     if (!ddHidden()) return;
     const directHit = event.target.closest('.dd-shard, .dd-shard-restore');
     const touchTap = event.pointerType === 'touch' || touchInput.matches;
-    const nearShard = touchTap && !event.target.closest('.playground__avatar')
-      && [...stage.querySelectorAll('.dd-shard')].some((shard) => {
-        const rect = shard.getBoundingClientRect();
-        return Math.hypot(event.clientX - rect.left - rect.width / 2,
-          event.clientY - rect.top - rect.height / 2) <= 24;
-      });
+    const nearShard = touchTap && [...stage.querySelectorAll('.dd-shard')].some((shard) => {
+      const rect = shard.getBoundingClientRect();
+      return Math.hypot(event.clientX - rect.left - rect.width / 2,
+        event.clientY - rect.top - rect.height / 2) <= 30;
+    });
     if (directHit || nearShard) bringDdBack();
   });
 

@@ -6,8 +6,9 @@ if (horizon) {
   const sprite = kodo ? kodo.querySelector('.site-footer__sprite') : null;
   const motion = matchMedia('(prefers-reduced-motion: no-preference)');
   const poses = { idle: 0, crouch: 1, push: 2, float: 3, reach: 4, land: 5 };
-  let visible = false;
-  let animations = [];
+  let frame = 0;
+  let startedAt;
+  let renderHop;
   let pathTimer = 0;
 
   const rand = (min, max) => min + Math.random() * (max - min);
@@ -38,8 +39,10 @@ if (horizon) {
     `translate3d(${x}px, ${y}px, 0) translate(-50%, -92.857%) rotate(${rotation}deg) scaleX(${facing})`;
 
   const updatePath = () => {
-    animations.forEach((animation) => animation.cancel());
-    animations = [];
+    cancelAnimationFrame(frame);
+    frame = 0;
+    renderHop = null;
+    startedAt = undefined;
     const visibleIcons = icons.filter((icon) => icon.getClientRects().length);
     if (!kodo || !sprite || !visibleIcons.length) return;
     kodo.classList.toggle('is-hopping', motion.matches);
@@ -64,6 +67,7 @@ if (horizon) {
 
     if (!motion.matches) {
       kodo.style.transform = kodoPose(stops[0].x, stops[0].y, stops[0].angle || 0, 1);
+      sprite.style.backgroundPosition = '0% 0%';
       return;
     }
 
@@ -71,7 +75,7 @@ if (horizon) {
     const frames = [];
     const spriteFrames = [{ time: 0, pose: poses.idle }];
     const addFrame = (time, x, y, angle = 0, facing = 1) => {
-      frames.push({ time, transform: kodoPose(x, y, angle, facing) });
+      frames.push({ time, x, y, angle, facing });
     };
 
     const faceOf = (from, to) => (to.x >= from.x ? -1 : 1);
@@ -127,16 +131,45 @@ if (horizon) {
     addFrame(time, last.x, last.y, angleAt(last), faceOf(route[route.length - 2] ?? last, last));
     spriteFrames.push({ time, pose: poses.idle });
 
-    const timing = { duration: time, iterations: Infinity };
-    animations = [
-      kodo.animate(frames.map(({ time: at, transform }) => ({ transform, offset: at / time })), timing),
-      sprite.animate(spriteFrames.map(({ time: at, pose }) => ({
-        backgroundPosition: `${pose * 20}% 0%`,
-        easing: 'steps(1, end)',
-        offset: at / time
-      })), timing)
-    ];
-    if (!visible) animations.forEach((animation) => animation.pause());
+    let lastPose;
+    renderHop = (elapsed) => {
+      const at = elapsed % time;
+      const next = frames.findIndex((keyframe) => keyframe.time > at);
+      const from = frames[next - 1];
+      const to = frames[next];
+      const progress = (at - from.time) / (to.time - from.time);
+      const mix = (start, end) => start + (end - start) * progress;
+      kodo.style.transform = kodoPose(mix(from.x, to.x), mix(from.y, to.y),
+        mix(from.angle, to.angle), from.facing);
+      const pose = spriteFrames[spriteFrames.findIndex((keyframe) => keyframe.time > at) - 1].pose;
+      if (pose !== lastPose) {
+        sprite.style.backgroundPosition = `${pose * 20}% 0%`;
+        lastPose = pose;
+      }
+    };
+    renderHop(0);
+    syncPlayback();
+  };
+
+  const tick = (now) => {
+    startedAt ??= now;
+    renderHop(now - startedAt);
+    frame = requestAnimationFrame(tick);
+  };
+
+  const syncPlayback = () => {
+    const rect = horizon.getBoundingClientRect();
+    const viewport = window.visualViewport;
+    const top = viewport?.offsetTop ?? 0;
+    const bottom = top + (viewport?.height ?? innerHeight);
+    const visible = rect.top < bottom && rect.bottom > top;
+    if (renderHop && visible && !document.hidden) {
+      if (!frame) frame = requestAnimationFrame(tick);
+    } else if (frame) {
+      cancelAnimationFrame(frame);
+      frame = 0;
+      startedAt = undefined;
+    }
   };
 
   const relayout = () => {
@@ -147,12 +180,12 @@ if (horizon) {
   const resizeObserver = new ResizeObserver(relayout);
   resizeObserver.observe(horizon);
 
-  // Rebuild only when the footer changes size. Toolbar resize events can restart a hop.
-  const visibilityObserver = new IntersectionObserver(([entry]) => {
-    visible = entry.isIntersecting;
-    animations.forEach((animation) => (visible ? animation.play() : animation.pause()));
-  });
-  visibilityObserver.observe(horizon);
+  // Measure against the visible viewport, including when the browser toolbar moves.
+  window.addEventListener('scroll', syncPlayback, { passive: true });
+  window.addEventListener('resize', syncPlayback);
+  window.visualViewport?.addEventListener('resize', syncPlayback);
+  window.visualViewport?.addEventListener('scroll', syncPlayback);
+  document.addEventListener('visibilitychange', syncPlayback);
   motion.addEventListener('change', updatePath);
 
   const schedulePath = () => {
