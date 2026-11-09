@@ -33,18 +33,28 @@ if (heroActions) {
 
 if (masthead) {
   const fullBleed = matchMedia('(max-width: 940px)');
+  const portraitPhone = matchMedia('(max-width: 560px) and (orientation: portrait) and (pointer: coarse)');
+  const page = document.documentElement;
   let frame = 0;
+
+  const syncScreenHeight = () => {
+    if (portraitPhone.matches) {
+      masthead.style.setProperty('--hero-screen-height', `${screen.height}px`);
+    } else {
+      masthead.style.removeProperty('--hero-screen-height');
+    }
+  };
 
   const syncFrame = () => {
     frame = 0;
     if (!fullBleed.matches) {
-      masthead.style.removeProperty('--hero-frame');
+      page.style.removeProperty('--hero-frame');
       return;
     }
     const progress = Math.max(0, Math.min(1, scrollY / 110));
     const value = progress.toFixed(3);
-    if (masthead.style.getPropertyValue('--hero-frame') !== value) {
-      masthead.style.setProperty('--hero-frame', value);
+    if (page.style.getPropertyValue('--hero-frame') !== value) {
+      page.style.setProperty('--hero-frame', value);
     }
   };
 
@@ -52,6 +62,8 @@ if (masthead) {
     if (fullBleed.matches && !frame) frame = requestAnimationFrame(syncFrame);
   }, { passive: true });
   fullBleed.addEventListener('change', syncFrame);
+  portraitPhone.addEventListener('change', syncScreenHeight);
+  syncScreenHeight();
   syncFrame();
 }
 

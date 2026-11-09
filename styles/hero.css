@@ -285,23 +285,34 @@
     width: min(230px, 100%);
   }
 
+  html {
+    --hero-edge: #e3edff;
+    background-color: var(--hero-edge);
+    background-color: color-mix(in srgb, var(--hero-edge), white calc(var(--hero-frame, 0) * 100%));
+  }
+
+  body {
+    background-color: transparent;
+  }
+
   .topbar {
     position: absolute;
     z-index: 3;
     inset: 0 0 auto;
     padding-top: env(safe-area-inset-top);
     padding-inline: max(14px, env(safe-area-inset-left)) max(14px, env(safe-area-inset-right));
-    background: linear-gradient(180deg, #f5f9fff5, #f5f9ffdf 76%, #f5f9ff00);
+    background: linear-gradient(180deg, var(--hero-edge) env(safe-area-inset-top), #e3edffdf 76%, #e3edff00);
   }
 
   .masthead {
     --hero-nav-space: calc(var(--nav-height) + env(safe-area-inset-top));
     min-height: 100vh;
-    min-height: 100lvh;
+    min-height: max(100lvh, var(--hero-screen-height, 0px));
     margin: 0 0 10px;
     padding-top: var(--hero-nav-space);
     border: 0;
     border-radius: 0;
+    background-color: var(--hero-edge);
     clip-path: inset(0 calc(var(--hero-frame, 0) * 10px) round calc(var(--hero-frame, 0) * 22px));
   }
 
@@ -310,6 +321,15 @@
     flex: none;
     min-height: calc(100vh - var(--hero-nav-space));
     min-height: calc(100dvh - var(--hero-nav-space));
+  }
+
+  .masthead::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    /* Give the browser a consistent color at the bottom edge of the artwork. */
+    background: linear-gradient(to bottom, transparent calc(100dvh - 2rem), var(--hero-edge) 100dvh);
   }
 }
 
