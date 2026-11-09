@@ -65,7 +65,6 @@ if (communityCameo && communityDancer && communityPaw && communitySection) {
     busy = false;
   };
 
-  const contactDelay = 600;
   let soundContext;
   let soundBuffer;
 
@@ -95,32 +94,37 @@ if (communityCameo && communityDancer && communityPaw && communitySection) {
     }
   };
 
-  const positionPaw = () => {
-    const dancer = communityDancer.getBoundingClientRect();
-    const x = dancer.left + dancer.width * 0.5;
-    const y = dancer.top + dancer.height * 0.43;
+  const positionPaw = (target) => {
+    const rect = target.getBoundingClientRect();
+    // The dancer moves sideways inside the image. Sweep across that space.
+    const contactX = target === communityDancer ? (fromLeft ? 0.78 : 0.23) : 0.5;
+    const x = rect.left + rect.width * contactX;
+    const y = rect.top + rect.height * 0.5;
     const distance = fromLeft ? x : innerWidth - x;
     communityCameo.style.setProperty('--paw-x', `${x}px`);
     communityCameo.style.setProperty('--paw-y', `${y}px`);
     communityCameo.style.setProperty('--paw-width', `${Math.max(360, distance + 48)}px`);
     communityCameo.style.setProperty('--paw-facing', fromLeft ? '-1' : '1');
-    communityCameo.style.setProperty('--paw-anchor', fromLeft ? '-98%' : '-2%');
+    communityCameo.style.setProperty('--paw-anchor', fromLeft ? '-96.5%' : '-3.5%');
   };
 
-  const swipe = async (onContact) => {
+  const swipe = async (target, onContact) => {
     await communityPaw.decode().catch(() => {});
-    positionPaw();
+    let trackingFrame;
+    const track = () => {
+      positionPaw(target);
+      trackingFrame = requestAnimationFrame(track);
+    };
+    track();
     communityCameo.classList.add('is-punching');
-    setTimeout(onContact, contactDelay);
+    const lunge = communityPaw.getAnimations().find((animation) => animation.animationName === 'paw-lunge');
+    await lunge?.finished.catch(() => {});
+    cancelAnimationFrame(trackingFrame);
+    positionPaw(target);
+    onContact();
   };
 
-  const followPaw = () => {
-    if (communityCameo.classList.contains('is-punching')) positionPaw();
-  };
-  window.addEventListener('resize', followPaw);
-  window.addEventListener('scroll', followPaw, { passive: true });
-
-  const punch = (swipeFromLeft = false) => {
+  const punch = (swipeFromLeft = false, target = communityDancer) => {
     if (busy || ddHidden()) return;
     busy = true;
     fromLeft = swipeFromLeft;
@@ -134,8 +138,8 @@ if (communityCameo && communityDancer && communityPaw && communitySection) {
       return;
     }
 
-    swipe(() => {
-      const rect = communityDancer.getBoundingClientRect();
+    swipe(target, () => {
+      const rect = target.getBoundingClientRect();
       const flying = communityDancer.cloneNode(true);
       flying.className = 'community-cameo__dancer is-flying';
       flying.removeAttribute('data-dd');
@@ -212,10 +216,19 @@ if (communityCameo && communityDancer && communityPaw && communitySection) {
     const tap = event.timeStamp - avatarTouch.time < 500
       && Math.hypot(event.clientX - avatarTouch.x, event.clientY - avatarTouch.y) <= 10;
     avatarTouch = null;
-    if (tap) punch(true);
+    if (tap) punch(true, ddAvatar);
   });
   stage?.addEventListener('click', (event) => {
-    if (event.target.closest('.dd-shard, .dd-shard-restore')) bringDdBack();
+    if (!ddHidden()) return;
+    const directHit = event.target.closest('.dd-shard, .dd-shard-restore');
+    const touchTap = event.pointerType === 'touch' || touchInput.matches;
+    const nearShard = touchTap && !event.target.closest('.playground__avatar')
+      && [...stage.querySelectorAll('.dd-shard')].some((shard) => {
+        const rect = shard.getBoundingClientRect();
+        return Math.hypot(event.clientX - rect.left - rect.width / 2,
+          event.clientY - rect.top - rect.height / 2) <= 24;
+      });
+    if (directHit || nearShard) bringDdBack();
   });
 
   document.addEventListener('keydown', (event) => {
