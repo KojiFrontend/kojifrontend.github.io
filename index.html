@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Home | Koji</title>
+    <meta name="description" content="Koji is a sleek, fun, and inspired frontend for handheld devices." />
+    <meta name="theme-color" content="#FFFFFF" />
+    <meta name="color-scheme" content="light" />
+    <script>
+      if (/(?:^|;\s*)koji_dd_out=1/.test(document.cookie)) {
+        document.documentElement.classList.add('dd-gone');
+      }
+    </script>
+    <link rel="icon" type="image/png" href="/assets/brand/favicon.png" />
+    <link rel="apple-touch-icon" href="/assets/brand/favicon.png" />
+    <link rel="canonical" href="https://koji.fyi/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Koji" />
+    <meta property="og:url" content="https://koji.fyi/" />
+    <meta property="og:title" content="Koji — The frontend made for you" />
+    <meta property="og:description" content="Koji is a sleek, fun, and inspired frontend for handheld devices." />
+    <meta property="og:image" content="https://koji.fyi/assets/brand/embed-banner.jpg" />
+    <meta property="og:image:width" content="1938" />
+    <meta property="og:image:height" content="1176" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Koji — The frontend made for you" />
+    <meta name="twitter:description" content="Koji is a sleek, fun, and inspired frontend for handheld devices." />
+    <meta name="twitter:image" content="https://koji.fyi/assets/brand/embed-banner.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Roboto+Condensed:wght@700&family=Rubik:wght@500;600;700;800;900&family=Nunito:wght@400;600;700;800&family=Instrument+Serif:ital@0;1&family=Redaction+50&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles/base.css?v=86" />
+    <link rel="stylesheet" href="/styles/header.css?v=86" />
+    <link rel="stylesheet" href="/styles/hero.css?v=86" />
+    <link rel="stylesheet" href="/styles/sections.css?v=86" />
+    <link rel="stylesheet" href="/styles/themes.css?v=86" />
+    <link rel="stylesheet" href="/styles/community.css?v=86" />
+    <link rel="stylesheet" href="/styles/team.css?v=86" />
+    <link rel="stylesheet" href="/styles/footer.css?v=86" />
+    <link rel="stylesheet" href="/styles/responsive.css?v=86" />
+  </head>
+  <body>
+    <header class="topbar">
+      <nav class="nav" aria-label="Primary">
+        <a class="brand" href="#top">
+          <img class="brand__mark" src="/assets/brand/glyph-round.webp" alt="" width="512" height="512" />
+          <span class="brand__name">Koji</span>
+        </a>
+        <div class="nav__links">
+          <a class="nav__link" href="#what">What Koji is</a>
+          <a class="nav__link" href="#themes">Themes</a>
+          <a class="nav__link" href="#community">Community</a>
+          <a class="nav__link" href="#team">Team</a>
+          <a class="nav__link" href="#more">More</a>
+        </div>
+        <a class="btn btn--sm" href="#">Download</a>
+      </nav>
+    </header>
+
+    <section class="masthead" id="top">
+      <div class="hero">
+        <h1 class="hero__title">
+          <span class="hero__line">The handheld</span>
+          <span class="hero__line hero__line--indent">frontend made</span>
+          <span class="hero__line">for <span class="hero__you is-roboto-condensed">you</span></span>
+        </h1>
+
+        <figure class="hero__shelf" data-console>
+          <div class="hero__devices">
+            <div class="hero__device hero__device--thor">
+              <img
+                src="/assets/home/thor-640.webp"
+                srcset="/assets/home/thor-640.webp 640w, /assets/home/thor-1080.webp 1080w"
+                sizes="(max-width: 700px) 60vw, 31vw"
+                width="1080"
+                height="1239"
+                alt="Thor clamshell handheld running Koji across both screens"
+              />
+            </div>
+            <div class="hero__device hero__device--odin">
+              <img
+                src="/assets/home/odin-880.webp"
+                srcset="/assets/home/odin-880.webp 880w, /assets/home/odin-1560.webp 1560w"
+                sizes="(max-width: 700px) 76vw, 42vw"
+                width="1560"
+                height="643"
+                alt="Odin handheld showing the Koji game library"
+                fetchpriority="high"
+              />
+            </div>
+          </div>
+        </figure>
+
+      </div>
+
+      <div class="masthead__floaters" aria-hidden="true">
+        <img src="/assets/icons/scroller/jumpback-1x2.webp" alt="" decoding="async" />
+        <img src="/assets/icons/scroller/box.webp" alt="" decoding="async" />
+        <img src="/assets/icons/scroller/kodo.webp" alt="" decoding="async" />
+        <img src="/assets/icons/scroller/mm.webp" alt="" decoding="async" />
+        <img src="/assets/icons/scroller/folder.webp" alt="" decoding="async" />
+        <img src="/assets/icons/scroller/gift.webp" alt="" decoding="async" />
+        <img src="/assets/icons/scroller/random.webp" alt="" decoding="async" />
+        <img src="/assets/icons/scroller/stat.webp" alt="" decoding="async" />
+        <img src="/assets/icons/scroller/cloud.webp" alt="" decoding="async" />
+      </div>
+    </section>
+
+    <div class="hero__actions" data-hero-actions>
+      <a class="btn" href="https://ko-fi.com/brocolabs" target="_blank" rel="noreferrer">Get early access</a>
+      <a class="hero__secondary" href="#what">See what's inside <span class="icon icon--down" aria-hidden="true"></span></a>
+    </div>
+
+    <main>
+      <section class="section" id="what">
+        <div class="wrap">
+          <div class="section__head">
+            <div>
+              <h2 class="section__title">A reimagining of the 3DS, as if it were made today.</h2>
+            </div>
+            <p class="section__lede">
+              Nothing is added without considering how it fits with everything already there.
+            </p>
+          </div>
+
+          <div class="card-grid">
+            <article class="card card--shot" role="button" tabindex="0" aria-haspopup="dialog" data-shot="/assets/shots/shop.webp" data-shot-size="1163x1400" style="--tint: 240 96 48">
+              <div class="card__head">
+                <h3 class="card__title">KoShop</h3>
+                <span class="card__icon"><span class="icon icon--store" aria-hidden="true"></span></span>
+              </div>
+              <p class="card__text">A built-in shop for themes, games, and more!</p>
+            </article>
+
+            <article class="card card--shot" role="button" tabindex="0" aria-haspopup="dialog" data-shot="/assets/shots/leaflet.webp" data-shot-size="508x594" style="--tint: 72 200 72">
+              <div class="card__head">
+                <h3 class="card__title">Leaflet</h3>
+                <span class="card__icon"><span class="icon icon--chat" aria-hidden="true"></span></span>
+              </div>
+              <p class="card__text">Our PictoChat-inspired social platform built on Pocketpass.</p>
+            </article>
+
+            <article class="card card--shot" role="button" tabindex="0" aria-haspopup="dialog" data-shot="/assets/shots/discord.webp" data-shot-size="1240x1208" style="--tint: 88 101 242">
+              <div class="card__head">
+                <h3 class="card__title">Discord</h3>
+                <span class="card__icon"><span class="icon icon--discord" aria-hidden="true"></span></span>
+              </div>
+              <p class="card__text">Supports Discord Rich Presence when browsing or playing a game.</p>
+            </article>
+
+            <article class="card card--shot" role="button" tabindex="0" aria-haspopup="dialog" data-shot="/assets/shots/media.webp" data-shot-size="1163x1400" style="--tint: 240 96 96">
+              <div class="card__head">
+                <h3 class="card__title">Media</h3>
+                <span class="card__icon"><span class="icon icon--media" aria-hidden="true"></span></span>
+              </div>
+              <p class="card__text">Relive your best moments with media!</p>
+            </article>
+
+            <article class="card card--wide" style="--tint: 144 120 240">
+              <div class="card__head">
+                <h3 class="card__title">The Little Things</h3>
+                <span class="card__icon"><span class="icon icon--apps" aria-hidden="true"></span></span>
+              </div>
+              <p class="card__text">
+                Folders, favorites, playtime, and a random game picker all fit into the same home
+                menu. Don’t like the defaults? Koji has settings for just about everything.
+              </p>
+            </article>
+          </div>
+
+          <p class="card-hint">Click any card to see a screenshot.</p>
+        </div>
+      </section>
+
+      <section class="section" id="themes">
+        <div class="wrap">
+          <div class="section__head">
+            <div>
+              <h2 class="section__title"><span class="icon icon--palette section__icon section__icon--themes" aria-hidden="true"></span>Themes for every occasion</h2>
+            </div>
+            <p class="section__lede">Give both screens a fresh look</p>
+          </div>
+
+          <div class="theme-showcase" data-theme-showcase>
+            <div class="theme-showcase__stage" aria-hidden="true">
+              <div class="theme-showcase__console">
+                <img class="theme-showcase__shell" data-theme-shell src="/assets/themes/thor-rainbow.webp" width="1400" height="1585" alt="" loading="lazy" decoding="async" />
+                <span class="theme-showcase__screen theme-showcase__screen--top">
+                  <span class="theme-showcase__layer is-visible" data-screen="top" style="background-image: url(&quot;/assets/themes/light-top.webp&quot;)"></span>
+                  <span class="theme-showcase__layer" data-screen="top"></span>
+                </span>
+                <span class="theme-showcase__screen theme-showcase__screen--bottom">
+                  <span class="theme-showcase__layer is-visible" data-screen="bottom" style="background-image: url(&quot;/assets/themes/light-bottom.webp&quot;)"></span>
+                  <span class="theme-showcase__layer" data-screen="bottom"></span>
+                </span>
+              </div>
+            </div>
+
+            <div class="theme-showcase__panel">
+              <div class="theme-showcase__options" role="group" aria-label="Themes">
+                <button class="theme-option is-active" type="button" aria-pressed="true" data-theme-option
+                  data-shell="/assets/themes/thor-rainbow.webp"
+                  data-top="/assets/themes/light-top.webp" data-bottom="/assets/themes/light-bottom.webp"
+                  data-tint="#8FB8FF" data-filter="none" data-name="Light" data-note="Bright &amp; breezy">
+                  <span class="theme-option__label">Light</span>
+                  <span class="theme-option__state" aria-hidden="true">
+                    <span class="icon icon--minus-circle"></span>
+                    <span class="icon icon--check-circle"></span>
+                  </span>
+                </button>
+                <button class="theme-option" type="button" aria-pressed="false" data-theme-option
+                  data-shell="/assets/themes/thor-black.webp"
+                  data-top="/assets/themes/oled-top.webp" data-bottom="/assets/themes/oled-bottom.webp"
+                  data-tint="#2A2E3C" data-filter="saturate(0.95)" data-name="OLED" data-note="True blacks">
+                  <span class="theme-option__label">OLED</span>
+                  <span class="theme-option__state" aria-hidden="true">
+                    <span class="icon icon--minus-circle"></span>
+                    <span class="icon icon--check-circle"></span>
+                  </span>
+                </button>
+                <button class="theme-option" type="button" aria-pressed="false" data-theme-option
+                  data-shell="/assets/themes/thor-black.webp"
+                  data-top="/assets/themes/switch-top.webp" data-bottom="/assets/themes/switch-bottom.webp"
+                  data-tint="#9AA0B4" data-filter="saturate(0.95)" data-name="Switch" data-note="Clean &amp; understated">
+                  <span class="theme-option__label">Switch</span>
+                  <span class="theme-option__state" aria-hidden="true">
+                    <span class="icon icon--minus-circle"></span>
+                    <span class="icon icon--check-circle"></span>
+                  </span>
+                </button>
+                <button class="theme-option" type="button" aria-pressed="false" data-theme-option
+                  data-shell="/assets/themes/thor-white.webp"
+                  data-top="/assets/themes/wii-top.webp" data-bottom="/assets/themes/wii-bottom.webp"
+                  data-tint="#7FC7E8" data-filter="none" data-name="Wii" data-note="A console classic">
+                  <span class="theme-option__label">Wii</span>
+                  <span class="theme-option__state" aria-hidden="true">
+                    <span class="icon icon--minus-circle"></span>
+                    <span class="icon icon--check-circle"></span>
+                  </span>
+                </button>
+                <button class="theme-option" type="button" aria-pressed="false" data-theme-option
+                  data-shell="/assets/themes/thor-black.webp"
+                  data-top="/assets/themes/wiiu-top.webp" data-bottom="/assets/themes/wiiu-bottom.webp"
+                  data-tint="#4C5BD4" data-filter="saturate(0.95)" data-name="Wii U" data-note="Big-screen energy">
+                  <span class="theme-option__label">Wii U</span>
+                  <span class="theme-option__state" aria-hidden="true">
+                    <span class="icon icon--minus-circle"></span>
+                    <span class="icon icon--check-circle"></span>
+                  </span>
+                </button>
+                <button class="theme-option" type="button" aria-pressed="false" data-theme-option
+                  data-shell="/assets/themes/thor-rainbow.webp"
+                  data-top="/assets/themes/3ds-top.webp" data-bottom="/assets/themes/3ds-bottom.webp"
+                  data-tint="#F0A24C" data-filter="saturate(1.1)" data-name="3DS" data-note="Where it all started">
+                  <span class="theme-option__label">3DS</span>
+                  <span class="theme-option__state" aria-hidden="true">
+                    <span class="icon icon--minus-circle"></span>
+                    <span class="icon icon--check-circle"></span>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="community">
+        <div class="wrap">
+          <div class="section__head">
+            <div>
+              <h2 class="section__title"><span class="icon icon--group section__icon section__icon--community" aria-hidden="true"></span>Built with our community</h2>
+            </div>
+            <p class="section__lede">Feedback is essential to Koji's progress.</p>
+          </div>
+
+          <div class="community-cameo" aria-hidden="true">
+            <img class="community-cameo__watcher" src="/assets/community/pommeswatch.webp" width="109" height="190" alt="" loading="lazy" decoding="async" />
+            <img class="community-cameo__dancer" data-dd src="/assets/community/dddance.webp" width="317" height="220" alt="" loading="lazy" decoding="async" />
+            <img class="community-cameo__fist" src="/assets/community/fist.webp" width="480" height="220" alt="" aria-hidden="true" decoding="async" />
+          </div>
+
+          <div class="playground" data-playground>
+            <div class="playground__layer" aria-hidden="true">
+              <img class="playground__avatar" src="/assets/pfps/2.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/3.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/4.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/5.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/7.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" data-dd-avatar src="/assets/pfps/9.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/10.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/11.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/12.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/13.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/14.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/15.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/16.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/17.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/18.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/19.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/20.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/21.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/22.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/23.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/24.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/25.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/26.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/27.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/28.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/29.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/30.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/31.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/32.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/33.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/36.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/37.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/38.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/39.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/40.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="playground__avatar" src="/assets/pfps/41.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="team">
+        <div class="wrap">
+          <div class="team-head">
+            <h2 class="section__title">The people behind Koji</h2>
+          </div>
+
+          <div class="team__groups">
+            <section class="team__group team__group--core" aria-labelledby="team-core">
+              <h3 class="team__group-title" id="team-core">Koji Team</h3>
+              <ul class="team__roster">
+                <li class="team__member">
+                  <a class="team__profile" href="https://brocodev.cc" target="_blank" rel="noreferrer">
+                    <div class="team__portrait">
+                      <img src="/assets/team/broco.webp" width="286" height="444" alt="broco.dev’s Mii" loading="lazy" decoding="async" />
+                    </div>
+                    <span class="team__identity">
+                      <img src="/assets/team/broco-avatar.webp" width="144" height="144" alt="" loading="lazy" decoding="async" />
+                      <span class="team__name">broco.dev</span>
+                      <span class="icon icon--external team__arrow" aria-hidden="true"></span>
+                    </span>
+                    <span class="team__credit">Development, design &amp; sound effects</span>
+                  </a>
+                </li>
+
+                <li class="team__member">
+                  <div class="team__profile">
+                    <div class="team__portrait">
+                      <img src="/assets/team/sabyy.webp" width="286" height="444" alt="sabyy’s Mii" loading="lazy" decoding="async" />
+                    </div>
+                    <span class="team__identity">
+                      <img src="/assets/team/sabyy-avatar.webp" width="144" height="144" alt="" loading="lazy" decoding="async" />
+                      <span class="team__name">sabyy</span>
+                    </span>
+                    <span class="team__credit">Soundtrack, sound effects &amp; early testing</span>
+                  </div>
+                </li>
+              </ul>
+            </section>
+
+            <section class="team__group" aria-labelledby="team-contributors">
+              <h3 class="team__group-title" id="team-contributors">Contributors</h3>
+              <ul class="team__roster">
+                <li class="team__member">
+                  <a class="team__profile" href="https://loyah.vercel.app" target="_blank" rel="noreferrer">
+                    <div class="team__portrait">
+                      <img src="/assets/team/loyah.webp" width="286" height="444" alt="loyah’s Mii" loading="lazy" decoding="async" />
+                    </div>
+                    <span class="team__identity">
+                      <img src="/assets/team/loyah-avatar.webp" width="144" height="144" alt="" loading="lazy" decoding="async" />
+                      <span class="team__name">loyah</span>
+                      <span class="icon icon--external team__arrow" aria-hidden="true"></span>
+                    </span>
+                    <span class="team__credit">Web development</span>
+                  </a>
+                </li>
+
+                <li class="team__member">
+                  <a class="team__profile" href="https://discord.com/users/1066505285801365627" target="_blank" rel="noreferrer">
+                    <div class="team__portrait">
+                      <img src="/assets/team/k0ol.webp" width="216" height="470" alt="k0ol’s Mii" loading="lazy" decoding="async" />
+                    </div>
+                    <span class="team__identity">
+                      <img src="/assets/team/k0ol-avatar.webp" width="144" height="144" alt="" loading="lazy" decoding="async" />
+                      <span class="team__name">k0ol</span>
+                      <span class="icon icon--external team__arrow" aria-hidden="true"></span>
+                    </span>
+                    <span class="team__credit">Theme track mixing</span>
+                  </a>
+                </li>
+
+                <li class="team__member">
+                  <a class="team__profile" href="https://x.com/kqwlaid" target="_blank" rel="noreferrer">
+                    <div class="team__portrait">
+                      <img src="/assets/team/kewlaid.webp" width="286" height="444" alt="kewlaid’s Mii" loading="lazy" decoding="async" />
+                    </div>
+                    <span class="team__identity">
+                      <img src="/assets/team/kewlaid-avatar.webp" width="144" height="144" alt="" loading="lazy" decoding="async" />
+                      <span class="team__name">kewlaid</span>
+                      <span class="icon icon--external team__arrow" aria-hidden="true"></span>
+                    </span>
+                    <span class="team__credit">Design &amp; motion</span>
+                  </a>
+                </li>
+
+                <li class="team__member">
+                  <a class="team__profile" href="https://hinoaaaaaf212.github.io/" target="_blank" rel="noreferrer">
+                    <div class="team__portrait">
+                      <img src="/assets/team/simply.webp" width="360" height="396" alt="simply’s Mii" loading="lazy" decoding="async" />
+                    </div>
+                    <span class="team__identity">
+                      <img src="/assets/team/simply-avatar.webp" width="144" height="144" alt="" loading="lazy" decoding="async" />
+                      <span class="team__name">simply</span>
+                      <span class="icon icon--external team__arrow" aria-hidden="true"></span>
+                    </span>
+                    <span class="team__credit">Pocketpass developer</span>
+                  </a>
+                </li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="more">
+        <div class="wrap">
+          <div class="section__head">
+            <div>
+              <h2 class="section__title"><span class="icon icon--sparkles section__icon section__icon--more" aria-hidden="true"></span>More from Koji</h2>
+            </div>
+            <p class="section__lede">Questions, early access, or just want to hang out? Start here.</p>
+          </div>
+
+          <div class="card-grid">
+            <article class="card card--link" style="--tint: 250 110 109">
+              <div class="card__head">
+                <h3 class="card__title">Have any more questions?</h3>
+                <span class="card__icon"><span class="icon icon--question" aria-hidden="true"></span></span>
+              </div>
+              <a class="card__link" href="#">Visit the Koji Wiki <span class="icon icon--right" aria-hidden="true"></span></a>
+            </article>
+
+            <article class="card card--link" style="--tint: 206 111 248">
+              <div class="card__head">
+                <h3 class="card__title">Want early access to Koji?</h3>
+                <span class="card__icon"><span class="icon icon--heart" aria-hidden="true"></span></span>
+              </div>
+              <a class="card__link" href="https://ko-fi.com/brocolabs" target="_blank" rel="noreferrer">See our Ko-fi <span class="icon icon--right" aria-hidden="true"></span></a>
+            </article>
+
+            <article class="card card--link card--wide" style="--tint: 111 139 250">
+              <div class="card__head">
+                <h3 class="card__title">Want to be a part of our community?</h3>
+                <span class="card__icon"><span class="icon icon--discord" aria-hidden="true"></span></span>
+              </div>
+              <a class="card__link" href="https://dsc.gg/brocolabs" target="_blank" rel="noreferrer">Join the Discord server <span class="icon icon--right" aria-hidden="true"></span></a>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__top">
+        <section class="get-koji" id="get-koji" aria-labelledby="access-title">
+          <h2 id="access-title">Koji early access</h2>
+          <p>Koji is still in development. Early access is available to supporters on Ko-fi.</p>
+          <div class="get-koji__actions">
+            <a class="btn" href="https://ko-fi.com/brocolabs" target="_blank" rel="noreferrer">Support on Ko-fi <span class="icon icon--external" aria-hidden="true"></span></a>
+            <a class="btn btn--discord" href="https://dsc.gg/brocolabs" target="_blank" rel="noreferrer">
+              <span class="icon icon--discord" aria-hidden="true"></span>
+              Open Discord <span class="icon icon--external" aria-hidden="true"></span>
+            </a>
+          </div>
+        </section>
+
+        <div class="footer__directories">
+          <nav class="footer__nav" aria-labelledby="footer-explore">
+            <h3 id="footer-explore">Explore</h3>
+            <a href="#what">Features</a>
+            <a href="#themes">Themes</a>
+            <a href="#community">Community</a>
+            <a href="#team">Team</a>
+          </nav>
+          <div class="footer__nav">
+            <h3>Support</h3>
+            <a href="https://ko-fi.com/brocolabs" target="_blank" rel="noreferrer">Ko-fi <span class="icon icon--external" aria-hidden="true"></span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="site-footer__horizon" data-footer-horizon aria-hidden="true">
+        <div class="site-footer__icons">
+          <img class="site-footer__icon" src="/assets/icons/scroller/jumpback-1x2.webp" alt="" loading="lazy" decoding="async" data-art-top="0.035" />
+          <img class="site-footer__icon" src="/assets/icons/scroller/box.webp" alt="" loading="lazy" decoding="async" data-art-top="0.1" />
+          <img class="site-footer__icon" src="/assets/icons/scroller/mm.webp" alt="" loading="lazy" decoding="async" data-art-top="0.1" />
+          <img class="site-footer__icon" src="/assets/icons/scroller/folder.webp" alt="" loading="lazy" decoding="async" data-art-top="0.1" />
+          <img class="site-footer__icon" src="/assets/icons/scroller/gift.webp" alt="" loading="lazy" decoding="async" data-art-top="0.1" />
+          <img class="site-footer__icon" src="/assets/icons/scroller/random.webp" alt="" loading="lazy" decoding="async" data-art-top="0.1" />
+          <img class="site-footer__icon" src="/assets/icons/scroller/stat.webp" alt="" loading="lazy" decoding="async" data-art-top="0.1" />
+          <img class="site-footer__icon" src="/assets/icons/scroller/cloud.webp" alt="" loading="lazy" decoding="async" data-art-top="0.1" />
+        </div>
+        <span class="site-footer__kodo"><span class="site-footer__sprite"></span></span>
+      </div>
+    </footer>
+
+    <dialog class="lightbox">
+      <figure class="lightbox__panel">
+        <img class="lightbox__art" alt="" />
+      </figure>
+    </dialog>
+
+    <script type="module" src="/scripts/main.js?v=86"></script>
+  </body>
+</html>
