@@ -1,28 +1,31 @@
+.community-playground {
+  --cameo-height: clamp(54px, 5.7vw, 72px);
+  position: relative;
+  margin-top: clamp(24px, 3.6vw, 34px);
+}
+
 .playground {
   position: relative;
   height: clamp(300px, 38vw, 460px);
-  margin-top: clamp(30px, 5vw, 48px);
   overflow: hidden;
   border: 1px solid var(--line);
 
   border-radius: clamp(20px, 2.4vw, 28px);
   background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(10px);
   touch-action: pan-y;
   user-select: none;
 }
 
 .community-cameo {
-  position: relative;
+  position: absolute;
+  right: clamp(18px, 4vw, 64px);
+  bottom: calc(100% - 8px);
   z-index: 2;
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
   gap: clamp(2px, 0.5vw, 7px);
-  height: clamp(54px, 5.7vw, 72px);
-  padding-right: clamp(18px, 4vw, 64px);
-  margin-top: clamp(16px, 2.4vw, 26px);
-  margin-bottom: calc(-1 * clamp(5px, 0.7vw, 9px));
+  height: var(--cameo-height);
   pointer-events: none;
   user-select: none;
 }
@@ -38,53 +41,53 @@
   display: block;
   flex: none;
   width: auto;
-  height: clamp(54px, 5.7vw, 72px);
+  height: var(--cameo-height);
 }
 
-.community-cameo + .playground {
-  margin-top: 0;
+@media (max-width: 760px) {
+  .community-playground {
+    margin-top: calc(var(--cameo-height) + 4px);
+  }
 }
 
-.community-cameo__fist {
+.community-cameo__swipe {
   position: fixed;
-  left: 0;
-  top: 0;
-  width: clamp(360px, 62vw, 980px);
-  height: auto;
+  inset: 0;
   z-index: 70;
+  overflow: clip;
+  visibility: hidden;
   pointer-events: none;
-  translate: var(--fist-x, 50vw) calc(var(--fist-y, 50vh) - 50%);
-  transform: translate3d(120vw, 0, 0) rotate(10deg);
-  will-change: transform, opacity;
 }
 
-.community-cameo.is-punching .community-cameo__fist {
-  animation: fist-punch 1400ms linear forwards;
+.community-cameo__paw {
+  position: absolute;
+  left: var(--paw-x);
+  top: var(--paw-y);
+  width: var(--paw-width);
+  max-width: none;
+  height: auto;
+  translate: -2% -39%;
 }
 
-@keyframes fist-punch {
+.community-cameo.is-punching .community-cameo__swipe {
+  visibility: visible;
+}
+
+.community-cameo.is-punching .community-cameo__paw {
+  animation: paw-swipe 1300ms both;
+}
+
+@keyframes paw-swipe {
   0% {
-    transform: translate3d(120vw, 0, 0) rotate(10deg);
-    animation-timing-function: cubic-bezier(0.6, 0, 0.9, 0.2);
+    transform: translateX(100vw);
+    animation-timing-function: cubic-bezier(0.64, 0, 0.8, 0.32);
   }
-  46% {
-    transform: translate3d(0, 0, 0) rotate(-4deg);
-    animation-timing-function: cubic-bezier(0.2, 0.9, 0.3, 1);
-  }
-  53% {
-    transform: translate3d(-2.5%, 0, 0) rotate(2deg);
-    animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
-  }
-  60% {
-    transform: translate3d(0, 0, 0) rotate(-2deg);
-    animation-timing-function: linear;
-  }
-  73% {
-    transform: translate3d(0, 0, 0) rotate(-2deg);
-    animation-timing-function: cubic-bezier(0.5, 0, 0.75, 1);
+  44%, 69% {
+    transform: translateX(0);
+    animation-timing-function: cubic-bezier(0.12, 0.64, 0.4, 1);
   }
   100% {
-    transform: translate3d(120vw, 0, 0) rotate(10deg);
+    transform: translateX(100vw);
   }
 }
 
@@ -152,12 +155,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .community-cameo__fist {
+  .community-cameo__swipe {
     display: none;
   }
 }
 
 .playground__layer {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   align-content: center;
@@ -168,8 +172,8 @@
 }
 
 .playground__avatar {
-  width: clamp(44px, 5.8vw, 72px);
-  height: clamp(44px, 5.8vw, 72px);
+  width: clamp(32px, 5.8vw, 72px);
+  height: clamp(32px, 5.8vw, 72px);
   border-radius: 50%;
   object-fit: cover;
   background: #F2F2F5;

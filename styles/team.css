@@ -2,6 +2,14 @@
   text-align: center;
 }
 
+.team-head::after {
+  content: "";
+  display: block;
+  width: min(100%, 980px);
+  margin: clamp(14px, 2vw, 20px) auto 0;
+  border-top: 1px solid var(--line-strong);
+}
+
 .team-head .section__title {
   max-width: 30ch;
   margin-inline: auto;
@@ -16,7 +24,7 @@
   display: grid;
   gap: clamp(28px, 3.5vw, 44px);
   max-width: 980px;
-  margin: clamp(30px, 4.5vw, 46px) auto 0;
+  margin: clamp(16px, 2.5vw, 26px) auto 0;
 }
 
 .team__group {

@@ -1,0 +1,13 @@
+{
+  "name": "koji-site",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "astro": "^7.3.5"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.5"
+  }
+}

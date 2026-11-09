@@ -1,9 +1,3 @@
-@media (min-width: 701px) {
-  .hero__title {
-    left: -56px;
-  }
-}
-
 @media (max-width: 1240px) {
   .hero__shelf {
     right: -16px;
@@ -39,25 +33,15 @@
   .nav__links {
     display: none;
   }
-
-  .hero__actions .btn {
-    flex: 1 1 140px;
-  }
 }
 
 @media (max-width: 380px) {
-  .brand__name {
-    font-size: 17px;
-  }
-
   .btn--sm {
     padding: 0 14px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .masthead::before,
-  .masthead::after,
   .masthead__floaters img {
     animation: none;
     opacity: 0.28;
@@ -65,12 +49,6 @@
 
   html {
     scroll-behavior: auto;
-  }
-
-  .lightbox::backdrop,
-  .lightbox__art,
-  .lightbox__face {
-    transition: none;
   }
 }
 

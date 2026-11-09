@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Home | Koji</title>
     <meta name="description" content="Koji is a sleek, fun, and inspired frontend for handheld devices." />
-    <meta name="theme-color" content="#FFFFFF" />
+    <meta name="theme-color" content="#E3EDFF" media="(max-width: 940px)" />
+    <meta name="theme-color" content="#FFFFFF" media="(min-width: 941px)" />
     <meta name="color-scheme" content="light" />
     <script>
       if (/(?:^|;\s*)koji_dd_out=1/.test(document.cookie)) {
@@ -30,15 +31,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Roboto+Condensed:wght@700&family=Rubik:wght@500;600;700;800;900&family=Nunito:wght@400;600;700;800&family=Instrument+Serif:ital@0;1&family=Redaction+50&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/styles/base.css?v=86" />
-    <link rel="stylesheet" href="/styles/header.css?v=86" />
-    <link rel="stylesheet" href="/styles/hero.css?v=86" />
-    <link rel="stylesheet" href="/styles/sections.css?v=86" />
-    <link rel="stylesheet" href="/styles/themes.css?v=86" />
-    <link rel="stylesheet" href="/styles/community.css?v=86" />
-    <link rel="stylesheet" href="/styles/team.css?v=86" />
+    <link rel="stylesheet" href="/styles/base.css?v=87" />
+    <link rel="stylesheet" href="/styles/header.css?v=90" />
+    <link rel="stylesheet" href="/styles/hero.css?v=100" />
+    <link rel="stylesheet" href="/styles/sections.css?v=88" />
+    <link rel="stylesheet" href="/styles/themes.css?v=89" />
+    <link rel="stylesheet" href="/styles/community.css?v=92" />
+    <link rel="stylesheet" href="/styles/team.css?v=87" />
     <link rel="stylesheet" href="/styles/footer.css?v=86" />
-    <link rel="stylesheet" href="/styles/responsive.css?v=86" />
+    <link rel="stylesheet" href="/styles/responsive.css?v=91" />
   </head>
   <body>
     <header class="topbar">
@@ -48,13 +49,13 @@
           <span class="brand__name">Koji</span>
         </a>
         <div class="nav__links">
-          <a class="nav__link" href="#what">What Koji is</a>
+          <a class="nav__link" href="#what">Features</a>
           <a class="nav__link" href="#themes">Themes</a>
           <a class="nav__link" href="#community">Community</a>
           <a class="nav__link" href="#team">Team</a>
           <a class="nav__link" href="#more">More</a>
         </div>
-        <a class="btn btn--sm" href="#">Download</a>
+        <a class="btn btn--sm" href="https://ko-fi.com/brocolabs" target="_blank" rel="noreferrer">Download</a>
       </nav>
     </header>
 
@@ -72,7 +73,7 @@
               <img
                 src="/assets/home/thor-640.webp"
                 srcset="/assets/home/thor-640.webp 640w, /assets/home/thor-1080.webp 1080w"
-                sizes="(max-width: 700px) 60vw, 31vw"
+                sizes="(max-width: 940px) min(60vw, 295px), 31vw"
                 width="1080"
                 height="1239"
                 alt="Thor clamshell handheld running Koji across both screens"
@@ -82,7 +83,7 @@
               <img
                 src="/assets/home/odin-880.webp"
                 srcset="/assets/home/odin-880.webp 880w, /assets/home/odin-1560.webp 1560w"
-                sizes="(max-width: 700px) 76vw, 42vw"
+                sizes="(max-width: 940px) min(76vw, 377px), 42vw"
                 width="1560"
                 height="643"
                 alt="Odin handheld showing the Koji game library"
@@ -92,6 +93,10 @@
           </div>
         </figure>
 
+        <div class="hero__actions" data-hero-actions>
+          <a class="btn" href="https://ko-fi.com/brocolabs" target="_blank" rel="noreferrer">Get early access</a>
+          <a class="hero__secondary" href="#what">See what's inside <img src="/assets/icons/ui/arrow-down.svg" width="15" height="15" alt="" /></a>
+        </div>
       </div>
 
       <div class="masthead__floaters" aria-hidden="true">
@@ -106,11 +111,6 @@
         <img src="/assets/icons/scroller/cloud.webp" alt="" decoding="async" />
       </div>
     </section>
-
-    <div class="hero__actions" data-hero-actions>
-      <a class="btn" href="https://ko-fi.com/brocolabs" target="_blank" rel="noreferrer">Get early access</a>
-      <a class="hero__secondary" href="#what">See what's inside <span class="icon icon--down" aria-hidden="true"></span></a>
-    </div>
 
     <main>
       <section class="section" id="what">
@@ -157,6 +157,9 @@
               <p class="card__text">Relive your best moments with media!</p>
             </article>
 
+            <p class="card-hint">Select a card above to see its screenshot.</p>
+            <hr class="card-divider" aria-hidden="true" />
+
             <article class="card card--wide" style="--tint: 144 120 240">
               <div class="card__head">
                 <h3 class="card__title">The Little Things</h3>
@@ -168,8 +171,6 @@
               </p>
             </article>
           </div>
-
-          <p class="card-hint">Click any card to see a screenshot.</p>
         </div>
       </section>
 
@@ -271,53 +272,57 @@
             <div>
               <h2 class="section__title"><span class="icon icon--group section__icon section__icon--community" aria-hidden="true"></span>Built with our community</h2>
             </div>
-            <p class="section__lede">Feedback is essential to Koji's progress.</p>
+            <p class="section__lede">On Discord, your ideas, bug reports, and support help us make Koji easier and more fun to use.</p>
           </div>
 
-          <div class="community-cameo" aria-hidden="true">
-            <img class="community-cameo__watcher" src="/assets/community/pommeswatch.webp" width="109" height="190" alt="" loading="lazy" decoding="async" />
-            <img class="community-cameo__dancer" data-dd src="/assets/community/dddance.webp" width="317" height="220" alt="" loading="lazy" decoding="async" />
-            <img class="community-cameo__fist" src="/assets/community/fist.webp" width="480" height="220" alt="" aria-hidden="true" decoding="async" />
-          </div>
+          <div class="community-playground">
+            <div class="community-cameo" aria-hidden="true">
+              <img class="community-cameo__watcher" src="/assets/community/pommeswatch.webp" width="109" height="190" alt="" loading="lazy" decoding="async" />
+              <img class="community-cameo__dancer" data-dd src="/assets/community/dddance.webp" width="317" height="220" alt="" loading="lazy" decoding="async" />
+              <span class="community-cameo__swipe">
+                <img class="community-cameo__paw" src="/assets/community/cat-paw.webp" width="960" height="218" alt="" loading="lazy" decoding="async" />
+              </span>
+            </div>
 
-          <div class="playground" data-playground>
-            <div class="playground__layer" aria-hidden="true">
-              <img class="playground__avatar" src="/assets/pfps/2.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/3.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/4.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/5.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/7.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" data-dd-avatar src="/assets/pfps/9.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/10.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/11.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/12.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/13.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/14.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/15.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/16.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/17.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/18.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/19.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/20.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/21.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/22.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/23.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/24.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/25.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/26.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/27.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/28.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/29.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/30.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/31.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/32.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/33.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/36.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/37.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/38.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/39.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/40.webp" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="playground__avatar" src="/assets/pfps/41.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+            <div class="playground" data-playground>
+              <div class="playground__layer" aria-hidden="true">
+                <img class="playground__avatar" src="/assets/pfps/2.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/3.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/4.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/5.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/7.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" data-dd-avatar src="/assets/pfps/9.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/10.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/11.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/12.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/13.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/14.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/15.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/16.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/17.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/18.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/19.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/20.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/21.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/22.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/23.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/24.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/25.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/26.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/27.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/28.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/29.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/30.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/31.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/32.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/33.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/36.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/37.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/38.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/39.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/40.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img class="playground__avatar" src="/assets/pfps/41.webp" alt="" draggable="false" loading="lazy" decoding="async" />
+              </div>
             </div>
           </div>
         </div>
@@ -336,7 +341,7 @@
                 <li class="team__member">
                   <a class="team__profile" href="https://brocodev.cc" target="_blank" rel="noreferrer">
                     <div class="team__portrait">
-                      <img src="/assets/team/broco.webp" width="286" height="444" alt="broco.dev’s Mii" loading="lazy" decoding="async" />
+                      <img src="/assets/team/broco-still.webp" data-motion-src="/assets/team/broco.webp" width="286" height="444" alt="broco.dev’s Mii" loading="lazy" decoding="async" />
                     </div>
                     <span class="team__identity">
                       <img src="/assets/team/broco-avatar.webp" width="144" height="144" alt="" loading="lazy" decoding="async" />
@@ -350,7 +355,7 @@
                 <li class="team__member">
                   <div class="team__profile">
                     <div class="team__portrait">
-                      <img src="/assets/team/sabyy.webp" width="286" height="444" alt="sabyy’s Mii" loading="lazy" decoding="async" />
+                      <img src="/assets/team/sabyy-still.webp" data-motion-src="/assets/team/sabyy.webp" width="286" height="444" alt="sabyy’s Mii" loading="lazy" decoding="async" />
                     </div>
                     <span class="team__identity">
                       <img src="/assets/team/sabyy-avatar.webp" width="144" height="144" alt="" loading="lazy" decoding="async" />
@@ -368,7 +373,7 @@
                 <li class="team__member">
                   <a class="team__profile" href="https://loyah.vercel.app" target="_blank" rel="noreferrer">
                     <div class="team__portrait">
-                      <img src="/assets/team/loyah.webp" width="286" height="444" alt="loyah’s Mii" loading="lazy" decoding="async" />
+                      <img src="/assets/team/loyah-still.webp" data-motion-src="/assets/team/loyah.webp" width="286" height="444" alt="loyah’s Mii" loading="lazy" decoding="async" />
                     </div>
                     <span class="team__identity">
                       <img src="/assets/team/loyah-avatar.webp" width="144" height="144" alt="" loading="lazy" decoding="async" />
@@ -382,7 +387,7 @@
                 <li class="team__member">
                   <a class="team__profile" href="https://discord.com/users/1066505285801365627" target="_blank" rel="noreferrer">
                     <div class="team__portrait">
-                      <img src="/assets/team/k0ol.webp" width="216" height="470" alt="k0ol’s Mii" loading="lazy" decoding="async" />
+                      <img src="/assets/team/k0ol-still.webp" data-motion-src="/assets/team/k0ol.webp" width="216" height="470" alt="k0ol’s Mii" loading="lazy" decoding="async" />
                     </div>
                     <span class="team__identity">
                       <img src="/assets/team/k0ol-avatar.webp" width="144" height="144" alt="" loading="lazy" decoding="async" />
@@ -396,7 +401,7 @@
                 <li class="team__member">
                   <a class="team__profile" href="https://x.com/kqwlaid" target="_blank" rel="noreferrer">
                     <div class="team__portrait">
-                      <img src="/assets/team/kewlaid.webp" width="286" height="444" alt="kewlaid’s Mii" loading="lazy" decoding="async" />
+                      <img src="/assets/team/kewlaid-still.webp" data-motion-src="/assets/team/kewlaid.webp" width="286" height="444" alt="kewlaid’s Mii" loading="lazy" decoding="async" />
                     </div>
                     <span class="team__identity">
                       <img src="/assets/team/kewlaid-avatar.webp" width="144" height="144" alt="" loading="lazy" decoding="async" />
@@ -410,7 +415,7 @@
                 <li class="team__member">
                   <a class="team__profile" href="https://hinoaaaaaf212.github.io/" target="_blank" rel="noreferrer">
                     <div class="team__portrait">
-                      <img src="/assets/team/simply.webp" width="360" height="396" alt="simply’s Mii" loading="lazy" decoding="async" />
+                      <img src="/assets/team/simply-still.webp" data-motion-src="/assets/team/simply.webp" width="360" height="396" alt="simply’s Mii" loading="lazy" decoding="async" />
                     </div>
                     <span class="team__identity">
                       <img src="/assets/team/simply-avatar.webp" width="144" height="144" alt="" loading="lazy" decoding="async" />
@@ -432,18 +437,10 @@
             <div>
               <h2 class="section__title"><span class="icon icon--sparkles section__icon section__icon--more" aria-hidden="true"></span>More from Koji</h2>
             </div>
-            <p class="section__lede">Questions, early access, or just want to hang out? Start here.</p>
+            <p class="section__lede">Get early access or join the Koji community on Discord.</p>
           </div>
 
           <div class="card-grid">
-            <article class="card card--link" style="--tint: 250 110 109">
-              <div class="card__head">
-                <h3 class="card__title">Have any more questions?</h3>
-                <span class="card__icon"><span class="icon icon--question" aria-hidden="true"></span></span>
-              </div>
-              <a class="card__link" href="#">Visit the Koji Wiki <span class="icon icon--right" aria-hidden="true"></span></a>
-            </article>
-
             <article class="card card--link" style="--tint: 206 111 248">
               <div class="card__head">
                 <h3 class="card__title">Want early access to Koji?</h3>
@@ -452,7 +449,7 @@
               <a class="card__link" href="https://ko-fi.com/brocolabs" target="_blank" rel="noreferrer">See our Ko-fi <span class="icon icon--right" aria-hidden="true"></span></a>
             </article>
 
-            <article class="card card--link card--wide" style="--tint: 111 139 250">
+            <article class="card card--link" style="--tint: 111 139 250">
               <div class="card__head">
                 <h3 class="card__title">Want to be a part of our community?</h3>
                 <span class="card__icon"><span class="icon icon--discord" aria-hidden="true"></span></span>
@@ -514,6 +511,6 @@
       </figure>
     </dialog>
 
-    <script type="module" src="/scripts/main.js?v=86"></script>
+    <script type="module" src="/scripts/main.js?v=100"></script>
   </body>
 </html>

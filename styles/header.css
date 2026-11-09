@@ -1,5 +1,10 @@
 .masthead {
   --text: var(--ink);
+  --masthead-artwork:
+    radial-gradient(62% 58% at 6% -6%, rgba(173, 214, 255, 0.95) 0%, rgba(173, 214, 255, 0) 64%),
+    radial-gradient(56% 60% at 96% 4%, rgba(56, 156, 255, 0.55) 0%, rgba(56, 156, 255, 0) 66%),
+    radial-gradient(66% 56% at 72% 86%, rgba(173, 214, 255, 0.72) 0%, rgba(173, 214, 255, 0) 72%),
+    radial-gradient(48% 46% at 22% 94%, rgba(116, 56, 255, 0.22) 0%, rgba(116, 56, 255, 0) 74%);
   color: var(--ink);
   position: relative;
   isolation: isolate;
@@ -14,63 +19,7 @@
   border-radius: clamp(22px, 3.2vw, 38px);
   box-shadow: var(--panel-shadow);
   background-color: var(--panel-bg);
-  background-image:
-    radial-gradient(62% 58% at 6% -6%, rgba(173, 214, 255, 0.95) 0%, rgba(173, 214, 255, 0) 64%),
-    radial-gradient(56% 60% at 96% 4%, rgba(56, 156, 255, 0.55) 0%, rgba(56, 156, 255, 0) 66%),
-    radial-gradient(66% 56% at 72% 86%, rgba(173, 214, 255, 0.72) 0%, rgba(173, 214, 255, 0) 72%),
-    radial-gradient(48% 46% at 22% 94%, rgba(116, 56, 255, 0.22) 0%, rgba(116, 56, 255, 0) 74%);
-}
-
-.masthead::before {
-  content: "";
-  position: absolute;
-  inset: -22% -12% -34%;
-  z-index: -1;
-  background:
-    radial-gradient(26% 30% at 28% 36%, rgba(56, 156, 255, 0.3), transparent 70%),
-    radial-gradient(22% 26% at 72% 22%, rgba(116, 56, 255, 0.2), transparent 72%),
-    radial-gradient(28% 30% at 58% 72%, rgba(173, 214, 255, 0.42), transparent 72%),
-    radial-gradient(20% 24% at 86% 58%, rgba(232, 162, 255, 0.18), transparent 74%);
-  filter: blur(34px);
-  animation: sky-drift 28s ease-in-out infinite alternate;
-  pointer-events: none;
-}
-
-.masthead::after {
-  content: "";
-  position: absolute;
-  inset: -38% -28%;
-  z-index: -1;
-  background: conic-gradient(
-    from 210deg at 55% 42%,
-    rgba(173, 214, 255, 0.32),
-    rgba(232, 162, 255, 0.16),
-    rgba(56, 156, 255, 0.3),
-    rgba(116, 56, 255, 0.2),
-    rgba(173, 214, 255, 0.32)
-  );
-  filter: blur(72px);
-  opacity: 0.8;
-  animation: sky-spin 48s linear infinite;
-  pointer-events: none;
-}
-
-@keyframes sky-drift {
-  from {
-    transform: translate3d(-2.5%, -1.5%, 0) scale(1);
-  }
-  to {
-    transform: translate3d(3%, 2.5%, 0) scale(1.08);
-  }
-}
-
-@keyframes sky-spin {
-  from {
-    transform: rotate(0deg) scale(1.05);
-  }
-  to {
-    transform: rotate(360deg) scale(1.05);
-  }
+  background-image: var(--masthead-artwork);
 }
 
 .topbar {
@@ -85,14 +34,14 @@
   max-width: 1060px;
   min-height: var(--nav-height);
   margin: 0 auto;
-  padding: 12px 0;
+  padding: 10px 0;
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  font-size: 19px;
+  font-size: clamp(24px, 3vw, 27px);
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--text);
@@ -100,9 +49,10 @@
 }
 
 .brand__mark {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
+  display: block;
+  flex: none;
+  width: 44px;
+  height: 44px;
   object-fit: contain;
 }
 

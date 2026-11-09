@@ -1,9 +1,9 @@
 const communityCameo = document.querySelector('.community-cameo');
 const communityDancer = document.querySelector('[data-dd]');
-const communityFist = document.querySelector('.community-cameo__fist');
+const communityPaw = document.querySelector('.community-cameo__paw');
 const communitySection = document.querySelector('#community');
 
-if (communityCameo && communityDancer && communityFist && communitySection) {
+if (communityCameo && communityDancer && communityPaw && communitySection) {
   const secret = 'ihatedd';
   const loveSecret = 'ilovedd';
   const ddHidden = () => document.documentElement.classList.contains('dd-gone');
@@ -48,30 +48,74 @@ if (communityCameo && communityDancer && communityFist && communitySection) {
     busy = false;
   };
 
+  const contactDelay = 600;
+  let soundContext;
+  let soundBuffer;
+
+  const prepareSound = () => {
+    const Audio = window.AudioContext || window.webkitAudioContext;
+    if (!Audio) return () => {};
+    try {
+      soundContext ??= new Audio();
+      const resumed = soundContext.resume().catch(() => {});
+      soundBuffer ??= fetch('/assets/community/cat-punch.mp3')
+        .then((response) => {
+          if (!response.ok) throw new Error('Cat paw audio unavailable');
+          return response.arrayBuffer();
+        })
+        .then((bytes) => soundContext.decodeAudioData(bytes))
+        .catch(() => null);
+      return async () => {
+        const [, buffer] = await Promise.all([resumed, soundBuffer]);
+        if (!buffer || soundContext.state !== 'running') return;
+        const source = soundContext.createBufferSource();
+        source.buffer = buffer;
+        source.connect(soundContext.destination);
+        source.start();
+      };
+    } catch {
+      return () => {};
+    }
+  };
+
+  const positionPaw = () => {
+    const cameo = communityCameo.getBoundingClientRect();
+    const x = cameo.left + communityDancer.offsetLeft + communityDancer.offsetWidth * 0.5;
+    const y = cameo.top + communityDancer.offsetTop + communityDancer.offsetHeight * 0.43;
+    communityCameo.style.setProperty('--paw-x', `${x}px`);
+    communityCameo.style.setProperty('--paw-y', `${y}px`);
+    communityCameo.style.setProperty('--paw-width', `${Math.max(360, innerWidth - x + 48)}px`);
+  };
+
+  const swipe = async (onContact) => {
+    communityPaw.loading = 'eager';
+    await communityPaw.decode().catch(() => {});
+    positionPaw();
+    communityCameo.classList.add('is-punching');
+    setTimeout(onContact, contactDelay);
+  };
+
+  const followPaw = () => {
+    if (communityCameo.classList.contains('is-punching')) positionPaw();
+  };
+  window.addEventListener('resize', followPaw);
+  window.addEventListener('scroll', followPaw, { passive: true });
+
   const punch = () => {
     if (busy) return;
     busy = true;
+    const playSound = prepareSound();
 
     if (reduceMotion.matches) {
+      playSound();
       shatterAvatar();
       ddIsGone();
       settle();
       return;
     }
 
-    const rect = communityDancer.getBoundingClientRect();
-
-    communityCameo.style.setProperty('--fist-x', `${rect.left + rect.width * 0.25}px`);
-    communityCameo.style.setProperty('--fist-y', `${rect.top + rect.height * 0.42}px`);
-    communityCameo.style.setProperty('--dd-left', `${rect.left}px`);
-    communityCameo.style.setProperty('--dd-top', `${rect.top}px`);
-    communityCameo.style.setProperty('--dd-w', `${rect.width}px`);
-    communityCameo.style.setProperty('--dd-h', `${rect.height}px`);
-
-    void communityFist.offsetWidth;
-    communityCameo.classList.add('is-punching');
-
-    setTimeout(() => {
+    swipe(() => {
+      const rect = communityDancer.getBoundingClientRect();
       const flying = communityDancer.cloneNode(true);
       flying.className = 'community-cameo__dancer is-flying';
       flying.removeAttribute('data-dd');
@@ -82,60 +126,50 @@ if (communityCameo && communityDancer && communityFist && communitySection) {
       flying.style.setProperty('--dd-h', `${rect.height}px`);
       document.body.append(flying);
       communityCameo.classList.add('is-flung');
+      playSound();
       shatterAvatar();
-      setTimeout(() => flying.remove(), 1000);
-    }, 650);
-
-    setTimeout(ddIsGone, 1650);
-
-    setTimeout(settle, 1900);
+      setTimeout(() => {
+        flying.remove();
+        ddIsGone();
+        settle();
+      }, 900);
+    });
   };
 
   const bringDdBack = () => {
     if (busy) return;
     busy = true;
-
     reformAvatar();
 
     document.cookie = 'koji_dd_out=; max-age=0; path=/';
-    communityCameo.classList.remove('is-punching', 'is-flung');
-
-    const rect = communityDancer.getBoundingClientRect();
-    if (!rect.width) {
-      busy = false;
-      return;
-    }
-
-    communityCameo.style.setProperty('--dd-left', `${rect.left}px`);
-    communityCameo.style.setProperty('--dd-top', `${rect.top}px`);
-    communityCameo.style.setProperty('--dd-w', `${rect.width}px`);
-    communityCameo.style.setProperty('--dd-h', `${rect.height}px`);
-
-    communityDancer.src = '/assets/community/ddfling.webp';
     document.documentElement.classList.remove('dd-gone');
 
     if (reduceMotion.matches) {
-      communityDancer.src = '/assets/community/dddance.webp';
-      busy = false;
+      settle();
       return;
     }
 
-    void communityDancer.offsetWidth;
+    const rect = communityDancer.getBoundingClientRect();
+    communityCameo.style.setProperty('--dd-w', `${rect.width}px`);
+    communityCameo.style.setProperty('--dd-h', `${rect.height}px`);
+    communityDancer.src = '/assets/community/ddfling.webp';
     communityCameo.classList.add('is-returning');
 
     setTimeout(() => {
       communityCameo.classList.remove('is-returning');
       communityDancer.src = '/assets/community/dddance.webp';
-      communityCameo.style.cssText = '';
-      busy = false;
+      settle();
     }, 800);
   };
 
   new Image().src = '/assets/community/ddfling.webp';
 
   document.addEventListener('keydown', (event) => {
-    if (event.key.length !== 1 || event.metaKey || event.ctrlKey || event.altKey) return;
-    if (!sectionOnScreen()) return;
+    if (event.key.length !== 1 || event.repeat || event.metaKey || event.ctrlKey || event.altKey) return;
+    if (!sectionOnScreen()) {
+      typed = '';
+      return;
+    }
     typed = (typed + event.key.toLowerCase()).slice(-secret.length);
     if (typed === secret && !ddHidden()) {
       typed = '';
