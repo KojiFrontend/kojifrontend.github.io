@@ -1,6 +1,6 @@
 import './lightbox.js?v=87';
 import './nav.js?v=87';
-import './hero.js?v=94';
+import './hero.js?v=95';
 import './themes.js?v=87';
 import './horizon.js?v=86';
 import './playground.js?v=92';

@@ -343,6 +343,12 @@
   .hero-is-rounded .masthead__floaters {
     clip-path: inset(0 10px var(--hero-bleed) round 22px);
   }
+
+  .hero-is-rounded #what .section__head {
+    /* Keep the heading visible while the hero backdrop retracts. */
+    position: relative;
+    z-index: 1;
+  }
 }
 
 @media (max-width: 940px) and (prefers-reduced-motion: no-preference) {

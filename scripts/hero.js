@@ -35,8 +35,8 @@ if (masthead) {
   const fullBleed = matchMedia('(max-width: 940px)');
   const portraitPhone = matchMedia('(max-width: 560px) and (orientation: portrait) and (pointer: coarse)');
   const page = document.documentElement;
-  const roundAt = 64;
-  const expandAt = 24;
+  const roundAt = 12;
+  const expandAt = 4;
   let rounded = false;
   let frame = 0;
 
