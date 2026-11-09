@@ -161,12 +161,8 @@
   text-underline-offset: 5px;
 }
 
-.hero__secondary span {
-  transition: transform 0.16s ease;
-}
-
-.hero__secondary:hover span {
-  transform: translateY(2px);
+.hero__secondary img {
+  flex: none;
 }
 
 .masthead__floaters {
@@ -213,6 +209,14 @@
 }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .hero__secondary img {
+    transition: transform 0.16s ease;
+  }
+
+  .hero__secondary:hover img {
+    transform: translateY(2px);
+  }
+
   .hero__device {
     transition: transform 0.32s ease-out;
   }
@@ -274,11 +278,14 @@
   }
 
   .hero__actions {
-    position: static;
+    position: relative;
+    inset: auto;
     flex-direction: column;
     gap: 18px;
     max-width: 100%;
-    transform: none;
+    /* Keep the links on a separate layer from the animated backdrop. */
+    transform: translateZ(0);
+    transition: none;
   }
 
   .hero__actions .btn {
@@ -288,7 +295,10 @@
   html {
     --hero-edge: #e3edff;
     background-color: var(--hero-edge);
-    background-color: color-mix(in srgb, var(--hero-edge), white calc(var(--hero-frame, 0) * 100%));
+  }
+
+  html.hero-is-rounded {
+    background-color: white;
   }
 
   body {
@@ -327,7 +337,21 @@
     background-image:
       linear-gradient(to bottom, transparent calc(100% - var(--hero-bleed) - 2rem), var(--hero-edge) calc(100% - var(--hero-bleed))),
       var(--masthead-artwork);
-    clip-path: inset(0 calc(var(--hero-frame, 0) * 10px) calc(var(--hero-frame, 0) * var(--hero-bleed)) round calc(var(--hero-frame, 0) * 22px));
+    clip-path: inset(0 0 0 round 0);
+  }
+
+  .hero-is-rounded .masthead__floaters {
+    clip-path: inset(0 10px var(--hero-bleed) round 22px);
+  }
+}
+
+@media (max-width: 940px) and (prefers-reduced-motion: no-preference) {
+  html {
+    transition: background-color 360ms ease;
+  }
+
+  .masthead__floaters {
+    transition: clip-path 360ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 }
 

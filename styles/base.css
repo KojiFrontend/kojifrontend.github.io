@@ -197,10 +197,6 @@ button:focus-visible,
   --icon: url("/assets/icons/ui/arrow-right.svg");
 }
 
-.icon--down {
-  --icon: url("/assets/icons/ui/arrow-down.svg");
-}
-
 .icon--question {
   --icon: url("/assets/icons/ui/question.svg");
 }
@@ -264,11 +260,6 @@ button:focus-visible,
 }
 
 .card__link .icon {
-  width: 15px;
-  height: 15px;
-}
-
-.hero__secondary .icon {
   width: 15px;
   height: 15px;
 }

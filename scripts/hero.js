@@ -35,6 +35,9 @@ if (masthead) {
   const fullBleed = matchMedia('(max-width: 940px)');
   const portraitPhone = matchMedia('(max-width: 560px) and (orientation: portrait) and (pointer: coarse)');
   const page = document.documentElement;
+  const roundAt = 64;
+  const expandAt = 24;
+  let rounded = false;
   let frame = 0;
 
   const syncScreenHeight = () => {
@@ -47,15 +50,11 @@ if (masthead) {
 
   const syncFrame = () => {
     frame = 0;
-    if (!fullBleed.matches) {
-      page.style.removeProperty('--hero-frame');
-      return;
-    }
-    const progress = Math.max(0, Math.min(1, scrollY / 110));
-    const value = progress.toFixed(3);
-    if (page.style.getPropertyValue('--hero-frame') !== value) {
-      page.style.setProperty('--hero-frame', value);
-    }
+    // Separate the thresholds so small scroll reversals don't restart the animation.
+    const nextRounded = fullBleed.matches && (rounded ? scrollY > expandAt : scrollY >= roundAt);
+    if (nextRounded === rounded) return;
+    rounded = nextRounded;
+    page.classList.toggle('hero-is-rounded', rounded);
   };
 
   window.addEventListener('scroll', () => {
