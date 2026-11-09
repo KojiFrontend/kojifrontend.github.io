@@ -284,21 +284,21 @@
   .hero__actions .btn {
     width: min(230px, 100%);
   }
-}
 
-@media (max-width: 700px) {
   .topbar {
     position: absolute;
     z-index: 3;
     inset: 0 0 auto;
-    padding-inline: 14px;
+    padding-top: env(safe-area-inset-top);
+    padding-inline: max(14px, env(safe-area-inset-left)) max(14px, env(safe-area-inset-right));
     background: linear-gradient(180deg, #f5f9fff5, #f5f9ffdf 76%, #f5f9ff00);
   }
 
   .masthead {
-    min-height: 100svh;
+    min-height: 100vh;
+    min-height: 100dvh;
     margin: 0 0 10px;
-    padding-top: var(--nav-height);
+    padding-top: calc(var(--nav-height) + env(safe-area-inset-top));
     border: 0;
     border-radius: 0;
     clip-path: inset(0 calc(var(--hero-frame, 0) * 10px) round calc(var(--hero-frame, 0) * 22px));

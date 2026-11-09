@@ -32,7 +32,7 @@ if (heroActions) {
 }
 
 if (masthead) {
-  const fullBleed = matchMedia('(max-width: 700px)');
+  const fullBleed = matchMedia('(max-width: 940px)');
   let frame = 0;
 
   const syncFrame = () => {
