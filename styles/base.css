@@ -1,0 +1,265 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #FFFFFF;
+  --text: #54596C;
+  --ink: #14141A;
+  --muted: #6B6B74;
+  --line: #E8E8ED;
+  --line-strong: #D2D2DA;
+  --card-surface: #FFFFFF;
+  --accent: #389CFF;
+  --radius: 18px;
+  --radius-lg: 22px;
+  --radius-card: 18px;
+  --surface-stroke-width: 1px;
+  --max: 1060px;
+  --panel-bg: rgba(255, 255, 255, 0.86);
+  --panel-stroke: rgba(18, 18, 32, 0.07);
+  --panel-stroke-width: 1px;
+  --panel-radius: clamp(20px, 2vw, 28px);
+  --panel-shadow: 0 3px 0 rgba(24, 28, 56, 0.09);
+  --button-tint: #EAF1FF;
+  --button-tint-hover: #DCE8FF;
+  --button-stroke: rgba(56, 108, 210, 0.22);
+  --button-stroke-hover: rgba(56, 108, 210, 0.38);
+  --theme-row: #F0F0F7;
+  --theme-row-hover: #E7E7F1;
+  --theme-row-active: #FFFFFF;
+  --theme-row-ink: #3E4762;
+  --theme-row-muted: #A9AFBF;
+  --theme-row-accent: #58A8F2;
+  --frame-margin: clamp(10px, 1.8vw, 22px);
+  --frame-stroke: 1px;
+  --nav-height: 64px;
+}
+
+html {
+  background-color: #FFFFFF;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(58vw 52vh at 8% 26%, rgba(173, 214, 255, 0.5), transparent 70%),
+    radial-gradient(48vw 46vh at 96% 36%, rgba(232, 162, 255, 0.3), transparent 72%),
+    radial-gradient(56vw 50vh at 88% 52%, rgba(56, 156, 255, 0.22), transparent 72%),
+    radial-gradient(50vw 44vh at 4% 64%, rgba(116, 56, 255, 0.13), transparent 74%),
+    radial-gradient(60vw 52vh at 46% 78%, rgba(173, 214, 255, 0.34), transparent 72%),
+    radial-gradient(46vw 42vh at 94% 94%, rgba(232, 162, 255, 0.22), transparent 74%);
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  color: var(--text);
+  font-family: "Quicksand", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-weight: 500;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+main {
+  background: none;
+}
+
+a,
+button,
+[role="button"] {
+  touch-action: manipulation;
+}
+
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.btn {
+  --button-depth: rgba(56, 108, 210, 0.26);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 22px;
+  border: 1px solid var(--button-stroke);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #FFFFFF 0%, var(--button-tint) 100%);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: -0.008em;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 3px 0 var(--button-depth);
+  transition: background-color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.btn:hover {
+  border-color: var(--button-stroke-hover);
+  background: linear-gradient(180deg, #FFFFFF 0%, var(--button-tint-hover) 100%);
+  box-shadow: 0 4px 0 var(--button-depth);
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--button-depth);
+}
+
+.btn--discord {
+  --button-tint: #EFEDFF;
+  --button-tint-hover: #E3DFFF;
+  --button-stroke: rgba(94, 82, 210, 0.22);
+  --button-stroke-hover: rgba(94, 82, 210, 0.4);
+  --button-depth: rgba(94, 82, 210, 0.26);
+}
+
+.btn--discord img {
+  object-fit: contain;
+}
+
+.btn--sm {
+  height: 38px;
+  padding: 0 18px;
+  border-width: 1px;
+  font-size: 14px;
+}
+
+.icon {
+  position: relative;
+  display: inline-block;
+  flex: none;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.12em;
+  isolation: isolate;
+
+  filter:
+    drop-shadow(1px 0 0 #FFFFFF) drop-shadow(-1px 0 0 #FFFFFF)
+    drop-shadow(0 1px 0 #FFFFFF) drop-shadow(0 -1px 0 #FFFFFF)
+    drop-shadow(1px 1px 0 #FFFFFF) drop-shadow(-1px -1px 0 #FFFFFF)
+    drop-shadow(1px -1px 0 #FFFFFF) drop-shadow(-1px 1px 0 #FFFFFF)
+    drop-shadow(0 2px 1px rgba(24, 28, 56, 0.18));
+}
+
+.icon::before,
+.icon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  -webkit-mask-image: var(--icon);
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-image: var(--icon);
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+}
+
+.icon::after {
+  background-color: currentColor;
+}
+
+.icon::before {
+  z-index: 1;
+  -webkit-mask-image: var(--icon), var(--icon);
+  -webkit-mask-size: contain, calc(100% - 6px) calc(100% - 6px);
+  -webkit-mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-composite: xor;
+  mask-image: var(--icon), var(--icon);
+  mask-size: contain, calc(100% - 6px) calc(100% - 6px);
+  mask-position: center, center;
+  mask-repeat: no-repeat, no-repeat;
+  mask-composite: exclude;
+  background-image: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.16) 14%,
+    rgba(0, 0, 0, 0) 36%
+  );
+}
+
+.icon--external {
+  --icon: url("/assets/icons/ui/external-link.svg");
+}
+
+.icon--right {
+  --icon: url("/assets/icons/ui/arrow-right.svg");
+}
+
+.icon--question {
+  --icon: url("/assets/icons/ui/question.svg");
+}
+
+.icon--heart {
+  --icon: url("/assets/icons/ui/heart.svg");
+}
+
+.icon--discord {
+  --icon: url("/assets/icons/ui/discord.svg");
+}
+
+.icon--check {
+  --icon: url("/assets/icons/ui/check.svg");
+}
+
+.icon--minus-circle {
+  --icon: url("/assets/icons/ui/minus-circle-fill.svg");
+}
+
+.icon--check-circle {
+  --icon: url("/assets/icons/ui/check-circle-fill.svg");
+}
+
+.icon--palette {
+  --icon: url("/assets/icons/ui/palette-fill.svg");
+}
+
+.icon--group {
+  --icon: url("/assets/icons/ui/group-fill.svg");
+}
+
+.icon--sparkles {
+  --icon: url("/assets/icons/ui/sparkles-fill.svg");
+}
+
+.icon--store {
+  --icon: url("/assets/icons/ui/store.svg");
+}
+
+.icon--chat {
+  --icon: url("/assets/icons/ui/chat.svg");
+}
+
+.icon--media {
+  --icon: url("/assets/icons/ui/media.svg");
+}
+
+.icon--apps {
+  --icon: url("/assets/icons/ui/apps.svg");
+}
+
+.btn .icon {
+  width: 17px;
+  height: 17px;
+}
+
+.card__icon .icon {
+  width: 22px;
+  height: 22px;
+}
+
+.card__link .icon {
+  width: 15px;
+  height: 15px;
+}
