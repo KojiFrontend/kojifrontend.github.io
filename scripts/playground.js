@@ -44,18 +44,20 @@ if (playground) {
 
     const seed = () => {
       measure();
-      const columns = Math.max(1, Math.round(view.w / 72));
-      const rows = Math.max(1, Math.ceil(bodies.length / columns));
+      const radius = Math.max(...bodies.map((body) => body.r));
+      const spread = radius * Math.sqrt(bodies.length) * 1.15;
+      const aspect = Math.max(0.8, Math.min(1.4, Math.sqrt(view.w / (view.h || 1))));
+      const horizontal = Math.max(0, Math.min(spread * aspect, view.w / 2 - radius - 2));
+      const vertical = Math.max(0, Math.min(spread / aspect, view.h / 2 - radius - 2));
+      const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+
       bodies.forEach((body, index) => {
-        const column = index % columns;
-        const row = Math.floor(index / columns);
-        const spreadX = (column + 0.5) * (view.w / columns) + (Math.random() - 0.5) * 14;
-        const spreadY = (row + 0.5) * (view.h / rows) + (Math.random() - 0.5) * 12;
-        body.x = spreadX;
-        body.y = spreadY;
+        // Spiral outward so the first render already looks like a magnetized cluster.
+        const angle = index * goldenAngle;
+        const distance = Math.sqrt((index + 0.5) / bodies.length);
+        body.x = view.w / 2 + Math.cos(angle) * distance * horizontal;
+        body.y = view.h / 2 + Math.sin(angle) * distance * vertical;
         contain(body);
-        body.vx = (Math.random() - 0.5) * 120;
-        body.vy = (Math.random() - 0.5) * 120;
       });
     };
 
@@ -96,16 +98,14 @@ if (playground) {
         contain(body);
       });
 
-      // Shards still follow the magnet, but never push the other avatars around.
-      const solid = bodies.filter((body) => !body.shard);
       for (let pass = 0; pass < 3; pass += 1) {
-        for (let i = 0; i < solid.length; i += 1) {
-          const a = solid[i];
-          for (let j = i + 1; j < solid.length; j += 1) {
-            const b = solid[j];
+        for (let i = 0; i < bodies.length; i += 1) {
+          const a = bodies[i];
+          for (let j = i + 1; j < bodies.length; j += 1) {
+            const b = bodies[j];
             const dx = b.x - a.x;
             const dy = b.y - a.y;
-            const radius = a.r + b.r;
+            const radius = (a.shard ? a.r * Math.SQRT2 : a.r) + (b.shard ? b.r * Math.SQRT2 : b.r);
             const distanceSquared = dx * dx + dy * dy;
             if (distanceSquared >= radius * radius) continue;
             const distance = Math.sqrt(distanceSquared);
@@ -113,7 +113,10 @@ if (playground) {
 
             const nx = distance ? dx / distance : 1;
             const ny = distance ? dy / distance : 0;
-            const aShare = a === drag.body ? 0 : b === drag.body ? 1 : 0.5;
+            // Smaller pieces move more on impact. The dragged avatar stays under the pointer.
+          const aWeight = a === drag.body ? 0 : 1 / (a.r * a.r);
+          const bWeight = b === drag.body ? 0 : 1 / (b.r * b.r);
+          const aShare = aWeight / (aWeight + bWeight);
             const bShare = 1 - aShare;
             a.x -= nx * overlap * aShare;
             a.y -= ny * overlap * aShare;

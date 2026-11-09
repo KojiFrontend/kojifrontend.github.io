@@ -1,9 +1,3 @@
-@media (min-width: 701px) {
-  .hero__title {
-    left: -56px;
-  }
-}
-
 @media (max-width: 1240px) {
   .hero__shelf {
     right: -16px;

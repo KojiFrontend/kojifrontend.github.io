@@ -15,7 +15,7 @@ if (masthead && 'IntersectionObserver' in window) {
 }
 
 if (heroActions) {
-  const fixedActions = matchMedia('(min-width: 701px)');
+  const fixedActions = matchMedia('(width > 940px)');
   let hidden = null;
 
   const syncActions = () => {
@@ -29,6 +29,30 @@ if (heroActions) {
   window.addEventListener('scroll', syncActions, { passive: true });
   fixedActions.addEventListener('change', syncActions);
   syncActions();
+}
+
+if (masthead) {
+  const fullBleed = matchMedia('(max-width: 700px)');
+  let frame = 0;
+
+  const syncFrame = () => {
+    frame = 0;
+    if (!fullBleed.matches) {
+      masthead.style.removeProperty('--hero-frame');
+      return;
+    }
+    const progress = Math.max(0, Math.min(1, scrollY / 110));
+    const value = progress.toFixed(3);
+    if (masthead.style.getPropertyValue('--hero-frame') !== value) {
+      masthead.style.setProperty('--hero-frame', value);
+    }
+  };
+
+  window.addEventListener('scroll', () => {
+    if (fullBleed.matches && !frame) frame = requestAnimationFrame(syncFrame);
+  }, { passive: true });
+  fullBleed.addEventListener('change', syncFrame);
+  syncFrame();
 }
 
 const consolePreview = document.querySelector('[data-console]');

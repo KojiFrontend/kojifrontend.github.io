@@ -50,45 +50,44 @@
   }
 }
 
-.community-cameo__fist {
+.community-cameo__swipe {
   position: fixed;
-  left: 0;
-  top: 0;
-  width: clamp(360px, 62vw, 980px);
-  height: auto;
+  inset: 0;
   z-index: 70;
+  overflow: clip;
+  visibility: hidden;
   pointer-events: none;
-  translate: var(--fist-x, 50vw) calc(var(--fist-y, 50vh) - 50%);
-  transform: translate3d(120vw, 0, 0) rotate(10deg);
 }
 
-.community-cameo.is-punching .community-cameo__fist {
-  animation: fist-punch 1400ms linear forwards;
+.community-cameo__paw {
+  position: absolute;
+  left: var(--paw-x);
+  top: var(--paw-y);
+  width: var(--paw-width);
+  max-width: none;
+  height: auto;
+  translate: -2% -39%;
 }
 
-@keyframes fist-punch {
+.community-cameo.is-punching .community-cameo__swipe {
+  visibility: visible;
+}
+
+.community-cameo.is-punching .community-cameo__paw {
+  animation: paw-swipe 1300ms both;
+}
+
+@keyframes paw-swipe {
   0% {
-    transform: translate3d(120vw, 0, 0) rotate(10deg);
-    animation-timing-function: cubic-bezier(0.6, 0, 0.9, 0.2);
+    transform: translateX(100vw);
+    animation-timing-function: cubic-bezier(0.64, 0, 0.8, 0.32);
   }
-  46% {
-    transform: translate3d(0, 0, 0) rotate(-4deg);
-    animation-timing-function: cubic-bezier(0.2, 0.9, 0.3, 1);
-  }
-  53% {
-    transform: translate3d(-2.5%, 0, 0) rotate(2deg);
-    animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
-  }
-  60% {
-    transform: translate3d(0, 0, 0) rotate(-2deg);
-    animation-timing-function: linear;
-  }
-  73% {
-    transform: translate3d(0, 0, 0) rotate(-2deg);
-    animation-timing-function: cubic-bezier(0.5, 0, 0.75, 1);
+  44%, 69% {
+    transform: translateX(0);
+    animation-timing-function: cubic-bezier(0.12, 0.64, 0.4, 1);
   }
   100% {
-    transform: translate3d(120vw, 0, 0) rotate(10deg);
+    transform: translateX(100vw);
   }
 }
 
@@ -156,7 +155,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .community-cameo__fist {
+  .community-cameo__swipe {
     display: none;
   }
 }

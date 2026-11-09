@@ -32,13 +32,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Roboto+Condensed:wght@700&family=Rubik:wght@500;600;700;800;900&family=Nunito:wght@400;600;700;800&family=Instrument+Serif:ital@0;1&family=Redaction+50&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/styles/base.css?v=86" />
     <link rel="stylesheet" href="/styles/header.css?v=89" />
-    <link rel="stylesheet" href="/styles/hero.css?v=92" />
+    <link rel="stylesheet" href="/styles/hero.css?v=93" />
     <link rel="stylesheet" href="/styles/sections.css?v=88" />
     <link rel="stylesheet" href="/styles/themes.css?v=89" />
-    <link rel="stylesheet" href="/styles/community.css?v=90" />
+    <link rel="stylesheet" href="/styles/community.css?v=92" />
     <link rel="stylesheet" href="/styles/team.css?v=87" />
     <link rel="stylesheet" href="/styles/footer.css?v=86" />
-    <link rel="stylesheet" href="/styles/responsive.css?v=90" />
+    <link rel="stylesheet" href="/styles/responsive.css?v=91" />
   </head>
   <body>
     <header class="topbar">
@@ -72,7 +72,7 @@
               <img
                 src="/assets/home/thor-640.webp"
                 srcset="/assets/home/thor-640.webp 640w, /assets/home/thor-1080.webp 1080w"
-                sizes="(max-width: 700px) 60vw, 31vw"
+                sizes="(max-width: 940px) min(60vw, 295px), 31vw"
                 width="1080"
                 height="1239"
                 alt="Thor clamshell handheld running Koji across both screens"
@@ -82,7 +82,7 @@
               <img
                 src="/assets/home/odin-880.webp"
                 srcset="/assets/home/odin-880.webp 880w, /assets/home/odin-1560.webp 1560w"
-                sizes="(max-width: 700px) 76vw, 42vw"
+                sizes="(max-width: 940px) min(76vw, 377px), 42vw"
                 width="1560"
                 height="643"
                 alt="Odin handheld showing the Koji game library"
@@ -278,7 +278,9 @@
             <div class="community-cameo" aria-hidden="true">
               <img class="community-cameo__watcher" src="/assets/community/pommeswatch.webp" width="109" height="190" alt="" loading="lazy" decoding="async" />
               <img class="community-cameo__dancer" data-dd src="/assets/community/dddance.webp" width="317" height="220" alt="" loading="lazy" decoding="async" />
-              <img class="community-cameo__fist" src="/assets/community/fist.webp" width="480" height="220" alt="" aria-hidden="true" decoding="async" />
+              <span class="community-cameo__swipe">
+                <img class="community-cameo__paw" src="/assets/community/cat-paw.webp" width="960" height="218" alt="" loading="lazy" decoding="async" />
+              </span>
             </div>
 
             <div class="playground" data-playground>
@@ -508,6 +510,6 @@
       </figure>
     </dialog>
 
-    <script type="module" src="/scripts/main.js?v=92"></script>
+    <script type="module" src="/scripts/main.js?v=95"></script>
   </body>
 </html>
