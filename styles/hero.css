@@ -98,19 +98,13 @@
 
 .hero__device {
   position: absolute;
-  filter: drop-shadow(0 24px 28px rgba(34, 25, 70, 0.18));
-  transform:
-    translate(
-      calc(var(--console-x, 0) * var(--pull-x, 0px)),
-      calc(var(--console-y, 0) * var(--pull-y, 0px))
-    )
-    rotate(var(--tilt, 0deg));
 }
 
 .hero__device img {
   display: block;
   width: 100%;
   height: auto;
+  filter: drop-shadow(0 24px 28px rgba(34, 25, 70, 0.18));
 }
 
 .hero__device--thor {
@@ -217,9 +211,6 @@
     transform: translateY(2px);
   }
 
-  .hero__device {
-    transition: transform 0.32s ease-out;
-  }
 }
 
 @media (max-width: 940px) {

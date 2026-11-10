@@ -24,8 +24,6 @@
   z-index: 1;
   width: 100%;
   height: auto;
-  filter: var(--shell-filter, none);
-  transition: filter 0.4s ease;
 }
 
 .theme-showcase__screen {

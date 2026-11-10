@@ -132,16 +132,25 @@ if (horizon) {
     spriteFrames.push({ time, pose: poses.idle });
 
     let lastPose;
+    let frameIndex = 0;
+    let spriteIndex = 0;
+    let lastAt = -1;
     renderHop = (elapsed) => {
       const at = elapsed % time;
-      const next = frames.findIndex((keyframe) => keyframe.time > at);
-      const from = frames[next - 1];
-      const to = frames[next];
+      if (at < lastAt) {
+        frameIndex = 0;
+        spriteIndex = 0;
+      }
+      lastAt = at;
+      while (frameIndex + 1 < frames.length && frames[frameIndex + 1].time <= at) frameIndex += 1;
+      const from = frames[frameIndex];
+      const to = frames[Math.min(frameIndex + 1, frames.length - 1)];
       const progress = (at - from.time) / (to.time - from.time);
       const mix = (start, end) => start + (end - start) * progress;
       kodo.style.transform = kodoPose(mix(from.x, to.x), mix(from.y, to.y),
         mix(from.angle, to.angle), from.facing);
-      const pose = spriteFrames[spriteFrames.findIndex((keyframe) => keyframe.time > at) - 1].pose;
+      while (spriteIndex + 1 < spriteFrames.length && spriteFrames[spriteIndex + 1].time <= at) spriteIndex += 1;
+      const pose = spriteFrames[spriteIndex].pose;
       if (pose !== lastPose) {
         sprite.style.backgroundPosition = `${pose * 20}% 0%`;
         lastPose = pose;
@@ -157,7 +166,10 @@ if (horizon) {
     frame = requestAnimationFrame(tick);
   };
 
+  let playbackFrame = 0;
+
   const syncPlayback = () => {
+    playbackFrame = 0;
     const rect = horizon.getBoundingClientRect();
     const viewport = window.visualViewport;
     const top = viewport?.offsetTop ?? 0;
@@ -180,11 +192,15 @@ if (horizon) {
   const resizeObserver = new ResizeObserver(relayout);
   resizeObserver.observe(horizon);
 
+  const schedulePlayback = () => {
+    if (!playbackFrame) playbackFrame = requestAnimationFrame(syncPlayback);
+  };
+
   // Measure against the visible viewport, including when the browser toolbar moves.
-  window.addEventListener('scroll', syncPlayback, { passive: true });
-  window.addEventListener('resize', syncPlayback);
-  window.visualViewport?.addEventListener('resize', syncPlayback);
-  window.visualViewport?.addEventListener('scroll', syncPlayback);
+  window.addEventListener('scroll', schedulePlayback, { passive: true });
+  window.addEventListener('resize', schedulePlayback);
+  window.visualViewport?.addEventListener('resize', schedulePlayback);
+  window.visualViewport?.addEventListener('scroll', schedulePlayback);
   document.addEventListener('visibilitychange', syncPlayback);
   motion.addEventListener('change', updatePath);
 

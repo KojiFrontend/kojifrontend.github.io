@@ -70,27 +70,47 @@ const consolePreview = document.querySelector('[data-console]');
 const pointerFine = matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
 
 if (consolePreview && masthead) {
+  const devices = [...consolePreview.querySelectorAll('.hero__device')].map((el) => {
+    const style = getComputedStyle(el);
+    return {
+      el,
+      pullX: Number.parseFloat(style.getPropertyValue('--pull-x')) || 0,
+      pullY: Number.parseFloat(style.getPropertyValue('--pull-y')) || 0,
+      x: null,
+      y: null
+    };
+  });
   let frame = 0;
   let x = 0;
   let y = 0;
+
+  const paint = () => {
+    frame = 0;
+    devices.forEach((device) => {
+      if (device.x === x && device.y === y) return;
+      device.x = x;
+      device.y = y;
+      device.el.style.transform = `translate3d(${(x * device.pullX).toFixed(2)}px, ${(y * device.pullY).toFixed(2)}px, 0)`;
+    });
+  };
 
   const trackPointer = (event) => {
     if (!heroVisible || !pointerFine.matches || event.pointerType === 'touch') return;
     x = Math.max(-1, Math.min(1, (2 * event.clientX) / innerWidth - 1));
     y = Math.max(-1, Math.min(1, (2 * event.clientY) / innerHeight - 1));
-    if (frame) return;
-    frame = requestAnimationFrame(() => {
-      frame = 0;
-      consolePreview.style.setProperty('--console-x', x.toFixed(3));
-      consolePreview.style.setProperty('--console-y', y.toFixed(3));
-    });
+    if (!frame) frame = requestAnimationFrame(paint);
   };
 
   const resetConsole = () => {
     cancelAnimationFrame(frame);
     frame = 0;
-    consolePreview.style.removeProperty('--console-x');
-    consolePreview.style.removeProperty('--console-y');
+    x = 0;
+    y = 0;
+    devices.forEach((device) => {
+      device.x = null;
+      device.y = null;
+      device.el.style.removeProperty('transform');
+    });
   };
 
   masthead.addEventListener('pointermove', trackPointer, { passive: true });

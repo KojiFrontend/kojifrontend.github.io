@@ -18,6 +18,7 @@ if (playground) {
     let running = false;
     let visible = !('IntersectionObserver' in window);
     let scrollTimer = 0;
+    let restFrames = 0;
 
     const clampAxis = (value, size, radius) => {
       const inset = Math.min(size / 2, radius + 2);
@@ -150,6 +151,17 @@ if (playground) {
       const steps = bodies.length > avatars.length ? Math.ceil(dt * 144) : 1;
       for (let index = 0; index < steps; index += 1) step(dt / steps);
       render();
+      const peak = bodies.reduce((max, body) => Math.max(max, Math.hypot(body.vx, body.vy)), 0);
+      if (peak < 6 && !drag.body) {
+        restFrames += 1;
+        if (restFrames > 40) {
+          restFrames = 0;
+          stop();
+          return;
+        }
+      } else {
+        restFrames = 0;
+      }
       frame = requestAnimationFrame(tick);
     };
 
@@ -245,8 +257,10 @@ if (playground) {
       pointer.x = point.x;
       pointer.y = point.y;
       pointer.inside = point.x >= 0 && point.x <= view.w && point.y >= 0 && point.y <= view.h;
+      start();
     }, { passive: true });
     const resetPointer = () => { pointer.inside = false; };
+    playground.addEventListener('pointerenter', start);
     playground.addEventListener('pointerleave', resetPointer);
     window.addEventListener('scroll', () => {
       resetPointer();
@@ -363,6 +377,7 @@ if (playground) {
       resetPointer();
       measure();
       render();
+      start();
     };
     if ('ResizeObserver' in window) new ResizeObserver(resize).observe(layer);
     else window.addEventListener('resize', resize);

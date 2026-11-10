@@ -4,14 +4,32 @@ const navItems = [...document.querySelectorAll('.nav__link')]
 
 let activeLink = null;
 let navFrame = 0;
+let measureFrame = 0;
+const offsets = new Map();
+
+const scheduleNav = () => {
+  if (!navFrame) navFrame = requestAnimationFrame(syncNav);
+};
+
+const measure = () => {
+  measureFrame = 0;
+  navItems.forEach(({ section }) => {
+    offsets.set(section, section.getBoundingClientRect().top + window.scrollY);
+  });
+  scheduleNav();
+};
+
+const scheduleMeasure = () => {
+  if (!measureFrame) measureFrame = requestAnimationFrame(measure);
+};
 
 const syncNav = () => {
   navFrame = 0;
-  const marker = window.innerHeight * 0.45;
+  const marker = window.scrollY + window.innerHeight * 0.45;
   let active = null;
 
   for (const { link, section } of navItems) {
-    if (section.getBoundingClientRect().top > marker) break;
+    if ((offsets.get(section) ?? 0) > marker) break;
     active = link;
   }
 
@@ -22,10 +40,10 @@ const syncNav = () => {
 };
 
 if (navItems.length) {
-  const scheduleNav = () => {
-    if (!navFrame) navFrame = requestAnimationFrame(syncNav);
-  };
   window.addEventListener('scroll', scheduleNav, { passive: true });
-  window.addEventListener('resize', scheduleNav);
-  syncNav();
+  window.addEventListener('resize', scheduleMeasure);
+  window.addEventListener('load', measure);
+  document.fonts?.ready.then(measure);
+  if ('ResizeObserver' in window) new ResizeObserver(scheduleMeasure).observe(document.body);
+  measure();
 }
