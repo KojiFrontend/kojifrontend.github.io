@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+<defs>
+ <linearGradient id="outer" x1="0" y1="0" x2=".9" y2="1" gradientUnits="objectBoundingBox"><stop stop-color="#a87a4d"/><stop offset=".52" stop-color="#86562f"/><stop offset="1" stop-color="#5c321c"/></linearGradient>
+ <linearGradient id="inner" x1=".2" y1="0" x2=".8" y2="1"><stop stop-color="#f2d0a4"/><stop offset=".52" stop-color="#dfb483"/><stop offset="1" stop-color="#a76f42"/></linearGradient>
+ <linearGradient id="tape" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff4df"/><stop offset="1" stop-color="#f5d4a9"/></linearGradient>
+ <linearGradient id="sticker" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff3a2"/><stop offset="1" stop-color="#ffe29a"/></linearGradient>
+ <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
+</defs>
+<!-- outer package -->
+<rect x="39" y="40" width="322" height="322" rx="61" fill="#5a341e" opacity=".35" filter="url(#soft)"/>
+<rect x="40" y="40" width="320" height="320" rx="58" fill="url(#outer)"/>
+<rect x="76" y="76" width="248" height="248" rx="34" fill="url(#inner)"/>
+<!-- paper seal -->
+<path d="M151 77H248V170Q248 182 239 190Q232 195 224 187L200 158L175 188Q166 198 158 190Q151 184 151 169Z" fill="#b78354" opacity=".28" transform="translate(0 5)"/>
+<path d="M151 77H248V168Q248 182 239 186Q231 190 225 181L200 153L176 181Q166 193 158 183Q151 177 151 165Z" fill="url(#tape)"/>
+<path d="M161 77V164Q161 183 170 181Q173 180 180 171L198 150Q201 147 204 151L229 178Q239 187 239 164V77" fill="none" stroke="#fff0d9" stroke-width="3" opacity=".4"/>
+<!-- label -->
+<g transform="rotate(-3 145 270)">
+<rect x="103" y="239" width="87" height="63" rx="8" fill="#8b582c" opacity=".3" transform="translate(2 3)"/>
+<rect x="103" y="238" width="87" height="63" rx="7" fill="url(#sticker)"/>
+<rect x="111" y="246" width="71" height="47" rx="3" fill="#ffefbc"/>
+<path d="M121 260l8 -3 7 3 9 -3 8 2 8 -3 10 2M121 282l7 -2 8 3 9 -2 9 2 8 -3 9 2" fill="none" stroke="#85663c" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<!-- stamp -->
+<circle cx="278" cy="280" r="24" fill="none" stroke="#4e3019" stroke-width="3"/>
+<circle cx="278" cy="280" r="19" fill="none" stroke="#4e3019" stroke-width="2"/>
+<path d="M263 277l6 -2 2 -7 5 5 5 -5 2 7 7 2 -5 5 2 7 -8 -2 -6 5 -2 -8 -7 -2z" fill="#50331b" opacity=".8"/>
+<circle cx="268" cy="270" r="2" fill="#c49763"/><circle cx="288" cy="287" r="2" fill="#c49763"/>
+</svg>

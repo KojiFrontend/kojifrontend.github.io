@@ -53,8 +53,12 @@ body {
     radial-gradient(50vw 44vh at 4% 64%, rgba(116, 56, 255, 0.13), transparent 74%),
     radial-gradient(60vw 52vh at 46% 78%, rgba(173, 214, 255, 0.34), transparent 72%),
     radial-gradient(46vw 42vh at 94% 94%, rgba(232, 162, 255, 0.22), transparent 74%);
+
   background-repeat: no-repeat;
+  background-size: contain, auto, auto, auto, auto, auto, auto;
+  background-position: center;
   background-attachment: scroll;
+
   color: var(--text);
   font-family: "Quicksand", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   font-weight: 500;
@@ -198,6 +202,10 @@ button:focus-visible,
 
 .icon--question {
   --icon: url("/assets/icons/ui/question.svg");
+}
+
+.icon--box {
+  --icon: url("/assets/icons/ui/box.svg");
 }
 
 .icon--heart {
