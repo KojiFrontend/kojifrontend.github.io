@@ -304,7 +304,7 @@
   /* Page background */
 
   html {
-    --hero-edge: #b5e3ff;
+    --hero-edge: var(--panel-bg);
     background-color: var(--hero-edge);
   }
 
@@ -316,7 +316,7 @@
     background-color: transparent;
   }
 
-  /* Navbar transition */
+  /* Navbar transition — preserved */
 
   .topbar {
     position: absolute;
@@ -368,17 +368,17 @@
     background: none;
   }
 
-  /* Sky background + floating icons */
+  /* Original gradient + floating icons */
 
   .masthead__floaters {
     bottom: 0;
     bottom: calc(-1 * var(--hero-bleed));
 
-    background-color: #b5e3ff;
+    background-color: var(--panel-bg);
     background-image: var(--masthead-artwork);
 
     background-size: cover;
-    background-position: right top;
+    background-position: center;
     background-repeat: no-repeat;
 
     clip-path: inset(0 0 0 round 0);
