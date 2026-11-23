@@ -36,7 +36,7 @@
   height: 0.84em;
   line-height: 0.84;
   vertical-align: bottom;
-  color: #6A46D8;
+  color: #8050E8;
 }
 
 .hero__you.is-roboto-condensed {
@@ -159,12 +159,16 @@
   flex: none;
 }
 
+/* Floating game icons */
+
 .masthead__floaters {
   position: absolute;
   inset: 0;
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
+
+  background: transparent;
 }
 
 .masthead__floaters img {
@@ -190,17 +194,26 @@
     transform: translate3d(-50%, 0, 0) rotate(var(--rot, 0deg));
     opacity: 0;
   }
+
   10% {
     opacity: 0.42;
   }
+
   90% {
     opacity: 0.42;
   }
+
   100% {
-    transform: translate3d(calc(-50% + var(--drift, 0px)), -108vh, 0) rotate(calc(var(--rot, 0deg) + 26deg));
+    transform: translate3d(
+      calc(-50% + var(--drift, 0px)),
+      -108vh,
+      0
+    ) rotate(calc(var(--rot, 0deg) + 26deg));
     opacity: 0;
   }
 }
+
+/* Hover effects */
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .hero__secondary img {
@@ -210,8 +223,9 @@
   .hero__secondary:hover img {
     transform: translateY(2px);
   }
-
 }
+
+/* Mobile layout */
 
 @media (max-width: 940px) {
   .hero {
@@ -219,7 +233,12 @@
     flex-direction: column;
     align-items: center;
     gap: clamp(20px, 4vw, 30px);
-    padding-block: clamp(24px, 4svh, 36px) max(clamp(40px, 5svh, 46px), calc(env(safe-area-max-inset-bottom, 0px) + 12px));
+    padding-block:
+      clamp(24px, 4svh, 36px)
+      max(
+        clamp(40px, 5svh, 46px),
+        calc(env(safe-area-inset-bottom, 0px) + 12px)
+      );
   }
 
   .hero__title {
@@ -274,7 +293,6 @@
     flex-direction: column;
     gap: 18px;
     max-width: 100%;
-    /* Keep the links on a separate layer from the animated backdrop. */
     transform: translateZ(0);
     transition: none;
   }
@@ -283,8 +301,10 @@
     width: min(230px, 100%);
   }
 
+  /* Page background */
+
   html {
-    --hero-edge: #e3edff;
+    --hero-edge: #b5e3ff;
     background-color: var(--hero-edge);
   }
 
@@ -296,51 +316,92 @@
     background-color: transparent;
   }
 
+  /* Navbar transition */
+
   .topbar {
     position: absolute;
     z-index: 3;
     inset: 0 0 auto;
+
     padding-top: env(safe-area-inset-top);
-    padding-inline: max(14px, env(safe-area-inset-left)) max(14px, env(safe-area-inset-right));
-    background: linear-gradient(180deg, var(--hero-edge) env(safe-area-inset-top), #e3edffdf 76%, #e3edff00);
+
+    padding-inline:
+      max(14px, env(safe-area-inset-left))
+      max(14px, env(safe-area-inset-right));
+
+    background: linear-gradient(
+      to bottom,
+      rgba(235, 244, 255, 0.85) 0%,
+      rgba(235, 244, 255, 0.45) 45%,
+      rgba(235, 244, 255, 0.12) 80%,
+      transparent 100%
+    );
   }
 
+  /* Hero background */
+
   .masthead {
-    --hero-nav-space: calc(var(--nav-height) + env(safe-area-inset-top));
-    --hero-bleed: max(0px, 100lvh - 100svh, var(--hero-screen-height, 0px) - 100svh);
+    --hero-nav-space: calc(
+      var(--nav-height) + env(safe-area-inset-top)
+    );
+
+    --hero-bleed: max(
+      0px,
+      100lvh - 100svh,
+      var(--hero-screen-height, 0px) - 100svh
+    );
+
     min-height: 100vh;
     min-height: 100svh;
+
     margin: 0 0 10px;
     padding-top: var(--hero-nav-space);
+
     border: 0;
     border-radius: 0;
     box-shadow: none;
+
     overflow: visible;
     z-index: 1;
+
+    /* Background is drawn by the floater layer on mobile. */
     background: none;
   }
 
+  /* Sky background + floating icons */
+
   .masthead__floaters {
-    /* Extend the artwork behind the browser controls without moving the content. */
     bottom: 0;
     bottom: calc(-1 * var(--hero-bleed));
-    background-color: var(--hero-edge);
-    background-image:
-      linear-gradient(to bottom, transparent calc(100% - var(--hero-bleed) - 2rem), var(--hero-edge) calc(100% - var(--hero-bleed))),
-      var(--masthead-artwork);
+
+    background-color: #b5e3ff;
+    background-image: var(--masthead-artwork);
+
+    background-size: cover;
+    background-position: right top;
+    background-repeat: no-repeat;
+
     clip-path: inset(0 0 0 round 0);
   }
 
+  /* Rounded hero mask */
+
   .hero-is-rounded .masthead__floaters {
-    clip-path: inset(0 10px var(--hero-bleed) round 22px);
+    clip-path: inset(
+      0
+      10px
+      var(--hero-bleed)
+      round 22px
+    );
   }
 
   .hero-is-rounded #what .section__head {
-    /* Keep the heading visible while the hero backdrop retracts. */
     position: relative;
     z-index: 1;
   }
 }
+
+/* Mobile transitions */
 
 @media (max-width: 940px) and (prefers-reduced-motion: no-preference) {
   html {
@@ -351,6 +412,8 @@
     transition: clip-path 360ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 }
+
+/* Small screens */
 
 @media (max-width: 560px) {
   .masthead__floaters img:nth-child(even),
